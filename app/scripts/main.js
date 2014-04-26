@@ -1,4 +1,4 @@
-/*global User, Questionnaire, DomHelper, ko, $, window */
+/*global User, Questionnaire, DomHelper, ko, window */
 
 window.onload = function () {
     var user = new User(),
@@ -10,17 +10,18 @@ window.onload = function () {
     this.test = new Questionnaire({ test: this.defaultTest, user: user });
     test = this.test;
 
-    test.resizeCards = function () {
-        var currentWidth = $("#questions").width();
+    function resizeCards() {
+        var currentWidth = document.getElementById("questions").offsetWidth;
         test.graphics.card.width(currentWidth);
-    };
+    }
 
-    $(this).resize(test.resizeCards);
+    window.onresize = resizeCards;
 
     test.started.subscribe(function (started) {
         var breadcrumbs = document.getElementById("breadcrumbs");
         return started && setTimeout(function () {
-            test.resizeCards();
+            resizeCards();
+
             if (breadcrumbs &&
                     typeof breadcrumbs.scrollIntoView === 'function' &&
                     window.innerHeight < 450) {
@@ -30,13 +31,21 @@ window.onload = function () {
     });
 
     test.currentQuestion.subscribe(function () {
-        var selector = $("#questions .controls button");
-        selector.attr("disabled", "disabled");
+        var selector = document.querySelectorAll("#questions .controls button");
+        selector = Array.prototype.slice.call(selector);
+
+        selector.forEach(function (button) {
+            button.setAttribute("disabled", "disabled");
+        });
+
         setTimeout(function () {
-            selector.attr("disabled", null);
+            selector.forEach(function (button) {
+                button.removeAttribute("disabled");
+            });
         }, 500);
     });
 
     ko.applyBindings(test);
-    $("body").removeClass("loading");
+
+    document.body.className = document.body.className.replace("loading", "");
 };

@@ -1,5 +1,5 @@
 /*exported Questionnaire*/
-/*global $, ko, window, DateFormatter, QuestionnaireRibbon, Sammy */
+/*global ko, window, DateFormatter, QuestionnaireRibbon, Sammy */
 
 function Questionnaire(config) {
     var me = this, sammy = Sammy, i;
@@ -15,7 +15,7 @@ function Questionnaire(config) {
     }
 
     this.user = config.user;
-    $.extend(this, config.test);
+    ko.utils.extend(this, config.test);
 
     for (i = 0; i < this.questions.length; i += 1) {
         this.questions[i].id = i + 1;

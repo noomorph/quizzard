@@ -168,6 +168,7 @@ module.exports = function (grunt) {
                 ]
             },
             dist: {
+                options: { compass: true },
                 files: [{
                     expand: true,
                     cwd: '<%= config.app %>/styles',
@@ -177,6 +178,7 @@ module.exports = function (grunt) {
                 }]
             },
             server: {
+                options: { compass: true },
                 files: [{
                     expand: true,
                     cwd: '<%= config.app %>/styles',

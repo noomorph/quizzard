@@ -1,31 +1,354 @@
-// bower:scss
-// endbower
+@import "reset";
 
-body {
-    background: #fafafa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
+div, h1, h2, h3, h4, h5, h6 {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-.hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 30px;
-    background-color: #eee;
-    border-radius: 6px;
-    padding: 60px;
-    h1 {
-        font-size: 60px;
-        line-height: 1;
-        letter-spacing: -1px;
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: url(img/paper.png);
+}
+
+body { 
+    position: relative; 
+    width: 60%; 
+    height: 100%; 
+    font: 16px Georgia, serif; 
+    margin: 0 10%;
+    padding: 2em 10% 1em 10%;
+}
+    
+h4 { font-family: Georgia, serif; } 
+h1, h3 { text-align: center; }
+
+strong { font-weight: bold; }
+pre { margin: 0; }
+p { font-size: 200%; }
+input { font-size: 100%; font-weight: lighter; text-align: center; }
+
+.submitted {
+    input.invalid {
+        border: solid 2px #ff5555;
+        &::-webkit-input-placeholder { color:#f00; }
+        &::-moz-placeholder { color:#f00; } /* firefox 19+ */
+        &:-ms-input-placeholder { color:#f00; } /* ie */
+        &:-moz-placeholder { color:#f00; }
+    }
+
+    label.invalid {
+        color: red;
+        &:after { color: red; }
     }
 }
 
-.browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+button {
+    padding: 10px;
+    font-size: 100%;
+}
+.loading { display: none; }
+
+h1 { 
+    margin: 0 0 0.1875em 0;
+    font-size: 1.875em;
+    color: #333;
+}
+
+h2 {
+    margin: 0 0 2em 0;
+    font-size: 0.75em;
+    font-style: italic;
+    color: gray;
+    text-align: right;
+}
+
+h3 {
+    margin: 1em 0 0 0;
+    text-align: left;
+    line-height: 100%;
+    font-weight: bold;
+}
+
+h4 {
+    color: #444;
+    font-style: italic;
+    font-size: 150%;
+    padding-left: 0.5em;
+    padding-bottom: 0.3em;
+    border-bottom: solid 1px silver;
+
+    span { color: #446; }
+}
+
+.screen {
+    padding-bottom: 1em;
+}
+
+#intro {
+
+    fieldset {
+
+        legend {
+            width: 100%;
+            line-height: 150%;
+            border-bottom: dashed 1px silver;
+            margin-bottom: 0.5em;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .fields {
+            margin-bottom: 1em;
+            padding-left: 2em;
+            label {
+                display: inline-block;
+                width: 6em;
+                &:after { content: ':'; }
+            }
+            input { text-align: left; }
+            input#name, input#age {
+                width: 15em;
+            }
+            input#male, input#female {
+                width: auto;
+            }
+            label.gender:after { content: ''; }
+        }
+
+        .sorry {
+            margin: 0 0 1em 0;
+            padding-top: 0.5em;
+        }
+
+        .disclaimer {
+            color: #555;
+            text-align: justify;
+            font-style: italic;
+            margin-top: 0.25em;
+            padding-left: 1.5em;
+        }
+
+        blockquote {
+            text-align: justify;
+            line-height: 150%;
+            border-top: dashed 1px silver;
+            margin-top: 1em;
+            padding-top: 1em;
+        }
+
+        .button {
+            margin-top: 1em;
+            text-align: center;
+        }
+
+        input[type='text'], input[type='number'] {
+            &:focus {
+                background-color: #fff0ee;
+            }
+        }
+    }
+}
+
+#questions {
+    h4 a { font-style: normal; font-weight: bold; text-decoration: none; }
+
+    .frame { 
+        overflow: hidden; 
+        position: relative;
+        height: 12em;
+
+        .ribbon {
+            position: absolute; 
+            top: 0; 
+            -webkit-transition: all 0.25s ease;
+            
+            .card { 
+                float: left;
+                overflow: hidden;
+                position: relative;
+
+                &.hidden { visibility: hidden; }
+
+                div {
+                    padding: 0.5em 0 0 0.5em;
+                    span {
+                        font-size: 150%;
+                        &.answer {
+                            padding-left: 0.5em;
+                            color: navy;
+                            font-style: italic;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .controls button {
+        float: left;
+        margin-left: 5%;
+        width: 40%;
+        cursor: pointer;
+        border: solid 2px;
+        font-family: sans-serif;
+        display: inline;
+        // TODO: use compass function;
+        -webkit-transition: opacity .25s linear;
+           -moz-transition: opacity .25s linear;
+            -ms-transition: opacity .25s linear;
+             -o-transition: opacity .25s linear;
+                transition: opacity .25s linear;
+
+        &[disabled] {
+            opacity: 0.5;
+        }
+
+        &.yes { background-color: white; color: black; border-color: black; }
+        &.yes:hover { background-color: #ddd; border-color: #333; }
+        &.no { background-color: black; color: white; border-color: black; }
+        &.no:hover { background-color: #333; }
+        &.a {
+            width: 18%;
+            margin-left: 2%;
+            font-size: 0.75em;
+        
+            &.a0 { background-color: #17516c; color: white; border-color: black; }
+            &.a1 { background-color: #b8dbef; }
+            &.a2 { }
+            &.a3 { background-color: #dbefbb; }
+            &.a4 { background-color: #aceca1; color: black; border-color: black; }
+        }
+    }
+}
+
+#outro {
+   table {
+     &, tr, td, th {
+        border: none;
+     } 
+     &.bordered {
+        th, td { border: solid 1px black; }
+     }
+     td, th {
+        padding: 0.5em;
+        &.under-border { border-bottom: solid 1px black; }
+     }
+     &.wide { width: 100%; }
+     td.topped { vertical-align: top; }
+     th.w8 { width: 8em; }
+   }
+}
+
+@media only screen and (max-width: 768px) {
+    html {
+        background: none;
+    }
+
+    body { 
+        padding: 1em 5%;
+        margin: 0;
+        width: 90%;
+    }
+
+    h2 {
+        font-size: 0.625em !important;
+    }
+
+    #intro {
+
+        fieldset {
+
+            .sorry { text-align: justify; }
+
+            .fields {
+                margin-bottom: 1em;
+                padding-left: 0;
+                .field { 
+                    display: table; 
+                    width: 100%;
+                    label, input { display: table-cell; }
+                    label.gender { width: auto; }
+                    input#name, input#age { width: 90%; }
+                    padding: 0.125em 0;
+                }
+            }
+
+            .disclaimer {
+                color: #555;
+                text-align: justify;
+                font-style: italic;
+                margin-top: 0.25em;
+                padding-left: 1.5em;
+            }
+
+            blockquote {
+                line-height: 1.5em;
+                border-top: dashed 1px silver;
+                margin-top: 1em;
+                padding-top: 1em;
+            }
+
+            .button {
+                margin-top: 1em;
+                text-align: center;
+            }
+        }
+    } 
+}
+
+@media only screen and (max-width: 615px) {
+    #questions {
+        .controls button.a {
+            &.a0 { width: 48%; }
+            &.a1 { width: 48%; }
+            &.a2 { width: 48%; margin-left: 26%; clear: both; }
+            &.a3 { width: 48%; }
+            &.a4 { width: 48%; }
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    #questions {
+        .card span {
+            font-size: 1.125em !important;
+        }
+    }
+}
+
+@media print {
+    body { 
+        width: 100%;
+        height: auto;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0 1em;
+        font-size: 14px;
+        font-family: 'Times New Roman', Times, serif;
+    }
+    h1 { 
+        font-size: 1.25em;
+    }
+    h2 { 
+        font-size: 1em;
+        color: black;
+        font-style: normal;
+    }
+    #outro table { 
+        margin-top: 0.5em;
+    }
+    #outro table td, #outro table th { 
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+    #outro #contact { 
+        width: 80%;
+    }
 }

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ru" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-startup-image" href="images/ico/splash.jpg" />
+        <link rel="stylesheet" href="styles/main.css">
+  </head>
+  <body class="loading">
+    <h1 data-bind="text: name"></h1>
+    <h2>
+      ДУ «УкрГосНИИМСПИ МЗО Украины»<br/>
+      Отделение психоневрологии, психотерапии и<br/>
+      медицинской психологии<br/>
+    </h2>
+    <form class="screen" id="intro" data-bind="visible: !started() &amp;&amp; !ended(), submit: start, css: { submitted: submitted }" method="POST">
+        <fieldset>
+          <legend>Информация о вас</legend>
+          <div class="sorry">
+            Для того, чтобы принять участие в исследовании, от вас потребуются следующие данные:
+          </div>
+        <div class="fields">
+          <div class="field">
+              <label class="name" for="name" data-bind="css: { invalid: !user.valid.name() }">ФИО</label>
+              <input type="text" id="name" placeholder="Фамилия И. О." data-bind="value: user.name, attr: { required: submitted }" />
+          </div>
+
+          <div class="field">
+              <label class="age" for="age" data-bind="css: { invalid: !user.valid.age() }">Возраст</label>
+              <input id="age" type="number" pattern="[0-9]*" placeholder="18" min="18" max="99" data-bind="value: user.age, attr: { required: submitted }" />
+          </div>
+
+          <div class="field">
+              <label id="gender" data-bind="css: { invalid: !user.valid.gender() }">Пол</label>
+              <input id="male" name="gender" type="radio" value="м" data-bind="checked: user.gender, attr: { required: submitted }" />
+              <label class="gender" for="male">мужской</label>
+              <input id="female" name="gender" type="radio" value="ж" data-bind="checked: user.gender, attr: { required: submitted }" />
+              <label class="gender" for="female">женский</label>
+          </div>
+        </div>
+        <div>
+            <input type="checkbox" id="agree" data-bind="checked: user.agree, attr: { required: submitted }" />
+            <label for="agree" data-bind="css: { invalid: !user.valid.agree() }">Заполняя эти поля, вы соглашаетесь с условиями использования ваших данных</label>
+            <div class="disclaimer">
+              Ваши фамилия, возраст и инициалы будут использоваться исключительно в научных целях для общей статистической обработки и не будут переданы третьим лицам, а также не будут использоваться для вашей идентификации и/или установления контакта с вами.
+            </div>
+        </div>
+          <blockquote>
+            <strong>ИНСТРУКЦИЯ</strong>: 
+            <span data-bind="text: instruction">&nbsp;</span>
+          </blockquote>
+          <div class="button">
+              <button type="submit" class="submit">Пройти опросник</button>
+          </div>
+        </fieldset>
+    </form>
+    <div class="screen" id="questions" data-bind="visible: started() &amp;&amp; !ended()">
+        <h4 id="breadcrumbs">
+          <a href="javascript:void(0)" data-bind="click: back">&#171;</a> 
+          Вопрос 
+          <span class="current" data-bind="text: currentQuestion() + 1"></span>&nbsp;из 
+          <span class="total" data-bind="text: questions.length"></span>
+          <a href="javascript:void(0)" data-bind="visible: canNext, click: forward">&#187;</a>
+        </h4>
+        <div class="frame">
+        <div class="ribbon" data-bind="style: { left: graphics.ribbon.left, width: graphics.ribbon.width }">
+          <!-- ko foreach: questions -->
+          <div class="card" data-bind="style: { width: $root.graphics.card.width() + 'px' }, css: { hidden: $index() !== $root.currentQuestion() }">
+            <div>
+              <span data-bind="html: $data.text"></span>
+              <span class="answer" data-bind="visible: $data.answerText(), html: $data.answerText()"></span>
+            </div>
+          </div>
+          <!-- /ko -->
+        </div>
+      </div>
+      <div class="controls" data-bind="visible: started()">
+        <!-- ko foreach: answers -->
+        <button tabindex="-1" data-bind="html: text, attr: { 'class': cls }, click: $parent.fill($data.value)"></button>
+        <!-- /ko -->
+          <div style="clear: both;"></div>
+      </div>
+    </div>
+    <div class="screen" id="outro" data-bind="if: ended">
+      <table class="wide">
+        <tr><th class="w8">ФИО</th><td class="under-border" data-bind="text: user.name"></td></tr>
+        <tr><th class="w8">Возраст</th><td class="under-border" data-bind="text: user.age"></td></tr>
+        <tr><th class="w8">Дата</th><td class="under-border" data-bind="text: creationDate"></td></tr>
+      </table>
+      <table class="wide">
+        <tr>
+          <td class="topped">
+            <table class="bordered">
+              <thead>
+              <tr>
+                <th>№ п/п</th>
+                <th>Ответ</th>
+                <th>№ п/п</th>
+                <th>Ответ</th>
+              </tr>
+              </thead>
+              <tbody data-bind="foreach: questions">
+              <!-- ko if: $index() <= ($root.questions.length / 2) -->
+              <tr>
+                <td data-bind="text: id"></td>
+                <td data-bind="html: answerText"></td>
+                <!-- ko with: $root.questions[Math.round($root.questions.length / 2) + id - 1] || { id: '', answer: '', answerText: '' } -->
+                <td data-bind="text: id"></td>
+                <td data-bind="html: answerText"></td>
+                <!-- /ko -->
+              </tr>
+              <!-- /ko -->
+              </tbody>
+            </table>
+          </td>
+          <td></td>
+          <td class="topped">
+            <table class="bordered">
+              <thead>
+              <tr>
+                <th>Шкала</th>
+                <th>Балл</th>
+                <th data-bind="visible: $root.t">T</th>
+              </tr>
+              </thead>
+              <tbody data-bind="foreach: scalesArray">
+              <tr>
+                <td data-bind="attr: { title: scale.description }, text: key"></td>
+                <td data-bind="text: scale.score"></td>
+                <td data-bind="visible: $root.t, text: scale.tscore"></td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/knockout.js/knockout.js"></script>
+    <script src="../bower_components/sammy/lib/sammy.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+        e.src='//www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+        ga('create','UA-XXXXX-X');ga('send','pageview');
+    </script>
+
+    <!-- build:js({app,.tmp}) scripts/main.js -->
+    <script src="scripts/utility/dateformatter.js"></script>
+    <script src="scripts/utility/domhelper.js"></script>
+    <script src="scripts/utility/cheats.js"></script>
+    <script src="scripts/utility/appcache.js"></script>
+    <script src="scripts/surveys/alex.js"></script>
+    <script src="scripts/surveys/amon.js"></script>
+    <script src="scripts/surveys/factor5.js"></script>
+    <script src="scripts/surveys/lsi.js"></script>
+    <script src="scripts/surveys/mendel.js"></script>
+    <script src="scripts/surveys/minimult.js"></script>
+    <script src="scripts/viewmodel/user.js"></script>
+    <script src="scripts/viewmodel/questionnaireRibbon.js"></script>
+    <script src="scripts/viewmodel/questionnaire.js"></script>
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
+
+    <script type="text/javascript">
+        (function(app){
+            var href = document.location.href;
+            var mendel = href.indexOf("mendel") >= 0; 
+            var alex = href.indexOf("alex") >= 0; 
+            var mmpi = href.indexOf("mmpi") >= 0;
+            var lsi = href.indexOf("lsi") >= 0;
+            var factor5 = href.indexOf("factor5") >= 0;
+            var amon = href.indexOf("amon") >= 0;
+
+            if (alex) { app.defaultTest  = new Alexithymia(); }
+            if (mendel) { app.defaultTest  = new Mendelevich(); }
+            if (lsi) { app.defaultTest  = new LifeStyleIndex(); }
+            if (mmpi) { app.defaultTest  = new MiniMult(); }
+            if (factor5) { app.defaultTest  = new Factor5(); }
+            if (amon) { app.defaultTest  = new Amon(); }
+
+            app.defaultTest = app.defaultTest || new MiniMult();
+        }(this));
+    </script>
+  </body>
+</html>
