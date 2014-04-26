@@ -33,9 +33,12 @@ module.exports = function (grunt) {
                 files: ['bower.json'],
                 tasks: ['bowerInstall']
             },
-            coffee: {
-                files: ['<%= config.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
-                tasks: ['coffee:dist']
+            js: {
+                files: ['<%= config.app %>/scripts/{,*/}*.js'],
+                tasks: ['jshint'],
+                options: {
+                    livereload: true
+                }
             },
             coffeeTest: {
                 files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}'],
@@ -59,7 +62,6 @@ module.exports = function (grunt) {
                 files: [
                     '<%= config.app %>/{,*/}*.html',
                     '.tmp/styles/{,*/}*.css',
-                    '.tmp/scripts/{,*/}*.js',
                     '<%= config.app %>/images/{,*/}*'
                 ]
             }
@@ -147,15 +149,6 @@ module.exports = function (grunt) {
 
         // Compiles CoffeeScript to JavaScript
         coffee: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= config.app %>/scripts',
-                    src: '{,*/}*.{coffee,litcoffee,coffee.md}',
-                    dest: '.tmp/scripts',
-                    ext: '.js'
-                }]
-            },
             test: {
                 files: [{
                     expand: true,
@@ -354,7 +347,6 @@ module.exports = function (grunt) {
         concurrent: {
             server: [
                 'sass:server',
-                'coffee:dist',
                 'copy:styles'
             ],
             test: [
