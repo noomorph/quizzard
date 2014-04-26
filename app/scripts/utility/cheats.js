@@ -1,10 +1,18 @@
 /* global test*/
 
-window._bypass = function () {
+window._bypass = function (xx) {
     var i, j;
+
+    test.user.name("Иван");
+    test.user.age("40");
+    test.user.gender('м');
+    test.user.agree(true);
+
+    document.querySelector("form button").click();
+
     for (i = 0; i < test.questions.length; i++) {
         j = Math.round((test.answers.length - 1) * Math.random());
-        test.fill(test.answers[j].value)();
+        setTimeout(test.fill(xx !== undefined ? xx : test.answers[j].value), i * 75);
     }
 };
 

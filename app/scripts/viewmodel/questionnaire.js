@@ -127,7 +127,7 @@ function Questionnaire(config) {
             if (me.started()) {
                 var q = me.getQuestion();
                 q.answer(answer);
-                q.answerText(me.textsOfAnswers[answer]);
+                q.answerText(me.textsOfAnswers[answer].replace(/<br\s?\/?>/, " ").toLowerCase());
                 if (!me.end()) {
                     me.next();
                 }

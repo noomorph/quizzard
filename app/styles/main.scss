@@ -181,7 +181,7 @@ h4 {
                     span {
                         font-size: 150%;
                         &.answer {
-                            padding-left: 0.5em;
+                            padding-left: 0.2em;
                             color: navy;
                             font-style: italic;
                         }
@@ -224,6 +224,18 @@ h4 {
             &.a2 { }
             &.a3 { background-color: #dbefbb; }
             &.a4 { background-color: #aceca1; color: black; border-color: black; }
+        }
+
+        &.b {
+            width: 22.5%;
+            min-height: 4.5em;
+            margin-left: 2%;
+            font-size: 0.75em;
+        
+            &.b0 { background-color: #17516c; color: white; border-color: black; }
+            &.b1 { background-color: #b8dbef; }
+            &.b2 { background-color: #dbefbb; }
+            &.b3 { background-color: #aceca1; color: black; border-color: black; }
         }
     }
 }
@@ -320,6 +332,8 @@ h4 {
         .card span {
             font-size: 1.125em !important;
         }
+
+        .controls button.b { min-height: 5.5em; }
     }
 }
 
