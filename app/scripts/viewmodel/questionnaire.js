@@ -1,8 +1,8 @@
 /*exported Questionnaire*/
-/*global ko, window, DateFormatter, QuestionnaireRibbon, Sammy */
+/*global ko, window, DateFormatter, QuestionnaireRibbon, Path */
 
 function Questionnaire(config) {
-    var me = this, sammy = Sammy, i;
+    var me = this, i;
 
     if (!config) {
         throw new Error("config is undefined");
@@ -48,7 +48,7 @@ function Questionnaire(config) {
     this.ended = ko.observable(false);
 
     this.reset = function () {
-        window.location.hash = "start";
+        window.location.hash = "/register";
         return false;
     };
 
@@ -64,7 +64,7 @@ function Questionnaire(config) {
             window.localStorage.user = ko.utils.stringifyJson(me.user.getData());
         }
 
-        window.location.hash = "1";
+        window.location.hash = "/questions/1";
         return false;
     };
 
@@ -99,7 +99,7 @@ function Questionnaire(config) {
     this.next = function () {
         var index = me.currentQuestion() + 1;
         if (me.canGoto(index)) {
-            window.location.hash = (index + 1).toString();
+            window.location.hash = "/questions/" + (index + 1).toString();
             return true;
         }
     };
@@ -112,7 +112,7 @@ function Questionnaire(config) {
     this.previous = function () {
         var index = me.currentQuestion() - 1;
         if (me.canGoto(index)) {
-            window.location.hash = (index + 1).toString();
+            window.location.hash = "/questions/" + (index + 1).toString();
             return true;
         }
     };
@@ -135,12 +135,9 @@ function Questionnaire(config) {
         };
     };
 
-    this.send = function () {
-    };
-
     this.end = function () {
         if (me.canEnd()) {
-            window.location.hash = "end";
+            window.location.hash = "/results";
             return true;
         }
     };
@@ -149,34 +146,35 @@ function Questionnaire(config) {
 
     this.reset();
 
-    sammy(function () {
+    Path.map("#/register").to(function () {
         var i;
-        this.get('#start', function () {
-            me.started(false);
-            for (i = me.questions.length - 1; i >= 0; i--) {
-                me.questions[i].answer(undefined);
-            }
-        });
 
-        this.get('#end', function () {
-            if (me.canEnd()) {
-                me.calculate();
-                me.correct();
-                me.ended(true);
-                me.send();
-            }
-        });
+        me.started(false);
+        for (i = me.questions.length - 1; i >= 0; i--) {
+            me.questions[i].answer(undefined);
+        }
+    });
+            
+    Path.map('#/results').to(function () {
+        if (me.canEnd()) {
+            me.calculate();
+            me.correct();
+            me.ended(true);
+        }
+    });
 
-        this.get('#:index', function () {
-            me.ended(false);
-            if (me.user.valid.all()) {
-                me.started(true);
-            }
-            var index = this.params.index - 1;
-            if (me.canGoto(index)) {
-                me.currentQuestion(index);
-            }
-        });
+    Path.map('#/questions/:index').to(function () {
+        me.ended(false);
+        if (me.user.valid.all()) {
+            me.started(true);
+        }
 
-    }).run();
+        var index = this.params['index'] - 1;
+        if (me.canGoto(index)) {
+            me.currentQuestion(index);
+        }
+    });
+
+    Path.root("#/register");
+    Path.listen();
 }

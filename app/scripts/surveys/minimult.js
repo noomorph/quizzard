@@ -184,3 +184,5 @@ function MiniMult() {
         }
     };
 }
+
+(this.surveys = this.surveys || []).push(new MiniMult());

@@ -76,3 +76,5 @@ function Alexithymia() {
 
     this.correct = function () {};
 }
+
+(this.surveys = this.surveys || []).push(new Alexithymia());

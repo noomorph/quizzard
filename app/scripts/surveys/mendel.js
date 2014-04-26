@@ -224,3 +224,5 @@ function Mendelevich() {
 
     this.correct = function () {};
 }
+
+(this.surveys = this.surveys || []).push(new Mendelevich());

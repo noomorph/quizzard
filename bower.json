@@ -2,9 +2,8 @@
   "name": "quizzard",
   "private": true,
   "dependencies": {
-    "jquery": "~1.11.0",
     "knockout.js": "~3.0.0",
-    "sammy": "~0.7.5"
+    "pathjs": "*"
   },
   "devDependencies": {}
 }

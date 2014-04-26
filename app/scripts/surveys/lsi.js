@@ -174,3 +174,5 @@ function LifeStyleIndex() {
         }
     };
 }
+
+(this.surveys = this.surveys || []).push(new LifeStyleIndex());

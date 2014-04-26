@@ -335,3 +335,5 @@ function Factor5() {
 
     this.correct = function () {};
 }
+
+(this.surveys = this.surveys || []).push(new Factor5());

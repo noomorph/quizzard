@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-startup-image" href="images/ico/splash.jpg" />
-        <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/main.css">
   </head>
   <body class="loading">
     <h1 data-bind="text: name"></h1>
@@ -139,9 +139,8 @@
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/knockout.js/knockout.js"></script>
-    <script src="../bower_components/sammy/lib/sammy.js"></script>
+    <script src="../bower_components/pathjs/path.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -174,22 +173,17 @@
 
     <script type="text/javascript">
         (function(app){
-            var href = document.location.href;
-            var mendel = href.indexOf("mendel") >= 0; 
-            var alex = href.indexOf("alex") >= 0; 
-            var mmpi = href.indexOf("mmpi") >= 0;
-            var lsi = href.indexOf("lsi") >= 0;
-            var factor5 = href.indexOf("factor5") >= 0;
-            var amon = href.indexOf("amon") >= 0;
+            var href = document.location.href,
+                survey, i;
 
-            if (alex) { app.defaultTest  = new Alexithymia(); }
-            if (mendel) { app.defaultTest  = new Mendelevich(); }
-            if (lsi) { app.defaultTest  = new LifeStyleIndex(); }
-            if (mmpi) { app.defaultTest  = new MiniMult(); }
-            if (factor5) { app.defaultTest  = new Factor5(); }
-            if (amon) { app.defaultTest  = new Amon(); }
+            for (i = 0; i < app.surveys.length; i++) {
+                survey = app.surveys[i];
+                if (href.indexOf(survey.id) !== -1) {
+                    break;
+                }
+            }
 
-            app.defaultTest = app.defaultTest || new MiniMult();
+            app.defaultTest = survey;
         }(this));
     </script>
   </body>
