@@ -5,7 +5,7 @@ window.onload = function () {
         test;
 
     DomHelper.setTitle(this.defaultTest.name);
-    DomHelper.initIcons('img/ico/' + this.defaultTest.id);
+    DomHelper.initIcons('images/ico/' + this.defaultTest.id);
 
     this.test = new Questionnaire({ test: this.defaultTest, user: user });
     test = this.test;

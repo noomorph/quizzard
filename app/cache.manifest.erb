@@ -1,0 +1,7 @@
+CACHE MANIFEST
+# <%= Time.now %>
+
+<%= Dir.glob("**/*").select { |dir| !dir.match(/(hanin|frustration|ico\/)/) && dir.match(/\.(png|css|jpg|html|js|css)/) }.join("\n") %>
+
+NETWORK:
+*

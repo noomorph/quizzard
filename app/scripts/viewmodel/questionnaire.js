@@ -60,9 +60,9 @@ function Questionnaire(config) {
             return false;
         }
 
-        if (window.localStorage) {
-            window.localStorage.user = ko.utils.stringifyJson(me.user.getData());
-        }
+        // if (window.localStorage) {
+        //     window.localStorage.user = ko.utils.stringifyJson(me.user.getData());
+        // }
 
         window.location.hash = "/questions/1";
         return false;

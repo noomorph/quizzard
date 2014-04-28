@@ -1,69 +1,32 @@
 <!doctype html>
-<html class="no-js">
-    <head>
-        <meta charset="utf-8">
-        <title>quizzard</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-        <link rel="shortcut icon" href="/favicon.ico">
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <!-- build:css styles/vendor.css -->
-        <!-- bower:css -->
-        <!-- endbower -->
-        <!-- endbuild -->
-        <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="styles/main.css">
-        <!-- endbuild -->
-    </head>
-    <body>
-        <!--[if lt IE 10]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+<html lang="ru" manifest="cache.manifest">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="styles/main.css">
+    <title>Опросники</title>
+  </head>
+  <body>
+    <h1>Опросники</h1>
+    <ul style="text-align: center;">
+      <li><a href="app.html?alex">Торонтская алекситимическая шкала</a></li>
+      <li><a href="app.html?lsi">Индекс жизненного стиля</a></li>
+      <li><a href="app.html?mendel">Яхин и Менделевич</a></li>
+      <li><a href="app.html?mmpi">Мини-мульт</a></li>
+      <li><a href="app.html?factor5">Пятифакторный опросник личности</a></li>
+      <li><a href="app.html?amon">Я-структурный тест Аммона</a></li>
+      <li><a href="app.html?emin">Методика эмоционального интеллекта</a></li>
+    </ul>
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+ga('create', 'UA-50457839-1', 'site44.com');
+ga('send', 'pageview');
 
-        <div class="hero-unit">
-          <h1>'Allo, 'Allo!</h1>
-          <p>You now have</p>
-          <ul>
-            <li>HTML5 Boilerplate</li>
-            <li>Sass</li>
-
-          </ul>
-        </div>
-
-
-        <!-- build:js scripts/vendor.js -->
-        <!-- bower:js -->
-        <script src="../bower_components/knockout.js/knockout.js"></script>
-        <!-- endbower -->
-        <script src="../bower_components/pathjs/path.js"></script>
-        <!-- endbuild -->
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
-        </script>
-
-        <!-- build:js({app,.tmp}) scripts/main.js -->
-        <script src="scripts/utility/dateformatter.js"></script>
-        <script src="scripts/utility/domhelper.js"></script>
-        <script src="scripts/utility/cheats.js"></script>
-        <script src="scripts/utility/appcache.js"></script>
-        <script src="scripts/viewmodel/user.js"></script>
-        <script src="scripts/viewmodel/questionnaireRibbon.js"></script>
-        <script src="scripts/viewmodel/questionnaire.js"></script>
-        <script src="scripts/surveys/alex.js"></script>
-        <script src="scripts/surveys/amon.js"></script>
-        <script src="scripts/surveys/factor5.js"></script>
-        <script src="scripts/surveys/lsi.js"></script>
-        <script src="scripts/surveys/mendel.js"></script>
-        <script src="scripts/surveys/minimult.js"></script>
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
-</body>
+    </script>
+  </body>
 </html>
