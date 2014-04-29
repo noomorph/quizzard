@@ -1,3 +1,4 @@
+/*jshint es3:false */
 // Generated on 2014-04-26 using generator-webapp 0.4.9
 'use strict';
 
