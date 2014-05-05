@@ -1,5 +1,5 @@
 /*exported Questionnaire*/
-/*global ko, window, DateFormatter, QuestionnaireRibbon, Path */
+/*global ko, window, DateFormatter, QuestionnaireRibbon */
 
 function Questionnaire(config) {
     var me = this, i;
