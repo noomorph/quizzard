@@ -146,35 +146,52 @@ function Questionnaire(config) {
 
     this.reset();
 
-    Path.map("#/register").to(function () {
-        var i;
+    window.onhashchange = function (e) {
+        var url = e.newURL,
+            questionRoute,
+            index;
 
-        me.started(false);
-        for (i = me.questions.length - 1; i >= 0; i--) {
-            me.questions[i].answer(undefined);
-        }
-    });
-            
-    Path.map('#/results').to(function () {
-        if (me.canEnd()) {
-            me.calculate();
-            me.correct();
-            me.ended(true);
-        }
-    });
+        function routeRegister() {
+            var i;
 
-    Path.map('#/questions/:index').to(function () {
-        me.ended(false);
-        if (me.user.valid.all()) {
-            me.started(true);
+            me.started(false);
+            for (i = me.questions.length - 1; i >= 0; i--) {
+                me.questions[i].answer(undefined);
+            }
         }
 
-        var index = this.params['index'] - 1;
-        if (me.canGoto(index)) {
-            me.currentQuestion(index);
+        function routeResults() {
+            if (me.canEnd()) {
+                me.calculate();
+                me.correct();
+                me.ended(true);
+            }
         }
-    });
 
-    Path.root("#/register");
-    Path.listen();
+        function routeQuestion(index) {
+            index = Math.max(0, index - 1);
+
+            me.ended(false);
+            if (me.user.valid.all()) {
+                me.started(true);
+            }
+
+            if (me.canGoto(index)) {
+                me.currentQuestion(index);
+            }
+        }
+
+        questionRoute = url.match(/#\/questions\/(\d+)/);
+
+        if (url === "#/register") {
+            routeRegister();
+        } else if (url === "#/results") {
+            routeResults();
+        } else if (questionRoute) {
+            index = parseInt(questionRoute[1], 10);
+            routeQuestion(index);
+        } else {
+            window.location.hash = "#/register";
+        }
+    };
 }

@@ -2,8 +2,7 @@
   "name": "quizzard",
   "private": true,
   "dependencies": {
-    "knockout.js": "~3.0.0",
-    "pathjs": "*"
+    "knockout.js": "~3.0.0"
   },
   "devDependencies": {}
 }
