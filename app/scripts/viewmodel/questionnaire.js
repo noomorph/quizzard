@@ -15,6 +15,8 @@ function Questionnaire(config) {
     }
 
     this.user = config.user;
+    this.isPreventingClick = ko.observable(false);
+
     ko.utils.extend(this, config.test);
 
     for (i = 0; i < this.questions.length; i += 1) {
@@ -60,10 +62,6 @@ function Questionnaire(config) {
             return false;
         }
 
-        // if (window.localStorage) {
-        //     window.localStorage.user = ko.utils.stringifyJson(me.user.getData());
-        // }
-
         window.location.hash = "/questions/1";
         return false;
     };
@@ -88,39 +86,41 @@ function Questionnaire(config) {
         return question && question.answer() !== undefined && nextIndex === this.questions.length;
     };
 
-    this.back = function () {
-        window.history.go(-1);
-    };
-
-    this.forward = function () {
-        window.history.go(1);
-    };
-
-    this.next = function () {
-        var index = me.currentQuestion() + 1;
-        if (me.canGoto(index)) {
-            window.location.hash = "/questions/" + (index + 1).toString();
-            return true;
-        }
-    };
-
     this.canNext = ko.computed(function () {
         var index = me.currentQuestion() + 1;
         return me.canGoto(index);
     }, this);
 
-    this.previous = function () {
-        var index = me.currentQuestion() - 1;
-        if (me.canGoto(index)) {
-            window.location.hash = "/questions/" + (index + 1).toString();
-            return true;
-        }
-    };
-
     this.canPrevious = ko.computed(function () {
         var index = me.currentQuestion() - 1;
         return me.canGoto(index);
     }, this);
+
+    this.backLink = ko.computed(function () {
+        var index = this.currentQuestion() + 1;
+
+        if (this.canPrevious()) {
+            return "#/questions/" + (index - 1);
+        }
+
+        return "#/register";
+    }, this);
+
+    this.forwardLink = ko.computed(function () {
+        if (me.canEnd()) {
+            return "#/results";
+        }
+
+        var index = this.currentQuestion() + 1;
+
+        return "#/questions/" + (index + 1);
+    }, this);
+
+    this.next = function () {
+        var index = me.currentQuestion() + 1;
+
+        window.location.hash = "/questions/" + (index + 1);
+    };
 
     this.fill = function (answer) {
         return function () {
@@ -128,18 +128,14 @@ function Questionnaire(config) {
                 var q = me.getQuestion();
                 q.answer(answer);
                 q.answerText(me.textsOfAnswers[answer].replace(/<br\s?\/?>/, " ").toLowerCase());
-                if (!me.end()) {
+
+                if (me.canEnd()) {
+                    window.location.hash = "/results";
+                } else {
                     me.next();
                 }
             }
         };
-    };
-
-    this.end = function () {
-        if (me.canEnd()) {
-            window.location.hash = "/results";
-            return true;
-        }
     };
 
     this.graphics = new QuestionnaireRibbon(this);
@@ -148,16 +144,15 @@ function Questionnaire(config) {
 
     window.onhashchange = function (e) {
         var url = e.newURL,
-            questionRoute,
-            index;
+            hash = window.location.hash,
+            REGISTER_REGEX = /#\/register\/?$/,
+            QUESTION_REGEX = /#\/questions\/(\d+)\/?$/,
+            RESULTS_REGEX  = /#\/results\/?$/,
+            route;
 
         function routeRegister() {
-            var i;
-
+            me.ended(false);
             me.started(false);
-            for (i = me.questions.length - 1; i >= 0; i--) {
-                me.questions[i].answer(undefined);
-            }
         }
 
         function routeResults() {
@@ -181,17 +176,15 @@ function Questionnaire(config) {
             }
         }
 
-        questionRoute = url.match(/#\/questions\/(\d+)/);
-
-        if (url === "#/register") {
+        if (!hash || REGISTER_REGEX.test(url)) {
             routeRegister();
-        } else if (url === "#/results") {
+        } else if (RESULTS_REGEX.test(url)) {
             routeResults();
-        } else if (questionRoute) {
-            index = parseInt(questionRoute[1], 10);
-            routeQuestion(index);
+        } else if (QUESTION_REGEX.test(url)) {
+            route = url.match(QUESTION_REGEX);
+            routeQuestion(parseInt(route[1], 10));
         } else {
-            window.location.hash = "#/register";
+            me.reset();
         }
     };
 }

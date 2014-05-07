@@ -58,11 +58,12 @@
     </form>
     <div class="screen" id="questions" data-bind="visible: started() &amp;&amp; !ended()">
         <h4 id="breadcrumbs">
-          <a href="javascript:void(0)" data-bind="click: back">&#171;</a> 
+          <a data-bind="attr: { href: backLink }">&#171;</a> 
           Вопрос 
           <span class="current" data-bind="text: currentQuestion() + 1"></span>&nbsp;из 
           <span class="total" data-bind="text: questions.length"></span>
-          <a href="javascript:void(0)" data-bind="visible: canNext, click: forward">&#187;</a>
+
+          <a data-bind="visible: canNext() || canEnd(), attr: { href: forwardLink }">&#187;</a>
         </h4>
         <div class="frame">
         <div class="ribbon" data-bind="style: { left: graphics.ribbon.left, width: graphics.ribbon.width }">
@@ -78,7 +79,8 @@
       </div>
       <div class="controls" data-bind="visible: started()">
         <!-- ko foreach: answers -->
-        <button tabindex="-1" data-bind="html: text, attr: { 'class': cls }, click: $parent.fill($data.value)"></button>
+        <button tabindex="-1"
+                data-bind="html: text, attr: { 'class': cls }, disable: $parent.isPreventingClick, click: $parent.fill($data.value)"></button>
         <!-- /ko -->
           <div style="clear: both;"></div>
       </div>
@@ -92,28 +94,31 @@
       <table class="wide">
         <tr>
           <td class="topped">
-            <table class="bordered">
-              <thead>
-              <tr>
+            <table class="bordered" style="float: left">
+              <thead> <tr>
                 <th>№ п/п</th>
                 <th>Ответ</th>
-                <th>№ п/п</th>
-                <th>Ответ</th>
-              </tr>
-              </thead>
-              <tbody data-bind="foreach: questions">
-              <!-- ko if: $index() <= ($root.questions.length / 2) -->
-              <tr>
+              </tr> </thead>
+              <tbody data-bind="foreach: questions.half(0)">
+              <tr data-bind="if: $data">
                 <td data-bind="text: id"></td>
                 <td data-bind="html: answerText"></td>
-                <!-- ko with: $root.questions[Math.round($root.questions.length / 2) + id - 1] || { id: '', answer: '', answerText: '' } -->
-                <td data-bind="text: id"></td>
-                <td data-bind="html: answerText"></td>
-                <!-- /ko -->
               </tr>
-              <!-- /ko -->
               </tbody>
             </table>
+            <table class="bordered" style="float: left">
+              <thead> <tr>
+                <th>№ п/п</th>
+                <th>Ответ</th>
+              </tr> </thead>
+              <tbody data-bind="foreach: questions.half(1)">
+              <tr data-bind="if: $data">
+                <td data-bind="text: id"></td>
+                <td data-bind="html: answerText"></td>
+              </tr>
+              </tbody>
+            </table>
+            <div style="clear: both;"></div>
           </td>
           <td></td>
           <td class="topped">

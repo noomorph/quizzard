@@ -31,17 +31,10 @@ window.onload = function () {
     });
 
     test.currentQuestion.subscribe(function () {
-        var selector = document.querySelectorAll("#questions .controls button");
-        selector = Array.prototype.slice.call(selector);
-
-        selector.forEach(function (button) {
-            button.setAttribute("disabled", "disabled");
-        });
+        test.isPreventingClick(true);
 
         setTimeout(function () {
-            selector.forEach(function (button) {
-                button.removeAttribute("disabled");
-            });
+            test.isPreventingClick(false);
         }, 500);
     });
 

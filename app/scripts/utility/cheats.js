@@ -7,8 +7,7 @@ window._bypass = function (xx) {
     test.user.age("40");
     test.user.gender('м');
     test.user.agree(true);
-
-    document.querySelector("form button").click();
+    test.start();
 
     for (i = 0; i < test.questions.length; i++) {
         j = Math.round((test.answers.length - 1) * Math.random());
