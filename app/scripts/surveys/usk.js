@@ -13,12 +13,12 @@ function USK() {
         "Проставьте в бланке ответов один из баллов с указанием его знака";
 
     this.answers = [
-        { value: -3, cls: "b b0", text: "-3" },
-        { value: -2, cls: "b b1", text: "-2" },
-        { value: -1, cls: "b b2", text: "-1" },
-        { value: +1, cls: "b b3", text: "+1" },
-        { value: +2, cls: "b b4", text: "+2" },
-        { value: +3, cls: "b b5", text: "+3" }
+        { value: -3, cls: "c c0", text: "-3" },
+        { value: -2, cls: "c c1", text: "-2" },
+        { value: -1, cls: "c c2", text: "-1" },
+        { value: +1, cls: "c c3", text: "+1" },
+        { value: +2, cls: "c c4", text: "+2" },
+        { value: +3, cls: "c c5", text: "+3" }
     ];
 
     this.questions = [
@@ -125,12 +125,12 @@ function USK() {
 
         function reducePositive(_score, index) {
             answer = questions[index - 1].answer();
-            return (answer > 0) ? _score + answer : _score;
+            return _score + answer;
         }
 
         function reduceNegative(_score, index) {
             answer = questions[index - 1].answer();
-            return (answer < 0) ? _score - answer : _score;
+            return _score - answer;
         }
 
         for (scale in this.scales) {
@@ -145,7 +145,35 @@ function USK() {
         }
     };
 
-    this.correct = function () {};
+    var normalization = {
+        "Ио": [-132, -13, -2, 10, 22, 33, 45, 57, 69, 80, 133],
+        "Ид": [-36, -10, -6, -2, 2, 6, 10, 15, 19, 23, 37],
+        "Ин": [-36, -7, -3, 1, 5, 8, 12, 16, 20, 24, 37],
+        "Ис": [-30, -11, -7, -4, 0, 4, 7, 11, 14, 18, 31],
+        "Ип": [-30, -4, 0, 4, 8, 12, 16, 20, 24, 28, 31],
+        "Им": [-12, -6, -4, -2, 0, 2, 5, 7, 9, 11, 13],
+        "Из": [-12, -3, -1, 1, 3, 4, 5, 7, 9, 11, 13]
+    };
+
+    this.correct = function () {
+        var key, score, ranges, nScore;
+
+        for (key in this.scales) {
+            score = this.scales[key].score;
+            ranges = normalization[key];
+            nScore = 0;
+
+            while (score >= ranges[nScore]) {
+                nScore += 1;
+            }
+
+            if (nScore < 1 || nScore > 10) {
+                this.scales[key].score = NaN;
+            } else {
+                this.scales[key].score = nScore;
+            }
+        }
+    };
 }
 
 (this.surveys = this.surveys || []).push(new USK());

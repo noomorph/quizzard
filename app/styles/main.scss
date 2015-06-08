@@ -238,6 +238,23 @@ h4 {
             &.b2 { background-color: #dbefbb; }
             &.b3 { background-color: #aceca1; color: black; border-color: black; }
         }
+
+        &.c {
+            width: 14.6%;
+            min-height: 4.5em;
+            margin-left: 2%;
+            font-size: 0.75em;
+            color: black;
+            border-color: black;
+            font-weight: bold;
+
+            &.c0 { background-color: rgb( 71,  95, 255); color: white; }
+            &.c1 { background-color: rgb(117, 144, 216); color: white; }
+            &.c2 { background-color: rgb(181, 198, 236); }
+            &.c3 { background-color: rgb(255, 234, 189); }
+            &.c4 { background-color: rgb(255, 210,  92); }
+            &.c5 { background-color: orange;             }
+        }
     }
 }
 
@@ -324,6 +341,17 @@ h4 {
             &.a2 { width: 48%; margin-left: 26%; clear: both; }
             &.a3 { width: 48%; }
             &.a4 { width: 48%; }
+        }
+
+        .controls button.c {
+            width: 31%;
+
+            &.c0 { margin-bottom: 0.5em; }
+            &.c1 { margin-bottom: 0.5em;}
+            &.c2 { margin-bottom: 0.5em; }
+            &.c3 { float: right; margin-right: 1%; }
+            &.c4 { float: right; }
+            &.c5 { float: right; margin-left: 0; }
         }
     }
 }
