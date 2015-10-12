@@ -1,35 +1,31 @@
 {
   "name": "quizzard",
-  "version": "0.0.0",
-  "dependencies": {},
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-autoprefixer": "~0.7.2",
-    "grunt-bower-install": "~1.4.0",
-    "grunt-concurrent": "~0.5.0",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-coffee": "~0.10.1",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-connect": "~0.7.1",
-    "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-cssmin": "~0.9.0",
-    "grunt-contrib-htmlmin": "~0.2.0",
-    "grunt-contrib-imagemin": "^0.7.1",
-    "grunt-contrib-jasmine": "~0.6.3",
-    "grunt-contrib-jshint": "~0.9.2",
-    "grunt-contrib-uglify": "~0.4.0",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-manifest": "~0.4.0",
-    "grunt-newer": "~0.7.0",
-    "grunt-rev": "~0.1.0",
-    "grunt-sass": "~0.11.0",
-    "grunt-svgmin": "~0.4.0",
-    "grunt-usemin": "~2.1.0",
-    "jshint-stylish": "~0.1.5",
-    "load-grunt-tasks": "~0.4.0",
-    "time-grunt": "~0.3.1"
+  "version": "2.0.0",
+  "license": "MIT",
+  "author": "Yaroslav Serhieiev",
+  "private": true,
+  "scripts": {
+    "start": "ENV='development' webpack-dev-server -d --hot --inline",
+    "test": "eslint ./src/**/*.js && webpack",
+    "build": "ENV='production' webpack -p"
   },
-  "engines": {
-    "node": ">=0.10.0"
+  "dependencies": {
+    "knockout": "^3.3.0",
+    "lodash": "^3.10.1",
+    "translate.js": "^0.2.2"
+  },
+  "devDependencies": {
+    "autoprefixer-loader": "^3.1.0",
+    "babel": "^5.0.0",
+    "babel-loader": "^5.0.0",
+    "css-loader": "~0.9.0",
+    "eslint": "^0.21.2",
+    "eslint-config-airbnb": "^0.1.0",
+    "eslint-loader": "^0.11.2",
+    "html-webpack-plugin": "^1.6.2",
+    "style-loader": "~0.8.0",
+    "url-loader": "~0.5.5",
+    "webpack": "~1.10.0",
+    "webpack-dev-server": "~1.10.0"
   }
 }

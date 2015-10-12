@@ -1,0 +1,10 @@
+build
+node_modules
+dist/*.js
+*.html
+*.md
+*.json
+*.css
+config.js
+server.js
+*.config.js
