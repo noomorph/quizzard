@@ -13,10 +13,11 @@ var ENV = process.env.ENV;
 
 module.exports = {
 
+    context: path.resolve(__dirname, 'src'),
+
     output: {
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist')
-            // publicPath: '/'
     },
 
     devServer: {
@@ -38,19 +39,18 @@ module.exports = {
         reasons: true
     },
 
-    context: path.resolve(__dirname, 'src'),
     resolve: {
         alias: {
-            'surveys': path.resolve(__dirname, 'src', 'surveys')
+            // 'surveys': path.resolve(__dirname, 'src', 'surveys')
         }
     },
 
     module: {
-        preLoaders: [{
-            test: /\.(js|jsx)$/,
-            exclude: /node_modules/,
-            loader: 'eslint-loader'
-        }],
+        // preLoaders: [{
+        //     test: /\.(js|jsx)$/,
+        //     exclude: /node_modules/,
+        //     loader: 'eslint-loader'
+        // }],
         loaders: [{
             test: /\.js$/,
             loader: 'babel-loader',

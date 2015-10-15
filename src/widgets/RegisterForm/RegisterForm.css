@@ -1,4 +1,4 @@
-#intro legend {
+.intro-legend {
   width: 100%;
   line-height: 150%;
   border-bottom: dashed 1px silver;
@@ -7,12 +7,12 @@
   letter-spacing: 1px;
 }
 
-#intro .sorry {
+.intro-sorry {
   margin: 0 0 1em 0;
   padding-top: 0.5em;
 }
 
-#intro .disclaimer {
+.intro-disclaimer {
   color: #555;
   text-align: justify;
   font-style: italic;
@@ -20,25 +20,25 @@
   padding-left: 1.5em;
 }
 
-#intro .fields {
+.intro-fields {
   margin-bottom: 1em;
   padding-left: 2em;
 }
 
-#intro label {
+.intro label {
   display: inline-block;
   width: 6em;
 }
 
-#intro label:after {
+.intro label:after {
   content: ':';
 }
 
-#intro label.gender:after {
+label.intro-gender:after {
   content: '';
 }
 
-#intro input {
+.intro input {
   text-align: left;
 }
 
@@ -52,7 +52,7 @@
   width: auto;
 }
 
-#intro blockquote {
+.intro blockquote {
   text-align: justify;
   line-height: 150%;
   border-top: dashed 1px silver;
@@ -60,13 +60,13 @@
   padding-top: 1em;
 }
 
-#intro .button {
+.intro .button {
   margin-top: 1em;
   text-align: center;
 }
 
-#intro input[type='text']:focus,
-#intro input[type='number']:focus {
+.intro input[type='text']:focus,
+.intro input[type='number']:focus {
   background-color: #fff0ee;
 }
 
@@ -77,59 +77,58 @@
 .submitted input.invalid::-webkit-input-placeholder,
 .submitted input.invalid::-moz-placeholder,
 .submitted input.invalid:-ms-input-placeholder,
-.submitted input.invalid:-moz-placeholder {
-  color: #f00;
-}
-
+.submitted input.invalid:-moz-placeholder,
 .submitted label.invalid,
 .submitted label.invalid:after {
   color: red;
 }
 
 @media only screen and (max-width: 768px) {
-  #intro .sorry {
+  .intro-sorry {
     text-align: justify;
   }
 
-  #intro .fields {
+  .intro-fields {
     margin-bottom: 1em;
     padding-left: 0;
   }
 
-  #intro .field {
+  .intro-field {
     display: table;
     padding: 0.125em 0;
     width: 100%;
   }
 
-  #intro .field label,
-  #intro .field input {
+  .intro-field > label,
+  .intro-field > input {
     display: table-cell;
   }
 
-  #intro .field label.gender {
+  .intro-gender {
     width: auto;
   }
 
-  #name,
-  #age {
+  .intro-field-name > input,
+  .intro-field-age > input {
     width: 90%;
   }
 
-  #intro .disclaimer {
+  .intro-disclaimer {
     color: #555;
     text-align: justify;
     font-style: italic;
     margin-top: 0.25em;
     padding-left: 1.5em;
   }
-  #intro blockquote {
+
+  .intro blockquote {
     line-height: 1.5em;
     border-top: dashed 1px silver;
     margin-top: 1em;
     padding-top: 1em;
   }
-  #intro .button {
+
+  .intro-button {
     margin-top: 1em;
     text-align: center;
   }
