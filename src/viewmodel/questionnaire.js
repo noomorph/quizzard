@@ -1,6 +1,6 @@
 /* eslint-disable func-names */
 
-import ko from 'knockout';
+// import ko from 'knockout';
 import QuestionnaireRibbon from './questionnaireRibbon';
 import { format } from '../util/date';
 

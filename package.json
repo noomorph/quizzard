@@ -10,7 +10,7 @@
     "build": "ENV='production' webpack -p"
   },
   "dependencies": {
-    "knockout": "^3.3.0",
+    "gator": "^1.2.4",
     "lodash": "^3.10.1",
     "translate.js": "^0.2.2"
   },

@@ -1,7 +1,7 @@
 .intro-legend {
   width: 100%;
   line-height: 150%;
-  border-bottom: dashed 1px silver;
+  border-bottom: 1px dashed silver;
   margin-bottom: 0.5em;
   font-weight: bold;
   letter-spacing: 1px;
@@ -30,6 +30,10 @@
   width: 6em;
 }
 
+label.intro-agree {
+  display: inline;
+}
+
 .intro label:after {
   content: ':';
 }
@@ -42,25 +46,24 @@ label.intro-gender:after {
   text-align: left;
 }
 
-#name,
-#age {
+.intro-field-name > input,
+.intro-field-age > input {
   width: 15em;
 }
 
-#male,
-#female {
+.intro-field-gender > input {
   width: auto;
 }
 
 .intro blockquote {
   text-align: justify;
   line-height: 150%;
-  border-top: dashed 1px silver;
+  border-top: 1px dashed silver;
   margin-top: 1em;
   padding-top: 1em;
 }
 
-.intro .button {
+.intro-button {
   margin-top: 1em;
   text-align: center;
 }
@@ -71,7 +74,7 @@ label.intro-gender:after {
 }
 
 .submitted input.invalid {
-  border: solid 2px #ff5555;
+  border: 2px solid #ff5555;
 }
 
 .submitted input.invalid::-webkit-input-placeholder,
@@ -123,7 +126,7 @@ label.intro-gender:after {
 
   .intro blockquote {
     line-height: 1.5em;
-    border-top: dashed 1px silver;
+    border-top: 1px dashed silver;
     margin-top: 1em;
     padding-top: 1em;
   }

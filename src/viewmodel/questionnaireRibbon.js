@@ -1,4 +1,4 @@
-import ko from 'knockout';
+// import ko from 'knockout';
 
 function getLeft() {
     return (-1 * this.card.width() * this.viewModel.currentQuestion()) + 'px';

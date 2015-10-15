@@ -41,7 +41,7 @@ module.exports = {
 
     resolve: {
         alias: {
-            // 'surveys': path.resolve(__dirname, 'src', 'surveys')
+            'util': path.resolve(__dirname, 'src', 'util')
         }
     },
 
@@ -60,7 +60,7 @@ module.exports = {
             include: []
         }, {
             test: /\.css$/,
-            loader: 'style!autoprefixer!css',
+            loader: 'style!css!autoprefixer?browsers=last 2 versions',
             include: path.resolve(__dirname, 'src')
         }, {
             test: /\.(png|jpg|svg)$/,
@@ -75,6 +75,7 @@ module.exports = {
             ENV: ENV,
             VERSION: packageJSON.version
         }),
-        new HtmlWebpackPlugin()
+        new HtmlWebpackPlugin({ filename: 'app.html', template: path.resolve(__dirname, 'src', 'app.html') }),
+        new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'index.html') }),
     ]
 };

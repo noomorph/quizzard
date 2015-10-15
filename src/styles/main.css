@@ -121,7 +121,3 @@ h4 span { color: #446; }
     font-style: normal;
   }
 }
-
-@import './intro.css';
-@import './questions.css';
-@import './outro.css';

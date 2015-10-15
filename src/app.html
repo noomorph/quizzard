@@ -1,162 +1,22 @@
 <!doctype html>
-<html lang="ru" class="no-js" manifest="cache.manifest">
+<html lang="ru">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-startup-image" href="images/ico/splash.jpg" />
-    <link rel="stylesheet" href="styles/main.css">
   </head>
-  <body class="loading">
+  <body>
     <h1 data-bind="text: name"></h1>
     <h2>
       ДУ «УкрГосНИИМСПИ МЗО Украины»<br/>
       Отделение психоневрологии, психотерапии и<br/>
       медицинской психологии<br/>
     </h2>
-    <form class="screen" id="intro" data-bind="visible: !started() &amp;&amp; !ended(), submit: start, css: { submitted: submitted }" method="POST">
-        <fieldset>
-          <legend>Информация о вас</legend>
-          <div class="sorry">
-            Для того, чтобы принять участие в исследовании, от вас потребуются следующие данные:
-          </div>
-        <div class="fields">
-          <div class="field">
-              <label class="name" for="name" data-bind="css: { invalid: !user.valid.name() }">ФИО</label>
-              <input type="text" id="name" placeholder="Фамилия И. О." data-bind="value: user.name, attr: { required: submitted }" />
-          </div>
-
-          <div class="field">
-              <label class="age" for="age" data-bind="css: { invalid: !user.valid.age() }">Возраст</label>
-              <input id="age" type="number" pattern="[0-9]*" placeholder="18" min="18" max="99" data-bind="value: user.age, attr: { required: submitted }" />
-          </div>
-
-          <div class="field">
-              <label id="gender" data-bind="css: { invalid: !user.valid.gender() }">Пол</label>
-              <input id="male" name="gender" type="radio" value="м" data-bind="checked: user.gender, attr: { required: submitted }" />
-              <label class="gender" for="male">мужской</label>
-              <input id="female" name="gender" type="radio" value="ж" data-bind="checked: user.gender, attr: { required: submitted }" />
-              <label class="gender" for="female">женский</label>
-          </div>
-        </div>
-        <div>
-            <input type="checkbox" id="agree" data-bind="checked: user.agree, attr: { required: submitted }" />
-            <label for="agree" data-bind="css: { invalid: !user.valid.agree() }">Заполняя эти поля, вы соглашаетесь с условиями использования ваших данных</label>
-            <div class="disclaimer">
-              Ваши фамилия, возраст и инициалы будут использоваться исключительно в научных целях для общей статистической обработки и не будут переданы третьим лицам, а также не будут использоваться для вашей идентификации и/или установления контакта с вами.
-            </div>
-        </div>
-          <blockquote>
-            <strong>ИНСТРУКЦИЯ</strong>:
-            <span data-bind="text: instruction">&nbsp;</span>
-          </blockquote>
-          <div class="button">
-              <button type="submit" class="submit">Пройти опросник</button>
-          </div>
-        </fieldset>
-    </form>
-    <div class="screen" id="questions" data-bind="visible: started() &amp;&amp; !ended()">
-        <h4 id="breadcrumbs">
-          <a data-bind="attr: { href: backLink }">&#171;</a>
-          Вопрос
-          <span class="current" data-bind="text: currentQuestion() + 1"></span>&nbsp;из
-          <span class="total" data-bind="text: questions.length"></span>
-
-          <a data-bind="visible: canNext() || canEnd(), attr: { href: forwardLink }">&#187;</a>
-        </h4>
-        <div class="frame">
-        <div class="ribbon" data-bind="style: { left: graphics.ribbon.left, width: graphics.ribbon.width }">
-          <!-- ko foreach: questions -->
-          <div class="card" data-bind="style: { width: $root.graphics.card.width() + 'px' }, css: { hidden: $index() !== $root.currentQuestion() }">
-            <div>
-              <span data-bind="html: $data.text"></span>
-              <span class="answer" data-bind="visible: $data.answerText(), html: $data.answerText()"></span>
-            </div>
-          </div>
-          <!-- /ko -->
-        </div>
-      </div>
-      <div class="controls" data-bind="visible: started()">
-        <!-- ko foreach: answers -->
-        <button tabindex="-1"
-                data-bind="html: text, attr: { 'class': cls }, disable: $parent.isPreventingClick, click: $parent.fill($data.value)"></button>
-        <!-- /ko -->
-          <div style="clear: both;"></div>
-      </div>
-    </div>
-    <div class="screen" id="outro" data-bind="if: ended">
-      <table class="wide">
-        <tr><th class="w8">ФИО</th><td class="under-border" data-bind="text: user.name"></td></tr>
-        <tr><th class="w8">Возраст</th><td class="under-border" data-bind="text: user.age"></td></tr>
-        <tr><th class="w8">Дата</th><td class="under-border" data-bind="text: creationDate"></td></tr>
-      </table>
-      <table class="wide">
-        <tr>
-          <td class="topped">
-            <table class="bordered" style="float: left">
-              <thead> <tr>
-                <th>№ п/п</th>
-                <th>Ответ</th>
-              </tr> </thead>
-              <tbody data-bind="foreach: questions.half(0)">
-              <tr data-bind="if: $data">
-                <td data-bind="text: id"></td>
-                <td data-bind="html: answerText"></td>
-              </tr>
-              </tbody>
-            </table>
-            <table class="bordered" style="float: left">
-              <thead> <tr>
-                <th>№ п/п</th>
-                <th>Ответ</th>
-              </tr> </thead>
-              <tbody data-bind="foreach: questions.half(1)">
-              <tr data-bind="if: $data">
-                <td data-bind="text: id"></td>
-                <td data-bind="html: answerText"></td>
-              </tr>
-              </tbody>
-            </table>
-            <div style="clear: both;"></div>
-          </td>
-          <td></td>
-          <td class="topped">
-            <table class="bordered">
-              <thead>
-              <tr>
-                <th>Шкала</th>
-                <th>Балл</th>
-                <th data-bind="visible: $root.t">T</th>
-              </tr>
-              </thead>
-              <tbody data-bind="foreach: scalesArray">
-              <tr>
-                <td data-bind="attr: { title: scale.description }, text: key"></td>
-                <td data-bind="text: scale.score"></td>
-                <td data-bind="visible: $root.t, text: scale.tscore"></td>
-              </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </table>
+    <div data-widget-class="RegisterForm">
     </div>
 
-    <script type="text/javascript">
-        (function(app){
-            var href = document.location.href,
-                survey, i;
-
-            for (i = 0; i < app.surveys.length; i++) {
-                survey = app.surveys[i];
-                if (href.indexOf(survey.id) !== -1) {
-                    break;
-                }
-            }
-
-            app.defaultTest = survey;
-        }(this));
-    </script>
+    <script src="vendor.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>
