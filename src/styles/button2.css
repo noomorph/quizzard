@@ -1,0 +1,19 @@
+#questions button.yes {
+  background-color: #fff;
+  color: #000;
+}
+
+#questions button.yes:hover {
+  background-color: #ddd;
+  border-color: #333;
+}
+
+#questions button.no {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+#questions button.no:hover {
+  background-color: #333;
+}

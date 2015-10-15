@@ -1,0 +1,122 @@
+@import './reset.css';
+
+html {
+  background-color: #fff;
+  background-image: url(/images/paper.png);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+body {
+  font: 16px Georgia, serif;
+  height: 100%;
+  margin: 0 10%;
+  padding: 2em 10% 1em 10%;
+  position: relative;
+  width: 60%;
+}
+
+.loading { display: none; }
+
+strong {
+  font-weight: bold;
+}
+
+pre {
+  margin: 0;
+}
+
+p {
+  font-size: 200%;
+}
+
+input {
+  font-size: 100%; font-weight: lighter; text-align: center;
+}
+
+button {
+  padding: 10px;
+  font-size: 100%;
+}
+
+h1 {
+  margin: 0 0 0.1875em 0;
+  font-size: 1.875em;
+  color: #333;
+  text-align: center;
+}
+
+h2 {
+  margin: 0 0 2em 0;
+  font-size: 0.75em;
+  font-style: italic;
+  color: gray;
+  text-align: right;
+}
+
+h3 {
+  margin: 1em 0 0 0;
+  text-align: left;
+  line-height: 100%;
+  font-weight: bold;
+}
+
+h4 {
+  color: #444;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 150%;
+  padding-left: 0.5em;
+  padding-bottom: 0.3em;
+  border-bottom: solid 1px silver;
+}
+
+h4 span { color: #446; }
+
+.screen {
+  padding-bottom: 1em;
+}
+
+@media only screen and (max-width: 768px) {
+  html {
+    background: none;
+  }
+
+  body {
+    padding: 1em 5%;
+    margin: 0;
+    width: 90%;
+  }
+
+  h2 {
+    font-size: 0.625em !important;
+  }
+}
+
+@media print {
+  body {
+    width: 100%;
+    height: auto;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0 1em;
+    font-size: 14px;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  h1 {
+    font-size: 1.25em;
+  }
+
+  h2 {
+    font-size: 1em;
+    color: black;
+    font-style: normal;
+  }
+}
+
+@import './intro.css';
+@import './questions.css';
+@import './outro.css';

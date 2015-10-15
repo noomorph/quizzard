@@ -1,190 +1,168 @@
-/*exported Questionnaire*/
-/*global ko, window, DateFormatter, QuestionnaireRibbon */
+/* eslint-disable func-names */
 
-function Questionnaire(config) {
-    var me = this, i;
+import ko from 'knockout';
+import QuestionnaireRibbon from './questionnaireRibbon';
+import { format } from '../util/date';
 
-    if (!config) {
-        throw new Error("config is undefined");
-    }
-    if (!config.test) {
-        throw new Error("config.test is undefined");
-    }
-    if (!config.user) {
-        throw new Error("config.user is undefined");
-    }
+const REGISTER_REGEX = /#\/register\/?$/;
+const QUESTION_REGEX = /#\/questions\/(\d+)\/?$/;
+const RESULTS_REGEX = /#\/results\/?$/;
 
-    this.user = config.user;
-    this.isPreventingClick = ko.observable(false);
+export default class Questionnaire {
+    constructor({ test, user }) {
+        this.user = user;
+        this.isPreventingClick = ko.observable(false);
 
-    ko.utils.extend(this, config.test);
+        ko.utils.extend(this, test);
 
-    for (i = 0; i < this.questions.length; i += 1) {
-        this.questions[i].id = i + 1;
-        this.questions[i].answer = ko.observable(undefined);
-        this.questions[i].answerText = ko.observable(undefined);
-    }
+        this.questions.forEach(function initQuestion(question, index) {
+            question.id = index + 1;
+            question.answer = ko.observable(undefined);
+            question.answerText = ko.observable(undefined);
+        });
 
-    this.textsOfAnswers = {};
+        this.answers.reduce(function buildTextsOfAnswers(acc, { value, print, text }) {
+            acc[value] = print || value || text;
+            return acc;
+        }, this.textsOfAnswers = {});
 
-    for (i = 0; i < this.answers.length; i += 1) {
-        var v = this.answers[i].value,
-            t = this.answers[i].text,
-            p = this.answers[i].print;
-        this.textsOfAnswers[v] = p || t || v;
-    }
+        this.scalesArray = ko.computed(function computeScalesArray() {
+            return Object.keys(this.scales).map(function computeScale(key) {
+                return { key, scale: this.scales[key] };
+            }, this);
+        }, this);
 
-    this.scalesArray = ko.computed(function () {
-        var key, arr = [];
-        for (key in this.scales) {
-            if (this.scales.hasOwnProperty(key)) {
-                arr.push({ key: key, scale: this.scales[key] });
+        this.currentQuestion = ko.observable(0);
+        this.creationDate = format(new Date());
+        this.started = ko.observable(false);
+        this.ended = ko.observable(false);
+        this.submitted = ko.observable(false);
+
+        this.canNext = ko.computed(function () {
+            let index = this.currentQuestion() + 1;
+            return this.canGoto(index);
+        }, this);
+
+        this.canPrevious = ko.computed(function () {
+            let index = this.currentQuestion() - 1;
+            return this.canGoto(index);
+        }, this);
+
+        this.backLink = ko.computed(function () {
+            let index = this.currentQuestion() + 1;
+
+            if (this.canPrevious()) {
+                return '#/questions/' + (index - 1);
             }
-        }
-        return arr;
-    }, this);
 
-    this.currentQuestion = ko.observable(0);
-    this.creationDate = new DateFormatter().format(new Date());
-    this.started = ko.observable(false);
-    this.ended = ko.observable(false);
+            return '#/register';
+        }, this);
 
-    this.reset = function () {
-        window.location.hash = "/register";
+        this.forwardLink = ko.computed(function () {
+            if (this.canEnd()) {
+                return '#/results';
+            }
+
+            let index = this.currentQuestion() + 1;
+
+            return '#/questions/' + (index + 1);
+        }, this);
+
+        this.graphics = new QuestionnaireRibbon(this);
+        this.reset();
+
+        this.dispose = this.dispose.bind(this);
+        this.reset = this.reset.bind(this);
+        this.start = this.start.bind(this);
+        this.getQuestion = this.getQuestion.bind(this);
+        this.canGoto = this.canGoto.bind(this);
+        this.canEnd = this.canEnd.bind(this);
+        this.next = this.next.bind(this);
+        this.fill = this.fill.bind(this);
+        this.onHashChange = this.onHashChange.bind(this);
+
+        window.addEventListener('haschange', this.onHashChange);
+    }
+    dispose() {
+        window.removeEventListener('haschange', this.onHashChange);
+    }
+    reset() {
+        window.location.hash = '/register';
         return false;
-    };
-
-    this.submitted = ko.observable(false);
-
-    this.start = function () {
-        if (!me.user.valid.all()) {
+    }
+    start() {
+        if (!this.user.valid.all()) {
             this.submitted(true);
             return false;
         }
 
-        window.location.hash = "/questions/1";
+        window.location.hash = '/questions/1';
         return false;
-    };
-
-    this.getQuestion = function (index) {
-        index = (index === undefined) ? this.currentQuestion() : index;
+    }
+    getQuestion(index = this.currentQuestion()) {
         if (index < 0 || index >= this.questions.length) {
             return undefined;
         }
         return this.questions[index];
-    };
+    }
+    canGoto(index) {
+        let question = this.getQuestion(index);
+        let prevQuestion = this.getQuestion(index - 1);
 
-    this.canGoto = function (index) {
-        var question = this.getQuestion(index),
-            prevQuestion = this.getQuestion(index - 1);
         return this.started() && question && (!prevQuestion || prevQuestion.answer() !== undefined);
-    };
+    }
+    canEnd() {
+        let question = this.getQuestion();
+        let nextIndex = this.currentQuestion() + 1;
 
-    this.canEnd = function () {
-        var question = this.getQuestion(),
-            nextIndex = this.currentQuestion() + 1;
         return question && question.answer() !== undefined && nextIndex === this.questions.length;
-    };
+    }
+    next() {
+        let index = this.currentQuestion() + 1;
 
-    this.canNext = ko.computed(function () {
-        var index = me.currentQuestion() + 1;
-        return me.canGoto(index);
-    }, this);
+        window.location.hash = '/questions/' + (index + 1);
+    }
+    fill(answer) {
+        return () => {
+            if (this.started()) {
+                let question = this.getQuestion();
+                question.answer(answer);
+                question.answerText(this.textsOfAnswers[answer].replace(/<br\s?\/?>/, ' ').toLowerCase());
 
-    this.canPrevious = ko.computed(function () {
-        var index = me.currentQuestion() - 1;
-        return me.canGoto(index);
-    }, this);
-
-    this.backLink = ko.computed(function () {
-        var index = this.currentQuestion() + 1;
-
-        if (this.canPrevious()) {
-            return "#/questions/" + (index - 1);
-        }
-
-        return "#/register";
-    }, this);
-
-    this.forwardLink = ko.computed(function () {
-        if (me.canEnd()) {
-            return "#/results";
-        }
-
-        var index = this.currentQuestion() + 1;
-
-        return "#/questions/" + (index + 1);
-    }, this);
-
-    this.next = function () {
-        var index = me.currentQuestion() + 1;
-
-        window.location.hash = "/questions/" + (index + 1);
-    };
-
-    this.fill = function (answer) {
-        return function () {
-            if (me.started()) {
-                var q = me.getQuestion();
-                q.answer(answer);
-                q.answerText(me.textsOfAnswers[answer].replace(/<br\s?\/?>/, " ").toLowerCase());
-
-                if (me.canEnd()) {
-                    window.location.hash = "/results";
+                if (this.canEnd()) {
+                    window.location.hash = '/results';
                 } else {
-                    me.next();
+                    this.next();
                 }
             }
         };
-    };
-
-    this.graphics = new QuestionnaireRibbon(this);
-
-    this.reset();
-
-    window.onhashchange = function (e) {
-        var url = e.newURL,
-            hash = window.location.hash,
-            REGISTER_REGEX = /#\/register\/?$/,
-            QUESTION_REGEX = /#\/questions\/(\d+)\/?$/,
-            RESULTS_REGEX  = /#\/results\/?$/,
-            route;
-
-        function routeRegister() {
-            me.ended(false);
-            me.started(false);
-        }
-
-        function routeResults() {
-            if (me.canEnd()) {
-                me.calculate();
-                me.correct();
-                me.ended(true);
-            }
-        }
-
-        function routeQuestion(index) {
-            index = Math.max(0, index - 1);
-
-            me.ended(false);
-            if (me.user.valid.all()) {
-                me.started(true);
-            }
-
-            if (me.canGoto(index)) {
-                me.currentQuestion(index);
-            }
-        }
+    }
+    onHashChange({ newURL: url }) {
+        let hash = window.location.hash;
 
         if (!hash || REGISTER_REGEX.test(url)) {
-            routeRegister();
+            this.ended(false);
+            this.started(false);
         } else if (RESULTS_REGEX.test(url)) {
-            routeResults();
+            if (this.canEnd()) {
+                this.calculate();
+                this.correct();
+                this.ended(true);
+            }
         } else if (QUESTION_REGEX.test(url)) {
-            route = url.match(QUESTION_REGEX);
-            routeQuestion(parseInt(route[1], 10));
+            let [, index] = url.match(QUESTION_REGEX);
+            index = Math.max(0, parseInt(index, 10) - 1);
+
+            this.ended(false);
+            if (this.user.valid.all()) {
+                this.started(true);
+            }
+
+            if (this.canGoto(index)) {
+                this.currentQuestion(index);
+            }
         } else {
-            me.reset();
+            this.reset();
         }
-    };
+    }
 }

@@ -48,7 +48,7 @@
             </div>
         </div>
           <blockquote>
-            <strong>ИНСТРУКЦИЯ</strong>: 
+            <strong>ИНСТРУКЦИЯ</strong>:
             <span data-bind="text: instruction">&nbsp;</span>
           </blockquote>
           <div class="button">
@@ -58,9 +58,9 @@
     </form>
     <div class="screen" id="questions" data-bind="visible: started() &amp;&amp; !ended()">
         <h4 id="breadcrumbs">
-          <a data-bind="attr: { href: backLink }">&#171;</a> 
-          Вопрос 
-          <span class="current" data-bind="text: currentQuestion() + 1"></span>&nbsp;из 
+          <a data-bind="attr: { href: backLink }">&#171;</a>
+          Вопрос
+          <span class="current" data-bind="text: currentQuestion() + 1"></span>&nbsp;из
           <span class="total" data-bind="text: questions.length"></span>
 
           <a data-bind="visible: canNext() || canEnd(), attr: { href: forwardLink }">&#187;</a>
@@ -142,43 +142,6 @@
         </tr>
       </table>
     </div>
-
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="../bower_components/knockout.js/knockout.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-50457839-1', 'site44.com');
-      ga('send', 'pageview');
-
-    </script>
-
-    <!-- build:js({app,.tmp}) scripts/main.js -->
-    <script src="scripts/utility/dateformatter.js"></script>
-    <script src="scripts/utility/domhelper.js"></script>
-    <script src="scripts/utility/cheats.js"></script>
-    <script src="scripts/utility/hashchange.js"></script>
-    <script src="scripts/utility/appcache.js"></script>
-    <script src="scripts/surveys/alex.js"></script>
-    <script src="scripts/surveys/amon.js"></script>
-    <script src="scripts/surveys/emin.js"></script>
-    <script src="scripts/surveys/factor5.js"></script>
-    <script src="scripts/surveys/lsi.js"></script>
-    <script src="scripts/surveys/mendel.js"></script>
-    <script src="scripts/surveys/minimult.js"></script>
-    <script src="scripts/surveys/usk.js"></script>
-    <script src="scripts/viewmodel/user.js"></script>
-    <script src="scripts/viewmodel/questionnaireRibbon.js"></script>
-    <script src="scripts/viewmodel/questionnaire.js"></script>
-    <script src="scripts/main.js"></script>
-    <!-- endbuild -->
 
     <script type="text/javascript">
         (function(app){

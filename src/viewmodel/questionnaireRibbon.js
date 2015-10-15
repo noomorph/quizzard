@@ -1,14 +1,19 @@
-/*global ko*/
-/*exported QuestionnaireRibbon*/
+import ko from 'knockout';
 
-function QuestionnaireRibbon(viewModel) {
-    this.card = { width: ko.observable(640) };
-    this.ribbon = {
-        left: ko.computed(function () {
-            return (-1 * this.card.width() * viewModel.currentQuestion()) + 'px';
-        }, this),
-        width: ko.computed(function () {
-            return (this.card.width() * viewModel.questions.length) + 'px';
-        }, this)
-    };
+function getLeft() {
+    return (-1 * this.card.width() * this.viewModel.currentQuestion()) + 'px';
+}
+
+function getWidth() {
+    return (this.card.width() * this.viewModel.questions.length) + 'px';
+}
+export default class QuestionnaireRibbon {
+    constructor(viewModel) {
+        this.viewModel = viewModel;
+        this.card = { width: ko.observable(640) };
+        this.ribbon = {
+            left: ko.computed(getLeft, this),
+            width: ko.computed(getWidth, this),
+        };
+    }
 }

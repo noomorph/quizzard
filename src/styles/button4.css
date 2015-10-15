@@ -1,0 +1,15 @@
+#questions button.b {
+  width: 22.5%;
+  min-height: 4.5em;
+  margin-left: 2%;
+  font-size: 0.75em;
+}
+
+#questions button.b0 { background-color: #17516c; color: white; border-color: black; }
+#questions button.b1 { background-color: #b8dbef; }
+#questions button.b2 { background-color: #dbefbb; }
+#questions button.b3 { background-color: #aceca1; color: black; border-color: black; }
+
+@media only screen and (max-width: 480px) {
+  #questions button.b { min-height: 5.5em; }
+}

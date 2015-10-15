@@ -1,0 +1,136 @@
+#intro legend {
+  width: 100%;
+  line-height: 150%;
+  border-bottom: dashed 1px silver;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+#intro .sorry {
+  margin: 0 0 1em 0;
+  padding-top: 0.5em;
+}
+
+#intro .disclaimer {
+  color: #555;
+  text-align: justify;
+  font-style: italic;
+  margin-top: 0.25em;
+  padding-left: 1.5em;
+}
+
+#intro .fields {
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+#intro label {
+  display: inline-block;
+  width: 6em;
+}
+
+#intro label:after {
+  content: ':';
+}
+
+#intro label.gender:after {
+  content: '';
+}
+
+#intro input {
+  text-align: left;
+}
+
+#name,
+#age {
+  width: 15em;
+}
+
+#male,
+#female {
+  width: auto;
+}
+
+#intro blockquote {
+  text-align: justify;
+  line-height: 150%;
+  border-top: dashed 1px silver;
+  margin-top: 1em;
+  padding-top: 1em;
+}
+
+#intro .button {
+  margin-top: 1em;
+  text-align: center;
+}
+
+#intro input[type='text']:focus,
+#intro input[type='number']:focus {
+  background-color: #fff0ee;
+}
+
+.submitted input.invalid {
+  border: solid 2px #ff5555;
+}
+
+.submitted input.invalid::-webkit-input-placeholder,
+.submitted input.invalid::-moz-placeholder,
+.submitted input.invalid:-ms-input-placeholder,
+.submitted input.invalid:-moz-placeholder {
+  color: #f00;
+}
+
+.submitted label.invalid,
+.submitted label.invalid:after {
+  color: red;
+}
+
+@media only screen and (max-width: 768px) {
+  #intro .sorry {
+    text-align: justify;
+  }
+
+  #intro .fields {
+    margin-bottom: 1em;
+    padding-left: 0;
+  }
+
+  #intro .field {
+    display: table;
+    padding: 0.125em 0;
+    width: 100%;
+  }
+
+  #intro .field label,
+  #intro .field input {
+    display: table-cell;
+  }
+
+  #intro .field label.gender {
+    width: auto;
+  }
+
+  #name,
+  #age {
+    width: 90%;
+  }
+
+  #intro .disclaimer {
+    color: #555;
+    text-align: justify;
+    font-style: italic;
+    margin-top: 0.25em;
+    padding-left: 1.5em;
+  }
+  #intro blockquote {
+    line-height: 1.5em;
+    border-top: dashed 1px silver;
+    margin-top: 1em;
+    padding-top: 1em;
+  }
+  #intro .button {
+    margin-top: 1em;
+    text-align: center;
+  }
+}

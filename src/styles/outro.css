@@ -1,0 +1,48 @@
+#outro table,
+#outro tr,
+#outro td,
+#outro th {
+  border: none;
+}
+
+#outro td,
+#outro th {
+  padding: 0.5em;
+}
+
+#outro .topped {
+  vertical-align: top;
+}
+
+#outro .w8 {
+  width: 8em;
+}
+
+#outro .under-border,
+#outro .under-border {
+  border-bottom: 1px solid #000;
+}
+
+#outro .bordered th,
+#outro .bordered td {
+  border: 1px solid #000;
+}
+
+#outro .wide {
+  width: 100%;
+}
+
+@media print {
+  #outro table {
+    margin-top: 0.5em;
+  }
+
+  #outro td,
+  #outro th {
+    padding: 1px 0 1px;
+  }
+
+  #outro #contact {
+    width: 80%;
+  }
+}
