@@ -77,12 +77,13 @@ label.intro-gender:after {
   border: 2px solid #ff5555;
 }
 
-.submitted input.invalid::-webkit-input-placeholder,
-.submitted input.invalid::-moz-placeholder,
-.submitted input.invalid:-ms-input-placeholder,
-.submitted input.invalid:-moz-placeholder,
-.submitted label.invalid,
-.submitted label.invalid:after {
+.submitted input.invalid::-webkit-input-placeholder { color: red; }
+.submitted input.invalid::-moz-placeholder { color: red; }
+.submitted input.invalid:-ms-input-placeholder { color: red; }
+.submitted input.invalid:-moz-placeholder { color: red; }
+
+.submitted input.invalid + label,
+.submitted input.invalid + label:after {
   color: red;
 }
 

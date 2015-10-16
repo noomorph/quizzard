@@ -1,7 +1,8 @@
+import '../common/button5.css';
 import { buildMetaData } from '../common/builder';
 
 const META = buildMetaData({
-    className: Alexithymia.constructor.name, // eslint-disable-line no-use-before-define
+    className: 'Alexithymia',
     questionsCount: 26,
     answers: [
         { value: 0, cls: 'a a0' },
@@ -22,7 +23,7 @@ export default class Alexithymia {
     constructor() {
         this.answers = new Array(META.questionsCount);
     }
-    static get metaData() {
+    get metaData() {
         return META;
     }
     calculate() {

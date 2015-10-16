@@ -1,7 +1,6 @@
-import brk from 'util/softbreak';
-import { register } from 'util/i18n';
+import { linebreak } from 'util/softbreak';
 
-register('ru', {
+export default {
     'Amon': {
         'name': 'Я-структурный тест Аммона',
         'description': 'Прочтите следующие утверждения. ' +
@@ -278,7 +277,7 @@ register('ru', {
                 '\n на себя те задачи, которые мне неприятны' },
             { text: '«Предстартовое» волнение способно меня окрылить' },
         ].reduce((acc, { text }, index) => {
-            acc[index + 1 ] = brk(text);
+            acc[index + 1 ] = linebreak(text);
             return acc;
         }),
         'answers': {
@@ -306,4 +305,4 @@ register('ru', {
             S3: 'Дефицитарная сексуальность',
         },
     },
-});
+};

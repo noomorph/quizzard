@@ -1,36 +1,61 @@
+import './RegisterForm.css';
 import template from './RegisterForm.tpl';
+import uniq from 'util/uniq';
+
+function toggleValidInput(el) {
+    if (el.checkValidity()) {
+        el.classList.remove('invalid');
+    } else {
+        el.classList.add('invalid');
+    }
+}
 
 export default class RegisterForm {
-    constructor({ name = '', age = NaN, gender = null, agree = false, submitted = false } = {}) {
-        this.id = 'intro' + String(Math.random()).slice(2);
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
-        this.agree = agree;
+    constructor({ user, survey, submitted = false, valid = false, onsubmit }) {
+        this.id = uniq('RegisterForm');
+        this.user = user;
+        this.survey = survey;
         this.submitted = submitted;
+        this.valid = valid;
+        this.onsubmit = onsubmit || function noop() {};
     }
-    isValid() {
-        return false;
-    }
-    static get listeners() {
+    get listeners() {
         return {
             'input': {
-                change({ target: { value, name } }) {
+                change: ({ target }) => {
+                    let { value, name } = target;
+
                     if (name) {
-                        this[name] = value;
+                        this.user[name] = value;
                     }
+
+                    toggleValidInput(target);
                 },
             },
-            'button': {
-                click() {
-                    if (this.isValid()) {
-                        alert('you are valid'); // eslint-disable-line
+            '': {
+                submit: (ev) => {
+                    ev.preventDefault();
+                    let dom = window[this.id];
+                    this.submitted = true;
+                    this.valid = dom.checkValidity();
+
+                    dom.classList.add('submitted');
+                    let els = [...dom.querySelectorAll('input')];
+                    els.forEach(toggleValidInput);
+
+                    if (this.valid) {
+                        this.onFormSubmit();
                     }
                 },
             },
         };
     }
     render() {
-        return template(this);
+        return template({
+            id: this.id,
+            extraClass: this.submitted ? 'submitted' : '',
+            user: this.user,
+            instruction: this.survey.metaData.description,
+        });
     }
 }

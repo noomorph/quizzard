@@ -1,3 +1,4 @@
+import '../common/button2.css';
 import { buildMetaData } from '../common/builder';
 
 function buildScaleReducer(indices, scaleId) {
@@ -36,7 +37,7 @@ const SCALES = [
 const reducers = SCALES.map(scale => buildScaleReducer(scale.info, scale.id));
 
 const META = buildMetaData({
-    className: Amon.constructor.name, // eslint-disable-line no-use-before-define
+    className: 'Amon',
     questionsCount: 220,
     answers: [
         { value: '+', cls: 'yes'},
@@ -55,10 +56,10 @@ export default class Amon {
     constructor() {
         this.answers = new Array(META.questionsCount);
     }
-    static get metaData() {
+    get metaData() {
         return META;
     }
     calculate() {
-        return rootReducer(this.answers, {});
+        return this.answers.reduce(rootReducer, {});
     }
 }

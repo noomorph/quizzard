@@ -1,5 +1,4 @@
 import i18n from 'util/i18n';
-import './RegisterForm.css';
 
 module.exports = ({ id = 'intro', className = '', instruction = '' }) => `
   <form id="${id}" class="screen intro ${className}" method="POST">

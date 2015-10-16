@@ -1,37 +1,42 @@
-/*
- * Webpack development server configuration
- *
- * This file is set up for serving the webpack-dev-server, which will watch for changes and recompile as required if
- * the subfolder /webpack-dev-server/ is visited. Visiting the root will not automatically reload.
- */
-'use strict';
+/* eslint-disable */
+
+var _ = require('lodash');
 var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var packageJSON = require('./package.json');
 var ENV = process.env.ENV;
+
+function generateHTML(entryName) {
+    return new HtmlWebpackPlugin({
+        filename: entryName.toLowerCase().replace('-', '.') + '.html',
+        template: path.resolve(__dirname, 'src', 'containers', 'main.html'),
+        inject: true,
+        chunks: [entryName]
+    });
+}
 
 module.exports = {
 
     context: path.resolve(__dirname, 'src'),
 
     output: {
-        filename: 'main.js',
+        filename: '[name].js',
+        chunkFilename: '[name].chunk.[id].js',
         path: path.resolve(__dirname, 'dist')
     },
 
     devServer: {
         contentBase: 'dist/',
+        publicPath: '/',
         port: 8000
     },
 
     entry: {
-        main: ['./main.js'],
-        vendor: Object.keys(
-            packageJSON.dependencies
-        ).filter(function (dep) {
-            return dep !== 'lodash';
-        })
+        'Alexithymia-RU': ['./containers/Alexithymia-RU'],
+        'Amon-RU': ['./containers/Amon-RU'],
+        'vendor': _(packageJSON.dependencies).keys().without('lodash').value(),
     },
 
     stats: {
@@ -41,7 +46,10 @@ module.exports = {
 
     resolve: {
         alias: {
-            'util': path.resolve(__dirname, 'src', 'util')
+            'images': path.resolve(__dirname, 'src', 'images'),
+            'surveys': path.resolve(__dirname, 'src', 'surveys'),
+            'widgets': path.resolve(__dirname, 'src', 'widgets'),
+            'util': path.resolve(__dirname, 'src', 'util'),
         }
     },
 
@@ -61,21 +69,25 @@ module.exports = {
         }, {
             test: /\.css$/,
             loader: 'style!css!autoprefixer?browsers=last 2 versions',
+            //loader: ExtractTextPlugin.extract('style-loader', 'css!autoprefixer?browsers=last 2 versions'),
             include: path.resolve(__dirname, 'src')
         }, {
             test: /\.(png|jpg|svg)$/,
             loader: 'url-loader?limit=8192',
             include: path.resolve(__dirname, 'src')
-        }]
+        }],
     },
 
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+        // new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+        // new webpack.optimize.CommonsChunkPlugin('main.js', ['Alexithymia-RU', 'Amon-RU']),
         new webpack.DefinePlugin({
             ENV: ENV,
             VERSION: packageJSON.version
         }),
-        new HtmlWebpackPlugin({ filename: 'app.html', template: path.resolve(__dirname, 'src', 'app.html') }),
+        //new ExtractTextPlugin('[name].css'),
+        generateHTML('Alexithymia-RU'),
+        generateHTML('Amon-RU'),
         new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'index.html') }),
     ]
 };

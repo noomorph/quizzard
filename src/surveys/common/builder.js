@@ -5,19 +5,29 @@ export function buildMetaData({ className, questionsCount, answers, scaleIds }) 
     return {
         id: className.toLowerCase(),
         className: className,
-        name: i18n(`${className}::name`),
-        description: i18n(`${className}::description`),
+        get name() {
+            return i18n(`${className}::name`);
+        },
+        get description() {
+            return i18n(`${className}::description`);
+        },
         answers: answers.map(({ value, cls = '' }, index) => ({
             value,
             cls,
-            text: i18n(`${className}::answers::${index}`),
+            get text() {
+                return i18n(`${className}::answers::${index}`);
+            },
         })),
         questions: range(questionsCount).map(index => ({
-            text: i18n(`${className}::questions::${index + 1}`),
+            get text() {
+                return i18n(`${className}::questions::${index + 1}`);
+            },
         })),
         scales: scaleIds.map(id => ({
             id,
-            text: i18n(`${className}::scales::${id}`),
+            get text() {
+                return i18n(`${className}::scales::${id}`);
+            },
         })),
     };
 }

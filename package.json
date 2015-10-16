@@ -7,7 +7,7 @@
   "scripts": {
     "start": "ENV='development' webpack-dev-server -d --hot --inline",
     "test": "eslint ./src/**/*.js && webpack",
-    "build": "ENV='production' webpack -p"
+    "build": "rm -rf dist; ENV='production' webpack -p"
   },
   "dependencies": {
     "gator": "^1.2.4",
@@ -23,6 +23,7 @@
     "eslint": "^0.21.2",
     "eslint-config-airbnb": "^0.1.0",
     "eslint-loader": "^0.11.2",
+    "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
     "html-webpack-plugin": "^1.6.2",
     "style-loader": "~0.8.0",

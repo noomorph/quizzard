@@ -2,7 +2,7 @@
 
 html {
   background-color: #fff;
-  background-image: url(/images/paper.png);
+  background-image: url('./assets/paper.jpg');
   height: 100%;
   margin: 0;
   padding: 0;
