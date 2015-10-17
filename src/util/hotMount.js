@@ -1,16 +1,16 @@
-import Gator from 'gator';
+import gator from 'gator';
 
 function toggleListeners(element, data, listenersMap = {}, shouldAddEventListeners = false) {
     if (listenersMap) {
-        Object.keys(listenersMap).forEach(function (query) {
-            Object.keys(listenersMap[query]).forEach(function (eventName) {
+        Object.keys(listenersMap).forEach(function processSelector(query) {
+            Object.keys(listenersMap[query]).forEach(function processEventName(eventName) {
                 if (shouldAddEventListeners) {
                     this.on(eventName, query, listenersMap[query][eventName].bind(data));
                 } else {
                     this.off(eventName, query);
                 }
             }, this);
-        }, Gator(element));
+        }, gator(element));
     }
 }
 
@@ -24,12 +24,20 @@ function unmountListeners(element, data, listenersMap) {
 
 let weakMap = new WeakMap();
 
-function safeRender(theClass, instance) {
+function safeRender(theClass, instance, node) {
     try {
-        return theClass && theClass.prototype.render.call(instance) || '';
+        if (theClass) {
+            return theClass.prototype.render.call(instance) || '';
+        }
+
+        if (node) {
+            return node.innerHTML || '';
+        }
     } catch (exception) {
         return exception.toString();
     }
+
+    return '';
 }
 
 export default function hotMount(root, oldWidgets = {}, newWidgets = {}, sharedData) {
@@ -53,7 +61,7 @@ export default function hotMount(root, oldWidgets = {}, newWidgets = {}, sharedD
                 instance = new NewClass(sharedData);
             }
 
-            let oldHTML = safeRender(OldClass, instance);
+            let oldHTML = safeRender(OldClass, instance, node);
             let newHTML = safeRender(NewClass, instance);
 
             if (oldHTML.trim() !== newHTML.trim()) {

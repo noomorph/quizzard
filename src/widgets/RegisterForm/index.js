@@ -44,7 +44,7 @@ export default class RegisterForm {
                     els.forEach(toggleValidInput);
 
                     if (this.valid) {
-                        this.onFormSubmit();
+                        window.location.hash = '/questions/1';
                     }
                 },
             },

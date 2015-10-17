@@ -7,7 +7,7 @@
   "scripts": {
     "start": "ENV='development' webpack-dev-server -d --hot --inline",
     "test": "eslint ./src/**/*.js && webpack",
-    "build": "rm -rf dist; ENV='production' webpack -p"
+    "build": "rm -rf dist; ENV='production' webpack -p --config webpack.prod.config"
   },
   "dependencies": {
     "gator": "^1.2.4",

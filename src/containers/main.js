@@ -12,9 +12,13 @@ export default function main({ lang, translations, Survey }) {
         survey: new Survey(),
     });
 
-    if (module.hot) {
-        let oldWidgets = widgets;
+    let oldWidgets = widgets;
 
+    window.addEventListener('hashchange', function onHashChange() {
+        hotMount(document.body, oldWidgets, oldWidgets);
+    });
+
+    if (module.hot) {
         module.hot.accept('../widgets', () => {
             let newWidgets = require('../widgets');
             hotMount(document.body, oldWidgets, newWidgets);

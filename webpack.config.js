@@ -10,7 +10,7 @@ var ENV = process.env.ENV;
 
 function generateHTML(entryName) {
     return new HtmlWebpackPlugin({
-        filename: entryName.toLowerCase().replace('-', '.') + '.html',
+        filename: entryName + '.html',
         template: path.resolve(__dirname, 'src', 'containers', 'main.html'),
         inject: true,
         chunks: [entryName]
@@ -69,7 +69,6 @@ module.exports = {
         }, {
             test: /\.css$/,
             loader: 'style!css!autoprefixer?browsers=last 2 versions',
-            //loader: ExtractTextPlugin.extract('style-loader', 'css!autoprefixer?browsers=last 2 versions'),
             include: path.resolve(__dirname, 'src')
         }, {
             test: /\.(png|jpg|svg)$/,
@@ -79,13 +78,10 @@ module.exports = {
     },
 
     plugins: [
-        // new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
-        // new webpack.optimize.CommonsChunkPlugin('main.js', ['Alexithymia-RU', 'Amon-RU']),
         new webpack.DefinePlugin({
             ENV: ENV,
             VERSION: packageJSON.version
         }),
-        //new ExtractTextPlugin('[name].css'),
         generateHTML('Alexithymia-RU'),
         generateHTML('Amon-RU'),
         new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'index.html') }),
