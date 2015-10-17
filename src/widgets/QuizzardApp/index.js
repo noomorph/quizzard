@@ -3,7 +3,7 @@ import mapKeys from 'lodash/object/mapKeys';
 import template from './QuizzardApp.tpl';
 import uniq from 'util/uniq';
 import RegisterForm from 'widgets/RegisterForm';
-// import SurveyForm from 'widgets/SurveyForm';
+import SurveyForm from 'widgets/SurveyForm';
 // import ResultsForm from 'widgets/ResultsForm';
 
 function prefixListener(value, key) {
@@ -25,7 +25,12 @@ export default class QuizzardApp {
             survey,
             onFormSubmit: this.onFormSubmit,
         });
-        // this.surveyForm = new SurveyForm({ user, survey });
+
+        this.surveyForm = new SurveyForm({
+            user,
+            survey,
+        });
+
         // this.resultsForm = new ResultsForm({ user, survey });
     }
     onFormSubmit() {
@@ -39,7 +44,7 @@ export default class QuizzardApp {
         let { survey } = this;
         return template({
             metaData: survey.metaData,
-            currentScreen: this.registerForm,
+            currentScreen: this.surveyForm,
         });
     }
 }

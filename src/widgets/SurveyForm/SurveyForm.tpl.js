@@ -16,23 +16,22 @@ function renderQuestion() {
     `;
 }
 
-export default ({ questions, answers }) => `
-    <div class="screen" id="questions" data-bind="visible: started() &amp;&amp; !ended()">
+export default ({ id, links, index, survey: { metaData } }) => `
+    <div id="${id}" class="screen">
         <h4 id="breadcrumbs">
-          <a data-bind="attr: { href: backLink }">&#171;</a>
+          <a href="${links.back}">&#171;</a>
           Вопрос
-          <span class="current" data-bind="text: currentQuestion() + 1"></span>&nbsp;из
-          <span class="total" data-bind="text: questions.length"></span>
-
-          <a data-bind="visible: canNext() || canEnd(), attr: { href: forwardLink }">&#187;</a>
+          <span class="current">${index}</span>&nbsp;из
+          <span class="total">${metaData.questions.length}</span>
+          <a href="${links.forward}">&#187;</a>
         </h4>
         <div class="frame">
         <div class="ribbon" data-bind="style: { left: graphics.ribbon.left, width: graphics.ribbon.width }">
-            ${questions.map(renderQuestion).join('')}
+            ${1} questions.map(renderQuestion).join('')}
         </div>
       </div>
       <div class="controls" data-bind="visible: started()">
-          ${answers.map(renderAnswer).join('')}
+          ${2} // answers.map(renderAnswer).join('')
           <div style="clear: both;"></div>
       </div>
     </div>
