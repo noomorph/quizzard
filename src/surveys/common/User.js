@@ -1,12 +1,17 @@
 export default class User {
-    constructor({ name = '', age = NaN, gender = null, agree = false, submitted = false } = {}) {
+    constructor({
+        name = '',
+        age = NaN,
+        gender = NaN,
+        agree = false,
+        submitted = false,
+        valid = false,
+    } = {}) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.agree = agree;
         this.submitted = submitted;
-    }
-    isValid() {
-        return false;
+        this.valid = valid;
     }
 }

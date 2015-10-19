@@ -30,7 +30,7 @@ export default class Alexithymia {
         let score = this.answers.reduce((scale, answer, index) => scale + plus(answer, index + 1), 0);
 
         return {
-            [META.scales[0].id]: { score },
+            [META.scales[0].id]: score,
         };
     }
 }
