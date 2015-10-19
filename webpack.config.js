@@ -46,6 +46,7 @@ module.exports = {
 
     resolve: {
         alias: {
+            'containers': path.resolve(__dirname, 'src', 'containers'),
             'images': path.resolve(__dirname, 'src', 'images'),
             'surveys': path.resolve(__dirname, 'src', 'surveys'),
             'widgets': path.resolve(__dirname, 'src', 'widgets'),

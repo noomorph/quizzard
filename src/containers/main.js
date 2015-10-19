@@ -14,10 +14,6 @@ export default function main({ lang, translations, Survey }) {
 
     let oldWidgets = widgets;
 
-    window.addEventListener('hashchange', function onHashChange() {
-        hotMount(document.body, oldWidgets, oldWidgets);
-    });
-
     if (module.hot) {
         module.hot.accept('../widgets', () => {
             let newWidgets = require('../widgets');

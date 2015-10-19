@@ -1,46 +1,46 @@
-#questions h4 a {
+.SurveyForm h4 a {
   font-style: normal;
   font-weight: bold;
   text-decoration: none;
 }
 
-#questions .frame {
+.SurveyForm .frame {
   height: 12em;
   overflow: hidden;
   position: relative;
 }
 
-#questions .ribbon {
+.SurveyForm .ribbon {
   position: absolute;
   top: 0;
   transition: all 0.25s ease;
 }
 
-#questions .card {
+.SurveyForm .card {
   float: left;
   overflow: hidden;
   position: relative;
 }
 
-#questions .hidden {
+.SurveyForm .hidden {
   visibility: hidden;
 }
 
-#questions .card div {
+.SurveyForm .card div {
   padding: 0.5em 0 0 0.5em;
 }
 
-#questions .card span {
+.SurveyForm .card span {
   font-size: 150%;
 }
 
-#questions .card span.answer {
+.SurveyForm .card span.answer {
   padding-left: 0.2em;
   color: navy;
   font-style: italic;
 }
 
-#questions button {
+.SurveyForm button {
   border: solid 2px;
   cursor: pointer;
   float: left;
@@ -50,6 +50,12 @@
   width: 40%;
 }
 
-#questions button[disabled] {
+.SurveyForm button[disabled] {
   opacity: 0.5;
+}
+
+.SurveyForm .controls:after {
+  clear: both;
+  content: '';
+  display: block;
 }

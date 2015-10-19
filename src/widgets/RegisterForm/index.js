@@ -11,8 +11,8 @@ function toggleValidInput(el) {
 }
 
 export default class RegisterForm {
-    constructor({ user, survey, submitted = false, valid = false, onsubmit }) {
-        this.id = uniq('RegisterForm');
+    constructor({ id, user, survey, submitted = false, valid = false, onsubmit }) {
+        this.id = id || uniq('RegisterForm');
         this.user = user;
         this.survey = survey;
         this.submitted = submitted;

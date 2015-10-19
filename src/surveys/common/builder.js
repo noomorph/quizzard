@@ -4,18 +4,22 @@ import i18n from 'util/i18n';
 export function buildMetaData({ className, questionsCount, answers, scaleIds }) {
     return {
         id: className.toLowerCase(),
-        className: className,
+        className,
+        questionsCount,
         get name() {
             return i18n(`${className}::name`);
         },
         get description() {
             return i18n(`${className}::description`);
         },
-        answers: answers.map(({ value, cls = '' }, index) => ({
+        getAnswer(value) {
+            return i18n(`${className}::answers::${value}`);
+        },
+        answers: answers.map(({ value, cls = '' }) => ({
             value,
             cls,
             get text() {
-                return i18n(`${className}::answers::${index}`);
+                return i18n(`${className}::answers::${value}`);
             },
         })),
         questions: range(questionsCount).map(index => ({

@@ -1,50 +1,42 @@
 import './QuizzardApp.css';
-import mapKeys from 'lodash/object/mapKeys';
+import assign from 'lodash/object/assign';
 import template from './QuizzardApp.tpl';
 import uniq from 'util/uniq';
-import RegisterForm from 'widgets/RegisterForm';
-import SurveyForm from 'widgets/SurveyForm';
-// import ResultsForm from 'widgets/ResultsForm';
-
-function prefixListener(value, key) {
-    return `#${this} ${key}`.trim();
-}
-
-function prefixListeners(widget) {
-    return mapKeys(widget.listeners, prefixListener, widget.id);
-}
+import { getWidgetClass, forceRender } from 'util/hotMount';
+import { getCurrentRoute, DEFAULT_URL } from 'containers/routes';
 
 export default class QuizzardApp {
     constructor({ user, survey }) {
         this.id = uniq('quizzard');
         this.user = user;
         this.survey = survey;
-
-        this.registerForm = new RegisterForm({
-            user,
-            survey,
-            onFormSubmit: this.onFormSubmit,
-        });
-
-        this.surveyForm = new SurveyForm({
-            user,
-            survey,
-        });
-
-        // this.resultsForm = new ResultsForm({ user, survey });
+        this.route = getCurrentRoute(location.hash);
     }
-    onFormSubmit() {
+    createWidget() {
+        let { route: { widget, data } } = this;
+        let Widget = getWidgetClass(widget);
+        return new Widget(assign({}, this, data));
     }
     get listeners() {
         return {
-            ...prefixListeners(this.registerForm),
+            ...this.createWidget().listeners,
+            'window': {
+                hashchange: () => {
+                    let newRoute = getCurrentRoute(location.hash);
+                    if (newRoute) {
+                        this.route = newRoute;
+                        forceRender(this);
+                    } else {
+                        location.hash = DEFAULT_URL;
+                    }
+                },
+            },
         };
     }
     render() {
-        let { survey } = this;
         return template({
-            metaData: survey.metaData,
-            currentScreen: this.surveyForm,
+            metaData: this.survey.metaData,
+            currentScreen: this.createWidget(),
         });
     }
 }

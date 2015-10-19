@@ -1,38 +1,42 @@
-function renderAnswer() {
-    return `
-        <button tabindex="-1"
-                data-bind="html: text, attr: { 'class': cls }, disable: $parent.isPreventingClick, click: $parent.fill($data.value)"></button>
-    `;
-}
+import { linebreak } from 'util/softbreak';
 
-function renderQuestion() {
+function renderQuestion({ text }, metaData, answer) {
+    let answerHtml = answer !== undefined ? metaData.getAnswer(answer) : '';
+
     return `
-      <div class="card" data-bind="style: { width: $root.graphics.card.width() + 'px' }, css: { hidden: $index() !== $root.currentQuestion() }">
+      <div class="card">
         <div>
-          <span data-bind="html: $data.text"></span>
-          <span class="answer" data-bind="visible: $data.answerText(), html: $data.answerText()"></span>
+          <span>${text}</span>
+          <span class="answer">${answerHtml}</span>
         </div>
       </div>
     `;
 }
 
-export default ({ id, links, index, survey: { metaData } }) => `
-    <div id="${id}" class="screen">
-        <h4 id="breadcrumbs">
-          <a href="${links.back}">&#171;</a>
-          Вопрос
-          <span class="current">${index}</span>&nbsp;из
-          <span class="total">${metaData.questions.length}</span>
-          <a href="${links.forward}">&#187;</a>
-        </h4>
-        <div class="frame">
-        <div class="ribbon" data-bind="style: { left: graphics.ribbon.left, width: graphics.ribbon.width }">
-            ${1} questions.map(renderQuestion).join('')}
-        </div>
-      </div>
-      <div class="controls" data-bind="visible: started()">
-          ${2} // answers.map(renderAnswer).join('')
-          <div style="clear: both;"></div>
+function renderAnswer({ text, cls, value }) {
+    return `
+      <button tabindex="-1" class="${cls}" data-value="${value}">
+        ${linebreak(text)}
+      </button>
+    `;
+}
+
+export default ({ id, count, links, index, metaData, questions, answers }) => `
+  <div id="${id}" class="SurveyForm screen">
+    <h4 id="breadcrumbs">
+      <a href="#${links.back}">&#171;</a>
+      Вопрос
+      <span class="current">${index}</span>&nbsp;из
+      <span class="total">${questions.length}</span>
+      <a href="#${links.forward}">&#187;</a>
+    </h4>
+    <div class="frame">
+      <div class="ribbon">
+        ${renderQuestion(questions[index - 1], metaData, answers[index - 1])}
       </div>
     </div>
+    <div class="controls">
+      ${metaData.answers.map(renderAnswer).join('')}
+    </div>
+  </div>
 `;

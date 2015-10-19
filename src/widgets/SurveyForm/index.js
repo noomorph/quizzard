@@ -2,38 +2,49 @@ import './SurveyForm.css';
 import template from './SurveyForm.tpl';
 import uniq from 'util/uniq';
 
-function onHashChange() {
-    let [, index] = location.hash.match(/questions\/(\d+)$/) || [];
-    this.index = +(index || 1);
+function getBackLink(index) {
+    let back = index - 1;
+    return back < 1 ? `/register` : `/questions/${back}`;
+}
+
+function getForwardLink(index, count) {
+    let forward = index + 1;
+    return forward <= count ? `/questions/${forward}` : `/results`;
 }
 
 export default class SurveyForm {
-    constructor({ user, survey }) {
-        this.id = uniq('SurveyForm');
+    constructor({ id, user, survey, index = 1 }) {
+        this.id = id || uniq('SurveyForm');
         this.user = user;
         this.survey = survey;
-        onHashChange.call(this);
+        this.index = index;
     }
-    static get listeners() {
-        return { };
+    get listeners() {
+        return {
+            button: {
+                'click': ({ target }) => {
+                    let { value } = target.dataset;
+                    let { survey, index } = this;
+                    this.survey.answers[index - 1] = isFinite(+value) ? +value : value;
+                    location.hash = getForwardLink(index, survey.metaData.questionsCount);
+                },
+            },
+        };
     }
     render() {
-        let { survey, index } = this;
-        let count = survey.metaData.questions.length;
-
-        let back = index - 1;
-        back = back < 1 ? `#/register` : `#/questions/${back}`;
-
-        let forward = index + 1;
-        forward = forward <= count ? `#/questions/${forward}` : `#/results`;
+        let { id, survey, index } = this;
+        let count = survey.metaData.questionsCount;
 
         return template({
-            id: this.id,
-            links: { back, forward },
-            index: this.index,
-            survey: this.survey,
-            questions: [],
-            answers: [],
+            id,
+            links: {
+                back: getBackLink(index),
+                forward: getForwardLink(index, count),
+            },
+            index,
+            metaData: survey.metaData,
+            questions: survey.metaData.questions,
+            answers: survey.answers,
         });
     }
 }

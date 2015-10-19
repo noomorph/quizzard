@@ -33,11 +33,11 @@ export default {
             26: 'Я часто не знаю, почему сержусь.',
         },
         'answers': {
-            1: linebreak(softbreak('Со_вер_шен_но\nне сог_ла_сен')),
-            2: linebreak(softbreak('Скорее\nне сог_ла_сен')),
-            3: linebreak(softbreak('Ни то,\nни дру_гое')),
-            4: linebreak(softbreak('Скорее\nсог_ла_сен')),
-            5: linebreak(softbreak('Со_вер_шен_но\nсог_ла_сен')),
+            0: softbreak('Со_вер_шен_но\nне сог_ла_сен'),
+            1: softbreak('Скорее\nне сог_ла_сен'),
+            2: softbreak('Ни то,\nни дру_гое'),
+            3: softbreak('Скорее\nсог_ла_сен'),
+            4: softbreak('Со_вер_шен_но\nсог_ла_сен'),
         },
         'scales': {
             'A': 'Алекситимичность',

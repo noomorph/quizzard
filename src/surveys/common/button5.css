@@ -1,35 +1,35 @@
-#questions button.a {
+.SurveyForm button.a {
   width: 18%;
   margin-left: 2%;
   font-size: 0.75em;
 }
 
-#questions button.a0 {
+.SurveyForm button.a0 {
   background-color: #17516c;
   color: white;
   border-color: black;
 }
 
-#questions button.a1 {
+.SurveyForm button.a1 {
   background-color: #b8dbef;
 }
 
-#questions button.a3 {
+.SurveyForm button.a3 {
   background-color: #dbefbb;
 }
 
-#questions button.a4 {
+.SurveyForm button.a4 {
   background-color: #aceca1;
   color: black;
   border-color: black;
 }
 
 @media only screen and (max-width: 615px) {
-  #questions button.a {
+  .SurveyForm button.a {
     width: 48%;
   }
 
-  #questions button.a2 {
+  .SurveyForm button.a2 {
       margin-left: 26%;
       clear: both;
   }
