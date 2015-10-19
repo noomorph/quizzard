@@ -4,20 +4,18 @@ import uniq from 'util/uniq';
 
 function toggleValidInput(el) {
     if (el.checkValidity()) {
-        el.classList.remove('invalid');
+        el.parentNode.classList.remove('invalid');
     } else {
-        el.classList.add('invalid');
+        el.parentNode.classList.add('invalid');
     }
 }
 
 export default class RegisterForm {
-    constructor({ id, user, survey, submitted = false, valid = false, onsubmit }) {
+    constructor({ id, user, survey }) {
         this.id = id || uniq('RegisterForm');
         this.user = user;
         this.survey = survey;
-        this.submitted = submitted;
-        this.valid = valid;
-        this.onsubmit = onsubmit || function noop() {};
+        this.submitted = !!user.valid;
     }
     get listeners() {
         return {
@@ -30,6 +28,7 @@ export default class RegisterForm {
                     }
 
                     toggleValidInput(target);
+                    this.user.valid = false; // HACK: marking as dirty
                 },
             },
             '': {
@@ -37,13 +36,13 @@ export default class RegisterForm {
                     ev.preventDefault();
                     let dom = window[this.id];
                     this.submitted = true;
-                    this.valid = dom.checkValidity();
+                    this.user.valid = dom.checkValidity();
 
                     dom.classList.add('submitted');
                     let els = [...dom.querySelectorAll('input')];
                     els.forEach(toggleValidInput);
 
-                    if (this.valid) {
+                    if (this.user.valid) {
                         window.location.hash = '/questions/1';
                     }
                 },

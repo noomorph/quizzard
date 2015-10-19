@@ -15,7 +15,9 @@ export default class QuizzardApp {
     createWidget() {
         let { route: { widget, data } } = this;
         let Widget = getWidgetClass(widget);
-        return new Widget(assign({}, this, data));
+        return new Widget(
+            assign({}, this, data, { id: this.id + '_' + widget })
+        );
     }
     get listeners() {
         return {

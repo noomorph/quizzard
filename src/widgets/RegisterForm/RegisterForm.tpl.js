@@ -28,7 +28,7 @@ module.exports = ({ id = 'intro', className = '', instruction = '' }) => `
           <div class="intro-disclaimer">${i18n('DISCLAIMER')}</div>
       </div>
         <blockquote>
-          <strong>${i18n('INSTRUCTION')}</strong>
+          <strong>${i18n('INSTRUCTION')}</strong>:
           <span>${instruction}</span>
         </blockquote>
         <div class="intro-button">

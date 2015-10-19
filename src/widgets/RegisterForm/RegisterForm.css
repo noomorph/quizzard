@@ -73,17 +73,18 @@ label.intro-gender:after {
   background-color: #fff0ee;
 }
 
-.submitted input.invalid {
+.submitted .invalid > input {
   border: 2px solid #ff5555;
 }
 
-.submitted input.invalid::-webkit-input-placeholder { color: red; }
-.submitted input.invalid::-moz-placeholder { color: red; }
-.submitted input.invalid:-ms-input-placeholder { color: red; }
-.submitted input.invalid:-moz-placeholder { color: red; }
+.submitted .invalid > input::-webkit-input-placeholder { color: red; }
+.submitted .invalid > input::-moz-placeholder { color: red; }
+.submitted .invalid > input:-ms-input-placeholder { color: red; }
+.submitted .invalid > input:-moz-placeholder { color: red; }
 
-.submitted input.invalid + label,
-.submitted input.invalid + label:after {
+.submitted .invalid > input,
+.submitted .invalid > label,
+.submitted .invalid > label:after {
   color: red;
 }
 
@@ -108,7 +109,8 @@ label.intro-gender:after {
     display: table-cell;
   }
 
-  .intro-gender {
+  .intro-field-gender > label[for],
+  .intro-field-gender > input {
     width: auto;
   }
 

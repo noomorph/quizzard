@@ -4,7 +4,7 @@ export default {
         `Для того, чтобы принять участие в исследовании,
         от вас потребуются следующие данные: `,
     'FULL_NAME': `ФИО`,
-    'FULL_NAME_PLACEHOLDER': `Иванов И. И.`,
+    'FULL_NAME_PLACEHOLDER': `Фамилия И. О.`,
     'AGE': `Возраст`,
     'GENDER': `Пол`,
     'GENDER_NAME': {
