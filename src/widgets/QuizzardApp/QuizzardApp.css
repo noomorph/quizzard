@@ -11,14 +11,19 @@ html {
 
 body {
   font: 16px Georgia, serif;
-  height: 100%;
-  margin: 0 10%;
-  padding: 2em 10% 1em 10%;
+  margin: 2em auto 0;
+  padding: 0 auto 1em;
   position: relative;
   width: 60%;
 }
 
 .loading { display: none; }
+
+.clearfix:after {
+  clear: both;
+  content: '';
+  display: block;
+}
 
 strong {
   font-weight: bold;
@@ -39,6 +44,11 @@ input {
 input[type='text']:focus,
 input[type='number']:focus {
   background-color: #fff0ee;
+}
+
+th,
+td {
+  text-align: left;
 }
 
 button {
@@ -102,10 +112,10 @@ h4 span { color: #446; }
 
 @media print {
   body {
+    box-sizing: border-box;
     width: 100%;
     height: auto;
-    margin-left: 0;
-    margin-right: 0;
+    margin: 0 auto;
     padding: 0 1em;
     font-size: 14px;
     font-family: 'Times New Roman', Times, serif;
@@ -113,11 +123,17 @@ h4 span { color: #446; }
 
   h1 {
     font-size: 1.25em;
+    font-weight: bold;
   }
 
   h2 {
-    font-size: 1em;
+    font-size: 0.875em;
     color: black;
     font-style: normal;
+    margin: 0.75em 0 2px;
+  }
+
+  .screen {
+    padding-bottom: 0;
   }
 }

@@ -1,48 +1,58 @@
-#outro table,
-#outro tr,
-#outro td,
-#outro th {
+.ResultsForm table,
+.ResultsForm tr,
+.ResultsForm td,
+.ResultsForm th {
   border: none;
 }
 
-#outro td,
-#outro th {
+.ResultsForm td,
+.ResultsForm th {
   padding: 0.5em;
 }
 
-#outro .topped {
+.ResultsForm .topped {
   vertical-align: top;
 }
 
-#outro .w8 {
+.ResultsForm .w8 {
   width: 8em;
 }
 
-#outro .under-border,
-#outro .under-border {
+.ResultsForm .w8:after {
+  content: ':';
+}
+
+.ResultsForm .under-border,
+.ResultsForm .under-border {
   border-bottom: 1px solid #000;
 }
 
-#outro .bordered th,
-#outro .bordered td {
+.ResultsForm .bordered th,
+.ResultsForm .bordered td {
   border: 1px solid #000;
 }
 
-#outro .wide {
+.ResultsForm .wide {
   width: 100%;
 }
 
 @media print {
-  #outro table {
+  .ResultsForm table {
     margin-top: 0.5em;
+    margin-bottom: 0;
   }
 
-  #outro td,
-  #outro th {
-    padding: 1px 0 1px;
+  .ResultsForm td,
+  .ResultsForm th {
+    padding: 1px 0 1px 0.25em;
   }
 
-  #outro #contact {
+  .ResultsForm .bordered th {
+    text-align: center;
+    padding-right: 0.25em;
+  }
+
+  .ResultsForm #contact {
     width: 80%;
   }
 }

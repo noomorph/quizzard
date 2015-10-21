@@ -8,23 +8,23 @@ export default class ResultsForm {
         this.user = user;
         this.survey = survey;
     }
+    get listeners() {
+        return {};
+    }
     render() {
         let { id, user } = this;
         let { metaData, answers } = this.survey;
         let results = this.survey.calculate();
-        let Na = answers.length;
 
         return template({
             id: id,
+            metaData,
             user: user,
-            answers: [
-                answers.slice(0, Math.ceil(Na / 2)),
-                answers.slice(Math.ceil(Na / 2), Na),
-            ],
+            answers,
             scales: metaData.scales.map(scale => ({
                 id: scale.id,
                 text: scale.text,
-                score: results[scale.id],
+                result: results[scale.id],
             })),
         });
     }

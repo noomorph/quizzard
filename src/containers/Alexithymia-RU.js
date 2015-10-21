@@ -1,11 +1,10 @@
 import main from './main';
+import translations from './common-ru';
 
 main({
     lang: 'ru',
-    translations: [
-        require('widgets/QuizzardApp/ru'),
-        require('widgets/RegisterForm/ru'),
+    translations: translations.concat([
         require('surveys/Alexithymia/ru'),
-    ],
+    ]),
     Survey: require('surveys/Alexithymia'),
 });

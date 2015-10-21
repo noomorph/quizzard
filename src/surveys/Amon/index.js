@@ -1,4 +1,5 @@
 import '../common/button2.css';
+import mapValues from 'lodash/object/mapValues';
 import { buildMetaData } from '../common/builder';
 
 function buildScaleReducer(indices, scaleId) {
@@ -52,6 +53,10 @@ function rootReducer(scales, value, index) {
     }, scales);
 }
 
+function mapResult(value) {
+    return { value };
+}
+
 export default class Amon {
     constructor() {
         this.answers = new Array(META.questionsCount);
@@ -60,6 +65,12 @@ export default class Amon {
         return META;
     }
     calculate() {
-        return this.answers.reduce(rootReducer, {});
+        let emptyResults = META.scales.reduce(function (acc, { id }) {
+            acc[id] = 0;
+            return acc;
+        }, {});
+
+        let result = this.answers.reduce(rootReducer, emptyResults);
+        return mapValues(result, mapResult);
     }
 }

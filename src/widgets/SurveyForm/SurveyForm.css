@@ -55,9 +55,3 @@
 .SurveyForm button[disabled] {
   opacity: 0.5;
 }
-
-.SurveyForm .controls:after {
-  clear: both;
-  content: '';
-  display: block;
-}
