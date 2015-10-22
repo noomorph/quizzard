@@ -44,7 +44,7 @@
 
   .ResultsForm td,
   .ResultsForm th {
-    padding: 1px 0 1px 0.25em;
+    padding: 1px 0.25em;
   }
 
   .ResultsForm .bordered th {

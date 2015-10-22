@@ -1,5 +1,4 @@
 import './QuizzardApp.css';
-import last from 'lodash/array/last';
 import assign from 'lodash/object/assign';
 import template from './QuizzardApp.tpl';
 import uniq from 'util/uniq';
@@ -33,6 +32,11 @@ export default class QuizzardApp {
         this.user = user;
         this.survey = survey;
         this.route = getCurrentRoute(location.hash);
+
+        if (!isRouteValid(this.route, this)) {
+            this.route = getCurrentRoute(DEFAULT_URL);
+            location.hash = DEFAULT_URL;
+        }
     }
     createWidget() {
         let { route: { widget, data } } = this;
@@ -45,14 +49,14 @@ export default class QuizzardApp {
         return {
             ...this.createWidget().listeners,
             'window': {
-                hashchange: (ev) => {
+                hashchange: ({ oldURL }) => {
                     let newRoute = getCurrentRoute(location.hash);
                     if (newRoute) {
                         if (isRouteValid(newRoute, this)) {
                             this.route = newRoute;
                             forceRender(this);
                         } else {
-                            ev.preventDefault();
+                            location.href = oldURL;
                         }
                     } else {
                         location.hash = DEFAULT_URL;

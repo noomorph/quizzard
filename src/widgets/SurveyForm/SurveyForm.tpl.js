@@ -22,6 +22,14 @@ function renderAnswer({ text, cls, value }) {
     `;
 }
 
+function renderForward(answer, link) {
+    if (answer !== undefined) {
+        return `<a href="#${link}">&#187;</a>`;
+    }
+
+    return '';
+}
+
 export default ({ id, count, links, index, metaData, questions, answers }) => `
   <div id="${id}" class="SurveyForm screen">
     <h4 id="breadcrumbs">
@@ -29,7 +37,7 @@ export default ({ id, count, links, index, metaData, questions, answers }) => `
       ${i18n('QUESTION')}
       <span class="current">${index}</span>&nbsp;${i18n('FROM')}
       <span class="total">${questions.length}</span>
-      <a href="#${links.forward}">&#187;</a>
+      ${renderForward(answers[index - 1], links.forward)}
     </h4>
     <div class="frame">
       <div class="ribbon">
