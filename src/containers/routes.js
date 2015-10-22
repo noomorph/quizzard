@@ -6,9 +6,9 @@ const RESULTS_REGEX = /^#?\/results\/?/;
 // import ResultsForm from 'widgets/ResultsForm';
 
 const routeParams = {
-    register: () => ({ widget: 'RegisterForm' }),
-    survey: index => ({ widget: 'SurveyForm', data: { index } }),
-    results: () => ({ widget: 'ResultsForm' }),
+    register: () => ({ widget: 'RegisterForm', is: { register: true } }),
+    survey: index => ({ widget: 'SurveyForm', data: { index }, is: { survey: true } }),
+    results: () => ({ widget: 'ResultsForm', is: { results: true } }),
 };
 
 function register(hash) {
