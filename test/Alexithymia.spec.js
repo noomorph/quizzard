@@ -9,19 +9,21 @@ describe(Alexithymia.name, function () {
     beforeEach(() => subject = new Alexithymia());
 
     describe('when blank', function () {
-        it('has A scale = NaN', function () {
-            expect(subject.calculate().A.value).to.eq(NaN);
+        it('has A scale = 0', function () {
+            expect(subject.calculate().A.value).to.eq(0);
         });
     });
 
     function when_filled_with(value) {
+        const expected = 16 * (1 + value) + 10 * (5 - value);
+
         describe(`when filled with ${value}`, function () {
             beforeEach(function () {
-                subject.answers = subject.answers.map(() => value);
+                subject.answers.fill(value);
             });
 
-            it('has A scale = NaN', function () {
-                expect(subject.calculate().A.value).to.eq(16 * (1 + value) + 10 * (5 - value));
+            it(`has A scale = ${expected}`, function () {
+                expect(subject.calculate().A.value).to.eq(expected);
             });
         });
     }
