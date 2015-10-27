@@ -4,16 +4,18 @@ var _ = require('lodash');
 var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var packageJSON = require('./package.json');
 var ENV = process.env.ENV;
+var entry = {
+    'Alexithymia-RU': ['./containers/Alexithymia-RU'],
+    'Amon-RU': ['./containers/Amon-RU'],
+};
 
 function generateHTML(entryName) {
     return new HtmlWebpackPlugin({
         filename: entryName + '.html',
         template: path.resolve(__dirname, 'src', 'containers', 'main.html'),
         inject: true,
-        chunks: [entryName]
+        excludeChunks: _(entry).keys().without(entryName).value()
     });
 }
 
@@ -33,11 +35,7 @@ module.exports = {
         port: 8000
     },
 
-    entry: {
-        'Alexithymia-RU': ['./containers/Alexithymia-RU'],
-        'Amon-RU': ['./containers/Amon-RU'],
-        'vendor': _(packageJSON.dependencies).keys().without('lodash').value(),
-    },
+    entry: entry,
 
     stats: {
         colors: true,
@@ -79,10 +77,6 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.DefinePlugin({
-            ENV: ENV,
-            VERSION: packageJSON.version
-        }),
         generateHTML('Alexithymia-RU'),
         generateHTML('Amon-RU'),
         new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'index.html') }),

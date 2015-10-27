@@ -30,7 +30,7 @@ function renderForward(answer, link) {
     return '';
 }
 
-export default ({ id, count, links, index, metaData, questions, answers }) => `
+export default ({ id, links, index, metaData, questions, answers }) => `
   <div id="${id}" class="SurveyForm screen">
     <h4 id="breadcrumbs">
       <a href="#${links.back}">&#171;</a>
