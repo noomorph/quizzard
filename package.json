@@ -7,7 +7,8 @@
   "scripts": {
     "start": "ENV='development' webpack-dev-server -d --hot --inline",
     "test": "eslint ./src/**/*.js && webpack",
-    "build": "rm -rf dist; ENV='production' webpack --config webpack.prod.config"
+    "build": "cd dist && git reset --hard && cd ..; ENV='production' webpack --config webpack.prod.config",
+    "deploy": "./gh-pages.sh dist"
   },
   "dependencies": {
     "gator": "^1.2.4",
