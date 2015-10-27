@@ -15,13 +15,17 @@ function build(lang, debug = true) {
     return translates.has(lang);
 }
 
-export function register(lang, data) {
+export function register(lang, data, forceRebuild = false) {
     dictionaries.set(lang, {
         ...(dictionaries.get(lang) || {}),
         ...data,
     });
 
     dirty.add(lang);
+
+    if (forceRebuild) {
+        build(lang);
+    }
 }
 
 export function change(lang) {

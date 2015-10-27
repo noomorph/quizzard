@@ -5,31 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <script>
-        window.onerror = function(message, url, line, col, error){
-            var stopPropagation = false;
-            var data = {
-              type: 'javascript',
-              url: window.location.hash,
-              localtime: Date.now()
-            };
-            if(message)       { data.message      = message;      }
-            if(url)           { data.fileName     = url;          }
-            if(line)          { data.lineNumber   = line;         }
-            if(col)           { data.columnNumber = col;          }
-            if(error){
-              if(error.name)  { data.name         = error.name;   }
-              if(error.stack) { data.stack        = error.stack;  }
-            }
-
-            console.log('exception', data);
-            window.alert('Error: '+data.message);
-            delete data.message;
-            window.alert(JSON.stringify(data, null, 4));
-            return stopPropagation;
-          };
-        });
-    </script>
   </head>
   <body>
     <div data-widget-class="QuizzardApp">

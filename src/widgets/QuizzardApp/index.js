@@ -4,6 +4,7 @@ import template from './QuizzardApp.tpl';
 import uniq from 'util/uniq';
 import { getWidgetClass, forceRender } from 'util/hotMount';
 import { getCurrentRoute, DEFAULT_URL } from 'containers/routes';
+import loader from 'containers/loader';
 
 function isRouteValid(route, { user, survey }) {
     if (!route || !route.is) { return false; }
@@ -45,9 +46,27 @@ export default class QuizzardApp {
             assign({}, this, data, { id: this.id + '_' + widget })
         );
     }
+    loadSurvey(Survey) {
+        this.survey = new Survey();
+        forceRender(this);
+    }
     get listeners() {
         return {
             ...this.createWidget().listeners,
+            '.prev-survey': {
+                click: (ev) => {
+                    ev.preventDefault();
+                    let fn = loader.getPrevious(this.survey);
+                    if (fn) { fn(this.loadSurvey, this); }
+                },
+            },
+            '.next-survey': {
+                click: (ev) => {
+                    ev.preventDefault();
+                    let fn = loader.getNext(this.survey);
+                    if (fn) { fn(this.loadSurvey, this); }
+                },
+            },
             'window': {
                 hashchange: ({ oldURL }) => {
                     let newRoute = getCurrentRoute(location.hash);
@@ -66,7 +85,13 @@ export default class QuizzardApp {
         };
     }
     render() {
+        let surveyLinks = {
+            prev: !!(loader.getPrevious(this.survey)),
+            next: !!(loader.getNext(this.survey)),
+        };
+
         return template({
+            surveyLinks,
             metaData: this.survey.metaData,
             currentScreen: this.createWidget(),
         });
