@@ -34,12 +34,12 @@ export default class RegisterForm {
             '': {
                 submit: (ev) => {
                     ev.preventDefault();
-                    let dom = window[this.id];
+                    let dom = document.getElementById(this.id);
                     this.submitted = true;
                     this.user.valid = dom.checkValidity();
 
                     dom.classList.add('submitted');
-                    let els = [...dom.querySelectorAll('input')];
+                    let els = [].slice.call(dom.querySelectorAll('input'));
                     els.forEach(toggleValidInput);
 
                     if (this.user.valid) {

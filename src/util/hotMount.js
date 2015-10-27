@@ -109,13 +109,13 @@ export function forceRender(instance) {
 }
 
 export default function hotMount(root, oldWidgets = {}, newWidgets = {}, sharedData) {
-    let allWidgets = new Set([
-        ...Object.keys(oldWidgets),
-        ...Object.keys(newWidgets),
-    ]);
+    let allWidgets = {
+        ...oldWidgets,
+        ...newWidgets
+    };
 
-    allWidgets.forEach(className => {
-        let nodes = [...root.querySelectorAll(`[data-widget-class="${className}"]`)];
+    Object.keys(allWidgets).forEach(className => {
+        let nodes = [].slice.call(root.querySelectorAll(`[data-widget-class="${className}"]`));
         let OldClass = oldWidgets[className];
         let NewClass = newWidgets[className];
 

@@ -1,5 +1,6 @@
 import '../common/button5.css';
 import { buildMetaData } from '../common/builder';
+import toSet from 'util/toSet';
 
 const META = buildMetaData({
     className: 'Alexithymia',
@@ -14,8 +15,8 @@ const META = buildMetaData({
     scaleIds: ['A'],
 });
 
-const positives = new Set([2, 3, 4, 7, 8, 10, 14, 16, 17, 18, 19, 20, 22, 23, 25, 26]);
-const negatives = new Set([1, 5, 6, 9, 11, 12, 13, 15, 21, 24]);
+const positives = toSet([2, 3, 4, 7, 8, 10, 14, 16, 17, 18, 19, 20, 22, 23, 25, 26]);
+const negatives = toSet([1, 5, 6, 9, 11, 12, 13, 15, 21, 24])
 const minus = (answer, index) => negatives.has(index) ? 5 - answer : NaN;
 const plus = (answer, index) => positives.has(index) ? answer + 1 : minus(answer, index);
 

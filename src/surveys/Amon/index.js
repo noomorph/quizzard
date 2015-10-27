@@ -1,9 +1,10 @@
 import '../common/button2.css';
 import mapValues from 'lodash/object/mapValues';
+import toSet from 'util/toSet';
 import { buildMetaData } from '../common/builder';
 
 function buildScaleReducer(indices, scaleId) {
-    let set = new Set(indices);
+    let set = toSet(indices);
 
     return function scaleReducer(scales, value, index) {
         if (value === '+' && set.has(index)) {
