@@ -50,7 +50,7 @@ const META = buildMetaData({
 
 function rootReducer(scales, value, index) {
     return reducers.reduce((acc, reducer) => {
-        return reducer(acc, value, index);
+        return reducer(acc, value, index + 1);
     }, scales);
 }
 
@@ -66,7 +66,7 @@ export default class Amon {
         return META;
     }
     calculate() {
-        let emptyResults = META.scales.reduce(function (acc, { id }) {
+        let emptyResults = META.scales.reduce((acc, { id }) => {
             acc[id] = 0;
             return acc;
         }, {});

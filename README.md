@@ -1,14 +1,19 @@
 quizzard
 ========
 
+[![Build Status](https://travis-ci.org/noomorph/quizzard.svg)](https://travis-ci.org/noomorph/quizzard)
+[![Coverage Status](https://coveralls.io/repos/noomorph/quizzard/badge.svg?branch=master&service=github)](https://coveralls.io/github/noomorph/quizzard?branch=master)
+[![Dependency Status](https://david-dm.org/noomorph/quizzard.svg)](https://david-dm.org/noomorph/quizzard)
+
 Psychological surveys, tests, quizzes in mobile-friendly format.
 
 Online access: http://question.site44.com
+2.0-alpha version: http://noomorph.github.io/quizzard
 
 Licensed under the MIT License (MIT).
 
 ```
-Copyright (c) 2014 Yaroslav Serhieiev
+Copyright (c) 2015 Yaroslav Serhieiev
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

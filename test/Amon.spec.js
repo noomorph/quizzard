@@ -22,7 +22,7 @@ describe(Amon.name, function () {
         scale_eq('A1', 13);
         scale_eq('A2', 14);
         scale_eq('A3', 12);
-        scale_eq('C1', 11);
+        scale_eq('C1', 12);
         scale_eq('C2', 11);
         scale_eq('C3', 14);
         scale_eq('LO1', 11);

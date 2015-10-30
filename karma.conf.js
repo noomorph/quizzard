@@ -13,6 +13,7 @@ module.exports = function karmaConfig(config) {
             'karma-chrome-launcher',
             'karma-phantomjs-launcher',
             'karma-coverage',
+            'karma-coveralls',
             'karma-chai',
             'karma-mocha',
             'karma-sourcemap-loader',
@@ -26,9 +27,10 @@ module.exports = function karmaConfig(config) {
         reporters: [
             'spec',
             'coverage',
+            'coveralls',
         ],
         coverageReporter: {
-            type: 'html',
+            type: 'lcov',
             dir: 'coverage/',
         },
         singleRun: true,

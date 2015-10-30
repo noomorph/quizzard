@@ -8,6 +8,8 @@ var ENV = process.env.ENV;
 var entry = {
     'Alexithymia-RU': ['./containers/Alexithymia-RU'],
     'Amon-RU': ['./containers/Amon-RU'],
+    'Emin-RU': ['./containers/Emin-RU'],
+    'test': ['chai', '../test/index'],
 };
 
 function generateHTML(entryName) {
@@ -59,9 +61,16 @@ module.exports = {
         //     loader: 'eslint-loader'
         // }],
         loaders: [{
+            test: /\.spec\.js$/,
+            loader: 'mocha-loader!imports?chai=chai&expect=>chai.expect!babel-loader',
+            include: path.resolve(__dirname, 'test')
+        }, {
             test: /\.js$/,
             loader: 'babel-loader',
-            include: path.resolve(__dirname, 'src')
+            include: [
+                path.resolve(__dirname, 'src'),
+                path.resolve(__dirname, 'test')
+            ]
         }, {
             loader: 'file-loader?name=[path][name].[ext]',
             include: []
@@ -73,12 +82,15 @@ module.exports = {
             test: /\.(png|jpg|svg)$/,
             loader: 'url-loader?limit=8192',
             include: path.resolve(__dirname, 'src')
-        }],
+        }]
     },
 
     plugins: [
         generateHTML('Alexithymia-RU'),
         generateHTML('Amon-RU'),
-        new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'index.html') }),
+        generateHTML('Emin-RU'),
+        new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'index.html'), chunks: [] }),
+        new HtmlWebpackPlugin({ filename: 'test.html', chunks: ['test'] }),
+
     ]
 };
