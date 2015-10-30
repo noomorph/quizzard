@@ -111,7 +111,7 @@ export function forceRender(instance) {
 export default function hotMount(root, oldWidgets = {}, newWidgets = {}, sharedData) {
     let allWidgets = {
         ...oldWidgets,
-        ...newWidgets
+        ...newWidgets,
     };
 
     Object.keys(allWidgets).forEach(className => {

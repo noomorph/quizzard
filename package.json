@@ -8,7 +8,7 @@
     "start": "ENV='development' webpack-dev-server -d --hot --inline",
     "test": "karma start",
     "build": "cd dist && git reset --hard && cd ..; ENV='production' webpack --config webpack.prod.config",
-    "deploy": "./gh-pages.sh dist"
+    "deploy": "./.gh-pages.sh dist"
   },
   "dependencies": {
     "gator": "^1.2.4",

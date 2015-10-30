@@ -1,4 +1,4 @@
-#questions button.c {
+.SurveyForm button.c {
   width: 14.6%;
   min-height: 4.5em;
   margin-left: 2%;
@@ -8,43 +8,43 @@
   font-weight: bold;
 }
 
-#questions button.c0 {
+.SurveyForm button.c0 {
   background-color: rgb(71, 95, 255);
   color: #fff;
 }
 
-#questions button.c1 {
+.SurveyForm button.c1 {
   background-color: rgb(117, 144, 216);
   color: #fff;
 }
 
-#questions button.c2 {
+.SurveyForm button.c2 {
   background-color: rgb(181, 198, 236);
 }
 
-#questions button.c3 {
+.SurveyForm button.c3 {
   background-color: rgb(255, 234, 189);
 }
 
-#questions button.c4 {
+.SurveyForm button.c4 {
   background-color: rgb(255, 210, 92);
 }
 
-#questions button.c5 {
+.SurveyForm button.c5 {
   background-color: orange;
 }
 
 @media only screen and (max-width: 615px) {
-  #questions .controls button.c { width: 31%; }
+  .SurveyForm .controls button.c { width: 31%; }
 
-  #questions .controls button.c0,
-  #questions .controls button.c1,
-  #questions .controls button.c2 {
+  .SurveyForm .controls button.c0,
+  .SurveyForm .controls button.c1,
+  .SurveyForm .controls button.c2 {
     margin-bottom: 0.5em;
   }
 
-  #questions .controls button.c.c3 { float: right; margin-right: 1%; }
-  #questions .controls button.c.c4 { float: right; }
-  #questions .controls button.c.c5 { float: right; margin-left: 0;
+  .SurveyForm .controls button.c.c3 { float: right; margin-right: 1%; }
+  .SurveyForm .controls button.c.c4 { float: right; }
+  .SurveyForm .controls button.c.c5 { float: right; margin-left: 0;
   }
 }
