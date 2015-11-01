@@ -33,6 +33,7 @@ export default class QuizzardApp {
         this.user = user;
         this.survey = survey;
         this.route = getCurrentRoute(location.hash);
+        this.onHashChange = this.onHashChange.bind(this);
 
         if (!isRouteValid(this.route, this)) {
             this.route = getCurrentRoute(DEFAULT_URL);
@@ -48,7 +49,27 @@ export default class QuizzardApp {
     }
     loadSurvey(Survey) {
         this.survey = new Survey();
-        forceRender(this);
+        this.onHashChange({ oldURL: location.hash });
+    }
+    onHashChange({ oldURL }) {
+        let newRoute = getCurrentRoute(location.hash);
+        if (newRoute) {
+            if (isRouteValid(newRoute, this)) {
+                this.route = newRoute;
+                forceRender(this);
+            } else {
+                let [, oldHash] = oldURL.split('#');
+                let oldRoute = getCurrentRoute(oldHash);
+
+                if (isRouteValid(oldRoute, this)) {
+                    location.href = oldURL;
+                } else {
+                    location.hash = DEFAULT_URL;
+                }
+            }
+        } else {
+            location.hash = DEFAULT_URL;
+        }
     }
     get listeners() {
         return {
@@ -68,19 +89,7 @@ export default class QuizzardApp {
                 },
             },
             'window': {
-                hashchange: ({ oldURL }) => {
-                    let newRoute = getCurrentRoute(location.hash);
-                    if (newRoute) {
-                        if (isRouteValid(newRoute, this)) {
-                            this.route = newRoute;
-                            forceRender(this);
-                        } else {
-                            location.href = oldURL;
-                        }
-                    } else {
-                        location.hash = DEFAULT_URL;
-                    }
-                },
+                hashchange: this.onHashChange,
             },
         };
     }

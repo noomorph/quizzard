@@ -1,4 +1,4 @@
-export default function initialize({ describe, beforeEach, it, expect, subject }) {
+module.exports = function initialize({ describe, beforeEach, it, expect, subject }) {
     return {
         scale_eq(scale, expected) {
             it(`has ${scale} scale = ${expected}`, function () {
@@ -21,4 +21,4 @@ export default function initialize({ describe, beforeEach, it, expect, subject }
             });
         },
     };
-}
+};

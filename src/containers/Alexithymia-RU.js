@@ -1,10 +1,10 @@
 import main from './main';
 import translations from './common-ru';
+import ru from 'surveys/Alexithymia/ru';
+import Alexithymia from 'surveys/Alexithymia';
 
 main({
     lang: 'ru',
-    translations: translations.concat([
-        require('surveys/Alexithymia/ru'),
-    ]),
-    Survey: require('surveys/Alexithymia'),
+    translations: [...translations, ru],
+    Survey: Alexithymia,
 });

@@ -3,15 +3,21 @@ import { register } from 'util/i18n';
 export const load = {
     Amon(callback, context) {
         require.ensure(['surveys/Amon', 'surveys/Amon/ru'], function onScriptsLoaded(require) {
-            register('ru', require('surveys/Amon/ru'), true);
-            callback.call(context, require('surveys/Amon'));
+            register('ru', require('surveys/Amon/ru').default, true);
+            callback.call(context, require('surveys/Amon').default);
         }, 'Amon-runtime-RU');
     },
     Alexithymia(callback, context) {
         require.ensure(['surveys/Alexithymia', 'surveys/Alexithymia/ru'], function onScriptsLoaded(require) {
-            register('ru', require('surveys/Alexithymia/ru'), true);
-            callback.call(context, require('surveys/Alexithymia'));
+            register('ru', require('surveys/Alexithymia/ru').default, true);
+            callback.call(context, require('surveys/Alexithymia').default);
         }, 'Alexithymia-runtime-RU');
+    },
+    Emin(callback, context) {
+        require.ensure(['surveys/Emin', 'surveys/Emin/ru'], function onScriptsLoaded(require) {
+            register('ru', require('surveys/Emin/ru').default, true);
+            callback.call(context, require('surveys/Emin').default);
+        }, 'Emin-runtime-RU');
     },
 };
 

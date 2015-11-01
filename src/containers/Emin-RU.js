@@ -1,10 +1,10 @@
 import main from './main';
 import translations from './common-ru';
+import ru from 'surveys/Emin/ru';
+import Emin from 'surveys/Emin';
 
 main({
     lang: 'ru',
-    translations: translations.concat([
-        require('surveys/Emin/ru'),
-    ]),
-    Survey: require('surveys/Emin'),
+    translations: [...translations, ru],
+    Survey: Emin,
 });

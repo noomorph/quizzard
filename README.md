@@ -4,11 +4,12 @@ quizzard
 [![Build Status](https://travis-ci.org/noomorph/quizzard.svg)](https://travis-ci.org/noomorph/quizzard)
 [![Coverage Status](https://coveralls.io/repos/noomorph/quizzard/badge.svg?branch=master&service=github)](https://coveralls.io/github/noomorph/quizzard?branch=master)
 [![Dependency Status](https://david-dm.org/noomorph/quizzard.svg)](https://david-dm.org/noomorph/quizzard)
+[![Development Dependency Status](https://david-dm.org/noomorph/quizzard/dev-status.svg)](https://david-dm.org/noomorph/quizzard)
 
 Psychological surveys, tests, quizzes in mobile-friendly format.
 
-Online access: http://question.site44.com
-2.0-alpha version: http://noomorph.github.io/quizzard
+* 1.0-stable access: http://question.site44.com
+* 2.0-alpha version: http://noomorph.github.io/quizzard
 
 Licensed under the MIT License (MIT).
 
