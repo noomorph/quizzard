@@ -63,11 +63,12 @@ module.exports = {
         // }],
         loaders: [{
             test: /\.spec\.js$/,
-            loader: 'mocha-loader!imports?chai=chai&expect=>chai.expect!babel-loader',
+            loader: 'mocha-loader!imports?chai=chai&expect=>chai.expect!babel-loader?presets[]=es2015&presets[]=stage-2',
             include: path.resolve(__dirname, 'test')
         }, {
             test: /\.js$/,
             loader: 'babel-loader',
+            query: { presets: ['es2015', 'stage-2'] },
             include: [
                 path.resolve(__dirname, 'src'),
                 path.resolve(__dirname, 'test')

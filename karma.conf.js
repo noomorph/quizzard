@@ -50,6 +50,7 @@ module.exports = function karmaConfig(config) {
                 loaders: [{
                     test: /\.js$/,
                     loader: 'babel-loader',
+                    query: { presets: ['es2015', 'stage-2'] },
                     include: [
                         path.resolve(__dirname, 'src'),
                         path.resolve(__dirname, 'test'),
