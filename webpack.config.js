@@ -17,6 +17,7 @@ function generateHTML(entryName) {
         filename: entryName + '.html',
         template: path.resolve(__dirname, 'src', 'containers', 'main.html'),
         inject: true,
+        hash: ENV === 'production',
         excludeChunks: _(entry).keys().without(entryName).value()
     });
 }
@@ -91,6 +92,5 @@ module.exports = {
         generateHTML('Emin-RU'),
         new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'index.html'), chunks: [] }),
         new HtmlWebpackPlugin({ filename: 'test.html', chunks: ['test'] }),
-
     ]
 };

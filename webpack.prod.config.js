@@ -7,9 +7,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var packageJSON = require('./package.json');
 var config = require('./webpack.config');
 
-// config.entry['main'] = ['./containers/main', './containers/common-ru'];
-// config.entry['vendor'] = _(packageJSON.dependencies).keys().without('lodash').value();
-
 var cssLoader = _.find(config.module.loaders, function (loader) {
     return ~loader.loader.indexOf('css');
 });

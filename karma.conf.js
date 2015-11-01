@@ -7,6 +7,7 @@ module.exports = function karmaConfig(config) {
         // karma only needs to know about the test bundle
         files: [
             'test/index.js',
+            'src/containers/main.js', // to include non-tested code in coverage
         ],
         frameworks: ['chai', 'mocha'],
         plugins: [
@@ -22,6 +23,7 @@ module.exports = function karmaConfig(config) {
         ],
         // run the bundle through the webpack and sourcemap plugins
         preprocessors: {
+            'src/containers/main.js': [ 'webpack', 'sourcemap' ],
             'test/index.js': [ 'webpack', 'sourcemap' ],
         },
         reporters: [
