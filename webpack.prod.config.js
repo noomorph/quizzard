@@ -18,7 +18,7 @@ config.plugins = [
         name: 'common',
         chunks: ['Alexithymia-RU', 'Amon-RU']
     }),
-    new ExtractTextPlugin('[name].css'),
+    new ExtractTextPlugin('[name].css', { allChunks: true }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin(),
 ].concat(config.plugins);
