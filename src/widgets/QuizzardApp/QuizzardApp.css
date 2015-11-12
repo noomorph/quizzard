@@ -1,8 +1,6 @@
 @import './reset.css';
 
 html {
-  background-color: #fff;
-  background-image: url('./assets/paper.jpg');
   height: 100%;
   margin: 0;
   padding: 0;
@@ -10,6 +8,8 @@ html {
 }
 
 body {
+  background-image: url('assets/paper.jpg');
+  background-attachment: fixed;
   font: 16px Georgia, serif;
   margin: 2em auto 0;
   padding: 0 auto 1em;
@@ -38,7 +38,9 @@ p {
 }
 
 input {
-  font-size: 100%; font-weight: lighter; text-align: center;
+  font-size: 100%;
+  font-weight: lighter;
+  text-align: center;
 }
 
 input[type='text']:focus,
