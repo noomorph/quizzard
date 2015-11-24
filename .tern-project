@@ -1,0 +1,13 @@
+{
+  "ecmaVersion": 6,
+  "libs": [
+    "browser",
+    "jquery"
+  ],
+  "loadEagerly": [
+    "src/containers/main.js"
+  ],
+  "dontLoad": [
+    "dist"
+  ]
+}

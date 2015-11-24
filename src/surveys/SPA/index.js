@@ -55,9 +55,76 @@ const SOURCE_SCALES = {
     },
     // Эскапизм (уход от проблем)
     8: {
-       '': [17, 18, 54, 64, 86],
+        default: [17, 18, 54, 64, 86],
     },
 };
+
+function validate(percentValue) {
+    if (percentValue < 0) {
+        console.error('percent < 0'); // eslint-disable-line no-console
+    } else if (percentValue > 100) {
+        console.error('percent > 100'); // eslint-disable-line no-console
+    }
+
+    return percentValue;
+}
+
+function percent(value) {
+    return Math.round(value * 100);
+}
+
+function sum(x, y, z, { a, b }) { // eslint-disable-line id-length
+    return (x * a) / (y * a + z * b);
+}
+
+function pick(key, obj) {
+    return obj[key];
+}
+
+const SCALE_MAPPERS = {
+    '1a': scales => scales[1].a,
+    '1b': scales => scales[1].b,
+    '2a': scales => scales[2].a,
+    '2b': scales => scales[2].b,
+    '3a': scales => scales[3].a,
+    '3b': scales => scales[3].b,
+    '4a': scales => scales[4].a,
+    '4b': scales => scales[4].b,
+    '5a': scales => scales[5].a,
+    '5b': scales => scales[5].b,
+    '6a': scales => scales[6].a,
+    '6b': scales => scales[6].b,
+    '7a': scales => scales[7].a,
+    '7b': scales => scales[7].b,
+    '8': scales => scales[8].default,
+    'A': compose(validate, percent, curry(sum)(1.0, 1.0, 1.0), curry(pick)('1')),
+    'S': compose(validate, percent, curry(sum)(1.0, 1.0, 1.0), curry(pick)('3')),
+    'L': compose(validate, percent, curry(sum)(1.2, 1.2, 1.0), curry(pick)('4')),
+    'E': compose(validate, percent, curry(sum)(1.0, 1.0, 1.0), curry(pick)('5')),
+    'I': compose(validate, percent, curry(sum)(1.0, 1.0, 1.4), curry(pick)('6')),
+    'D': compose(validate, percent, curry(sum)(2.0, 2.0, 1.0), curry(pick)('7')),
+};
+
+const basicReducers = [];
+
+forOwn(SOURCE_SCALES, function forEachScale(subScales, scale) {
+    return forOwn(subScales, function forEachSubScale(questions, subScale) {
+        const answers = toSet(questions);
+        const path = [scale, subScale];
+
+        basicReducers.push(function computeScale(scales, answer, index) {
+            const oldValue = get(scales, path, 0);
+            const newValue = answers.has(index) ? oldValue + answer : oldValue;
+            return set(scales, path, newValue);
+        });
+    });
+});
+
+function rootReducer(scales, value, index) {
+    return reduce(basicReducers, function applyScaleReducer(acc, reducer) {
+        return reducer(acc, value, index + 1);
+    }, scales);
+}
 
 const META = buildMetaData({
     className: 'SPA',
@@ -70,75 +137,8 @@ const META = buildMetaData({
         { value: 5, cls: 'c c4', text: '5' },
         { value: 6, cls: 'c c5', text: '6' },
     ],
-    scaleIds: keys(SCALE_MAPPERS)
+    scaleIds: keys(SCALE_MAPPERS),
 });
-
-function validate(percent) {
-    if (percent < 0) {
-        console.error('percent < 0');
-    } else if (percent > 100) {
-        console.error('percent > 100');
-    }
-
-    return percent;
-}
-
-function percent(value) {
-    return Math.round(value * 100);
-}
-
-function sum(x, y, z, { a, b }) {
-    return (x * a) / (y * a + z * b);
-}
-
-function pick(key, obj) {
-    return obj[key];
-}
-
-const SCALE_MAPPERS = {
-    '1a': s => s[1].a,
-    '1b': s => s[1].b,
-    '2a': s => s[2].a,
-    '2b': s => s[2].b,
-    '3a': s => s[3].a,
-    '3b': s => s[3].b,
-    '4a': s => s[4].a,
-    '4b': s => s[4].b,
-    '5a': s => s[5].a,
-    '5b': s => s[5].b,
-    '6a': s => s[6].a,
-    '6b': s => s[6].b,
-    '7a': s => s[7].a,
-    '7b': s => s[7].b,
-    '8':  s => s[8][''],
-    'A': compose(validate, percent, curry(sum, 1.0, 1.0, 1.0), curry(pick, '1')),
-    'S': compose(validate, percent, curry(sum, 1.0, 1.0, 1.0), curry(pick, '3')),
-    'L': compose(validate, percent, curry(sum, 1.2, 1.2, 1.0), curry(pick, '4')),
-    'E': compose(validate, percent, curry(sum, 1.0, 1.0, 1.0), curry(pick, '5')),
-    'I': compose(validate, percent, curry(sum, 1.0, 1.0, 1.4), curry(pick, '6')),
-    'D': compose(validate, percent, curry(sum, 2.0, 2.0, 1.0), curry(pick, '7')),
-};
-
-const basicReducers = [];
-
-forOwn(SOURCE_SCALES, function (subScales, scale) {
-    return forOwn(subScales, function (questions, subScale) {
-        const answers = toSet(questions);
-        const path = [scale, subScale];
-
-        basicReducers.push(function computeScale(scales, answer, index) {
-            const oldValue = get(scales, path, 0);
-            const newValue = answers.has(index) ? value + answer : value;
-            return set(scales, path, value + answer)
-        });
-    });
-});
-
-function rootReducer(scales, value, index) {
-    return reduce(basicReducers, function (acc, reducer) {
-        return reducer(acc, value, index + 1);
-    }, scales);
-}
 
 export default class SPA {
     constructor() {
@@ -148,7 +148,7 @@ export default class SPA {
         return META;
     }
     calculate() {
-        const tree = this.answers.reduce(rootReducer, {});
+        const tree = reduce(this.answers, rootReducer, {});
 
         return mapValues(SCALE_MAPPERS, mapper => ({
             value: mapper(tree),
