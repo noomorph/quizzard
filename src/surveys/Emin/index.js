@@ -1,5 +1,6 @@
 import '../common/button4.css';
 import mapValues from 'lodash/object/mapValues';
+import zipObject from 'lodash/array/zipObject';
 import toSet from 'util/toSet';
 import { buildMetaData } from '../common/builder';
 
@@ -51,10 +52,6 @@ function rootReducer(scales, value, index) {
     }, scales);
 }
 
-function mapResult(value) {
-    return { value };
-}
-
 const META = buildMetaData({
     className: 'Emin',
     questionsCount: 46,
@@ -77,10 +74,9 @@ export default class Emin {
         return META;
     }
     calculate() {
-        return mapValues(
-            COMPUTED_SCALES.reduce(computedReducer,
-               this.answers.reduce(rootReducer, {})
-            ), mapResult
-        );
+        const zeroScales = zipObject(SCALES.map(({ id }) => [id, 0]));
+        const basicScales = this.answers.reduce(rootReducer, zeroScales);
+        const unwrappedScales = COMPUTED_SCALES.reduce(computedReducer, basicScales);
+        return mapValues(unwrappedScales, value => ({ value }));
     }
 }

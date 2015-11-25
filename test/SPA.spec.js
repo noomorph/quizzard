@@ -1,23 +1,12 @@
 import SPA from 'surveys/SPA';
+import { should_equal } from './helpers';
 
 describe('SPA Test', function () {
     let subject;
 
-    beforeEach(function () {
-        subject = new SPA();
-    });
+    beforeEach(() => subject = new SPA());
 
-    describe('even when empty', function () {
-        it('should calculate without errors', function () {
-            expect(() => subject.calculate()).not.to.throw();
-        });
-    });
-
-    let { when_filled_with, scale_eq } = require('./helpers')({
-        describe, beforeEach, it, expect, subject: () => subject,
-    });
-
-    function test_spa(expectedScales) {
+    function SPAScales(scales) {
         const {
             1: [e1a, e1b],
             2: [e2a, e2b],
@@ -27,34 +16,42 @@ describe('SPA Test', function () {
             6: [e6a, e6b],
             7: [e7a, e7b],
             8: e8
-        } = expectedScales;
+        } = scales;
 
-        scale_eq('1a', e1a);
-        scale_eq('1b', e1b);
-        scale_eq('2a', e2a);
-        scale_eq('2b', e2b);
-        scale_eq('3a', e3a);
-        scale_eq('3b', e3b);
-        scale_eq('4a', e4a);
-        scale_eq('4b', e4b);
-        scale_eq('5a', e5a);
-        scale_eq('5b', e5b);
-        scale_eq('6a', e6a);
-        scale_eq('6b', e6b);
-        scale_eq('7a', e7a);
-        scale_eq('7b', e7b);
-        scale_eq('8', e8);
-        scale_eq('A', Math.round(100 * e1a / (e1a + e1b)));
-        scale_eq('S', Math.round(100 * e3a / (e3a + e3b)));
-        scale_eq('L', Math.round(100 * 1.2 * e4a / (1.2 * e4a + e4b)));
-        scale_eq('E', Math.round(100 * e5a / (e5a + e5b)));
-        scale_eq('I', Math.round(100 * e6a / (e6a + 1.4 * e6b)));
-        scale_eq('D', Math.round(100 * 2 * e7a / (2 * e7a + e7b)));
+        this['1a'] = { value: e1a };
+        this['1b'] = { value: e1b };
+        this['2a'] = { value: e2a };
+        this['2b'] = { value: e2b };
+        this['3a'] = { value: e3a };
+        this['3b'] = { value: e3b };
+        this['4a'] = { value: e4a };
+        this['4b'] = { value: e4b };
+        this['5a'] = { value: e5a };
+        this['5b'] = { value: e5b };
+        this['6a'] = { value: e6a };
+        this['6b'] = { value: e6b };
+        this['7a'] = { value: e7a };
+        this['7b'] = { value: e7b };
+        this['8'] = { value: e8 };
+        this.A = { value: Math.round(100 * e1a / (e1a + e1b)) };
+        this.S = { value: Math.round(100 * e3a / (e3a + e3b)) };
+        this.L = { value: Math.round(100 * 1.2 * e4a / (1.2 * e4a + e4b)) };
+        this.E = { value: Math.round(100 * e5a / (e5a + e5b)) };
+        this.I = { value: Math.round(100 * e6a / (e6a + 1.4 * e6b)) };
+        this.D = { value: Math.round(100 * 2 * e7a / (2 * e7a + e7b)) };
     }
 
+    describe('even when empty', function () {
+        it('should calculate without errors', function () {
+            expect(() => subject.calculate()).not.to.throw();
+        });
+    });
+
     [undefined, 0, 2, 3, 4, 5, 6].forEach(value => {
-        when_filled_with(value, function () {
-            test_spa({
+        describe(`when filled with ${value}`, () => {
+            beforeEach(() => subject.answers.fill(value));
+
+            const expected = new SPAScales({
                 1: [34 * value, 34 * value],
                 2: [5 * value, 4 * value],
                 3: [11 * value, 7 * value],
@@ -63,6 +60,10 @@ describe('SPA Test', function () {
                 6: [14 * value, 8 * value],
                 7: [3 * value, 6 * value],
                 8: 5 * value,
+            });
+
+            it(should_equal(expected), () => {
+                expect(subject.calculate()).to.eql(expected);
             });
         });
     });

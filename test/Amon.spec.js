@@ -2,66 +2,69 @@
 /* eslint-disable func-names */
 /* eslint-disable camelcase */
 import Amon from 'surveys/Amon';
+import { should_equal } from './helpers';
 
 describe(Amon.name, function () {
     let subject;
 
     beforeEach(() => subject = new Amon());
 
-    function scale_eq(scale, value) {
-        it(`has ${scale} scale = ${value}`, function () {
-            expect(subject.calculate()[scale].value).to.eq(value);
-        });
-    }
+    describe('when filled with +', () => {
+        beforeEach(() => subject.answers.fill('+'));
 
-    describe('when filled with YES', function () {
-        beforeEach(function () {
-            subject.answers.fill('+');
-        });
+        const expected = {
+            'A1': { value: 13 },
+            'A2': { value: 14 },
+            'A3': { value: 12 },
+            'C1': { value: 12 },
+            'C2': { value: 11 },
+            'C3': { value: 14 },
+            'LO1': { value: 11 },
+            'LO2': { value: 11 },
+            'LO3': { value: 11 },
+            'LI1': { value: 12 },
+            'LI2': { value: 12 },
+            'LI3': { value: 13 },
+            'N1': { value: 12 },
+            'N2': { value: 12 },
+            'N3': { value: 13 },
+            'S1': { value: 13 },
+            'S2': { value: 13 },
+            'S3': { value: 11 },
+        };
 
-        scale_eq('A1', 13);
-        scale_eq('A2', 14);
-        scale_eq('A3', 12);
-        scale_eq('C1', 12);
-        scale_eq('C2', 11);
-        scale_eq('C3', 14);
-        scale_eq('LO1', 11);
-        scale_eq('LO2', 11);
-        scale_eq('LO3', 11);
-        scale_eq('LI1', 12);
-        scale_eq('LI2', 12);
-        scale_eq('LI3', 13);
-        scale_eq('N1', 12);
-        scale_eq('N2', 12);
-        scale_eq('N3', 13);
-        scale_eq('S1', 13);
-        scale_eq('S2', 13);
-        scale_eq('S3', 11);
+        it(should_equal(expected), () => {
+            expect(subject.calculate()).to.eql(expected);
+        });
     });
 
-    describe('when filled with NO', function () {
-        beforeEach(function () {
-            subject.answers.fill('-');
-        });
+    describe('when filled with -', () => {
+        beforeEach(() => subject.answers.fill('-'));
 
-        scale_eq('A1', 0);
-        scale_eq('A2', 0);
-        scale_eq('A3', 0);
-        scale_eq('C1', 0);
-        scale_eq('C2', 0);
-        scale_eq('C3', 0);
-        scale_eq('LO1', 0);
-        scale_eq('LO2', 0);
-        scale_eq('LO3', 0);
-        scale_eq('LI1', 0);
-        scale_eq('LI2', 0);
-        scale_eq('LI3', 0);
-        scale_eq('N1', 0);
-        scale_eq('N2', 0);
-        scale_eq('N3', 0);
-        scale_eq('S1', 0);
-        scale_eq('S2', 0);
-        scale_eq('S3', 0);
+        const expected = {
+            'A1': { value: 0 },
+            'A2': { value: 0 },
+            'A3': { value: 0 },
+            'C1': { value: 0 },
+            'C2': { value: 0 },
+            'C3': { value: 0 },
+            'LO1': { value: 0 },
+            'LO2': { value: 0 },
+            'LO3': { value: 0 },
+            'LI1': { value: 0 },
+            'LI2': { value: 0 },
+            'LI3': { value: 0 },
+            'N1': { value: 0 },
+            'N2': { value: 0 },
+            'N3': { value: 0 },
+            'S1': { value: 0 },
+            'S2': { value: 0 },
+            'S3': { value: 0 },
+        };
+
+        it(should_equal(expected), () => {
+            expect(subject.calculate()).to.eql(expected);
+        });
     });
 });
 /* eslint-enable func-names */

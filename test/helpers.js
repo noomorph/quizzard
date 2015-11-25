@@ -1,24 +1,6 @@
-module.exports = function initialize({ describe, beforeEach, it, expect, subject }) {
-    return {
-        scale_eq(scale, expected) {
-            it(`has ${scale} scale = ${expected}`, function () {
-                let actual = subject().calculate()[scale].value;
+const _ = require('lodash');
 
-                if (isNaN(expected)) {
-                    expect(actual).to.be.NaN; // eslint-disable-line
-                } else {
-                    expect(actual).to.eq(expected);
-                }
-            });
-        },
-        when_filled_with(value, inner) {
-            describe(`when filled with ${value}`, function () {
-                beforeEach(function () {
-                    subject().answers.fill(value);
-                });
-
-                inner();
-            });
-        },
-    };
-};
+export function should_equal(expectedScales) {
+    const arr = _(expectedScales).values().pluck('value').value().join(', ');
+    return `has scales = [${arr}]`;
+}
