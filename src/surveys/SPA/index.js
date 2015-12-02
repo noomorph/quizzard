@@ -39,7 +39,7 @@ const rootReducer = (function () {
         [[7, 'a'], [58, 61, 66]],
         // Ведомость
         [[7, 'b'], [16, 32, 38, 69, 84, 87]],
-        // ???
+        // Эскапизм
         [[8, ''], [17, 18, 54, 64, 86]],
     ]).map(([path, questionsArray]) => {
         const questions = toSet(questionsArray);
@@ -107,8 +107,10 @@ const META = buildMetaData({
         { value: 5, cls: 'c c4', text: '5' },
         { value: 6, cls: 'c c5', text: '6' },
     ],
-    scaleIds: keys(scaleMappers),
+    scaleIds: keys(scaleMappers).sort(),
 });
+
+META.getAnswer = value => String(value);
 
 export default class SPA {
     constructor() {

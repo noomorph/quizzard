@@ -9,6 +9,7 @@ var entry = {
     'Alexithymia-RU': ['./containers/Alexithymia-RU'],
     'Amon-RU': ['./containers/Amon-RU'],
     'Emin-RU': ['./containers/Emin-RU'],
+    'SPA-RU': ['./containers/SPA-RU'],
     'test': ['chai', '../test/index'],
 };
 
@@ -92,7 +93,14 @@ module.exports = {
         generateHTML('Alexithymia-RU'),
         generateHTML('Amon-RU'),
         generateHTML('Emin-RU'),
-        new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'index.html'), chunks: [] }),
-        new HtmlWebpackPlugin({ filename: 'test.html', chunks: ['test'] }),
+        generateHTML('SPA-RU'),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'src', 'index.html'),
+            chunks: [],
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'test.html',
+            chunks: ['test']
+        }),
     ]
 };
