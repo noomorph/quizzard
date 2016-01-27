@@ -24,7 +24,7 @@ function renderAnswers(answers, extra) {
             <th>${i18n('ANSWER')}</th>
           </tr></thead>
           <tbody>
-            ${map(answers, renderAnswer, extra).join('')}
+            ${map(answers, renderAnswer.bind(extra)).join('')}
           </tbody>
         </table>
     `;
@@ -55,7 +55,7 @@ function renderScales(scales) {
           </tr>
           </thead>
           <tbody>
-            ${map(scales, renderScale, { hasT }).join('')}
+            ${map(scales, renderScale.bind({ hasT })).join('')}
           </tbody>
         </table>
     `;
