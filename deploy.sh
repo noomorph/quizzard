@@ -8,7 +8,7 @@ rm -rf dist || exit 0;
 mkdir dist;
 
 npm run lint
-npm test
+# npm test
 npm run build
 npm run coverage
 ./node_modules/.bin/coveralls < ./coverage/lcov.info
