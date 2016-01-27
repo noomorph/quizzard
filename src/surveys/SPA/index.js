@@ -1,15 +1,17 @@
+/* eslint max-len: 0 */
+
 import '../common/button6.css';
-import compose from 'lodash/function/compose';
-import curry from 'lodash/function/curry';
-import keys from 'lodash/object/keys';
-import get from 'lodash/object/get';
-import set from 'lodash/object/set';
-import mapValues from 'lodash/object/mapValues';
-import reduce from 'lodash/collection/reduce';
+import flowRight from 'lodash/flowRight';
+import curry from 'lodash/curry';
+import keys from 'lodash/keys';
+import get from 'lodash/get';
+import set from 'lodash/set';
+import mapValues from 'lodash/mapValues';
+import reduce from 'lodash/reduce';
 import toSet from 'util/toSet';
 import { buildMetaData } from '../common/builder';
 
-const rootReducer = (function () {
+const rootReducer = ((() => {
     const reducers = ([
         // Адаптивность
         [[1, 'a'], [4, 5, 9, 12, 15, 19, 22, 23, 26, 27, 29, 33, 35, 37, 41, 44, 47, 51, 53, 55, 61, 63, 67, 72, 74, 75, 78, 80, 88, 91, 94, 96, 97, 98]],
@@ -56,9 +58,9 @@ const rootReducer = (function () {
             return reducer(accumulator, value, index + 1);
         }, rootAccumulator);
     };
-}());
+})());
 
-const scaleMappers = (function () {
+const scaleMappers = ((() => {
     function percent(value) {
         return Math.round(value * 100);
     }
@@ -86,17 +88,17 @@ const scaleMappers = (function () {
         '6b': scales => scales[6].b,
         '7a': scales => scales[7].a,
         '7b': scales => scales[7].b,
-        '8': scales => scales[8][''],
-        'A': compose(percent, curry(sum)(1.0, 1.0, 1.0), curry(pick)('1')),
-        'S': compose(percent, curry(sum)(1.0, 1.0, 1.0), curry(pick)('3')),
-        'L': compose(percent, curry(sum)(1.2, 1.2, 1.0), curry(pick)('4')),
-        'E': compose(percent, curry(sum)(1.0, 1.0, 1.0), curry(pick)('5')),
-        'I': compose(percent, curry(sum)(1.0, 1.0, 1.4), curry(pick)('6')),
-        'D': compose(percent, curry(sum)(2.0, 2.0, 1.0), curry(pick)('7')),
+        8: scales => scales[8][''],
+        A: flowRight(percent, curry(sum)(1.0, 1.0, 1.0), curry(pick)('1')),
+        S: flowRight(percent, curry(sum)(1.0, 1.0, 1.0), curry(pick)('3')),
+        L: flowRight(percent, curry(sum)(1.2, 1.2, 1.0), curry(pick)('4')),
+        E: flowRight(percent, curry(sum)(1.0, 1.0, 1.0), curry(pick)('5')),
+        I: flowRight(percent, curry(sum)(1.0, 1.0, 1.4), curry(pick)('6')),
+        D: flowRight(percent, curry(sum)(2.0, 2.0, 1.0), curry(pick)('7')),
     };
-}());
+})());
 
-const META = buildMetaData({
+export const metaData = {
     className: 'SPA',
     questionsCount: 101,
     answers: [
@@ -108,7 +110,9 @@ const META = buildMetaData({
         { value: 6, cls: 'c c5', text: '6' },
     ],
     scaleIds: keys(scaleMappers).sort(),
-});
+};
+
+const META = buildMetaData(metaData);
 
 META.getAnswer = value => String(value);
 

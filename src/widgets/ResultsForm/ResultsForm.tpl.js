@@ -1,5 +1,5 @@
-import map from 'lodash/collection/map';
-import chunk from 'lodash/array/chunk';
+import map from 'lodash/map';
+import chunk from 'lodash/chunk';
 import i18n from 'util/i18n';
 import { format } from 'util/date';
 import { quoteattr, escape } from 'util/xss';
@@ -64,18 +64,39 @@ function renderScales(scales) {
 export default ({ id, user, answers, metaData, scales }) => `
     <div id="${id}" class="ResultsForm screen">
       <table class="wide">
-        <tr><th class="w8">${i18n('FULL_NAME')}</th><td class="under-border">${escape(user.name)}</td></tr>
-        <tr><th class="w8">${i18n('AGE')}</th><td class="under-border">${escape(user.age)}</td></tr>
-        <tr><th class="w8">${i18n('DATE')}</th><td class="under-border">${format(new Date())}</td></tr>
+        <tr>
+            <th class="w8">
+                ${i18n('FULL_NAME')}
+            </th>
+            <td class="under-border">
+                ${escape(user.name)}
+            </td>
+        </tr>
+        <tr>
+            <th class="w8">
+                ${i18n('AGE')}
+            </th>
+            <td class="under-border">
+                ${escape(user.age)}
+            </td>
+        </tr>
+        <tr>
+            <th class="w8">
+                ${i18n('DATE')}
+            </th>
+            <td class="under-border">
+                ${format(new Date())}
+            </td>
+        </tr>
       </table>
       <table class="wide">
         <tr>
           <td class="topped clearfix">
             ${chunk(answers, Math.min(38, answers.length / 2))
-                .reduce(function ({ offset, html }, value) {
+                .reduce(({ offset, html }, value) => {
                     return {
                         offset: offset + value.length,
-                        html: html + renderAnswers(value, { offset, metaData })
+                        html: html + renderAnswers(value, { offset, metaData }),
                     };
                 }, { offset: 0, html: '' }).html}
           </td>

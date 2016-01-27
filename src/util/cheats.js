@@ -13,7 +13,10 @@ export function _bypass(xx) {
     }
 }
 
-export function _bypass2(answers = [3, 2, 1, -2, 3, -1, -1, -1, -1, -1, -1, -1, -1, 3, -3, -3, -3, -3, -3, -3, -1, -1, -1, -1, 3, -2, -1, -1, -1, -3, 3, -3, 3, 3, -3, -3, -3, -3, 3, -3, -3, 3, -3, -3]) {
+export function _bypass2(answers = [
+    3, 2, 1, -2, 3, -1, -1, -1, -1, -1, -1, -1, -1, 3, -3, -3, -3, -3, -3, -3, -1, -1, -1, -1,
+    3, -2, -1, -1, -1, -3, 3, -3, 3, 3, -3, -3, -3, -3, 3, -3, -3, 3, -3, -3,
+]) {
     for (let index = 0; index < test.questions.length; index++) {
         let answer = answers[index];
         setTimeout(test.fill(answer), index * 100);

@@ -16,10 +16,9 @@ function build(lang, debug = true) {
 }
 
 export function register(lang, data, forceRebuild = false) {
-    dictionaries.set(lang, {
-        ...(dictionaries.get(lang) || {}),
-        ...data,
-    });
+    dictionaries.set(lang, Object.assign(
+        {}, data, dictionaries.get(lang)
+    ));
 
     dirty.add(lang);
 

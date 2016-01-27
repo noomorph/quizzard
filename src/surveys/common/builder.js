@@ -1,7 +1,9 @@
 import range from 'util/range';
-import i18n from 'util/i18n';
+import i18nDefault from 'util/i18n';
 
-export function buildMetaData({ className, questionsCount, answers, scaleIds }) {
+export function buildMetaData({ className, questionsCount, answers, scaleIds }, i18n) {
+    i18n = i18n || i18nDefault;
+
     return {
         id: className.toLowerCase(),
         className,

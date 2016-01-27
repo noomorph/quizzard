@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* exported LifeStyleIndex */
 
 function LifeStyleIndex() {
@@ -9,7 +10,7 @@ function LifeStyleIndex() {
         'Если утверждение Вам не соответствует, нажмите кнопку "Нет". Если утверждение Вам соответствует, нажмите на кнопку "Да".';
 
     this.answers = [
-        { value: '+', text: 'Да', cls: 'yes'},
+        { value: '+', text: 'Да', cls: 'yes' },
         { value: '-', text: 'Нет', cls: 'no' }
     ];
 

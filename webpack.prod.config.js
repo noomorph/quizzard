@@ -10,7 +10,7 @@ var config = require('./webpack.config');
 var cssLoader = _.find(config.module.loaders, function (loader) {
     return ~loader.loader.indexOf('css');
 });
-
+ 
 cssLoader.loader = ExtractTextPlugin.extract('style-loader', 'css!autoprefixer?browsers=last 2 versions');
 
 config.plugins = [

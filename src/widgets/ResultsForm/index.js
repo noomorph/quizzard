@@ -17,9 +17,9 @@ export default class ResultsForm {
         let results = this.survey.calculate();
 
         return template({
-            id: id,
+            id,
+            user,
             metaData,
-            user: user,
             answers,
             scales: metaData.scales.map(scale => ({
                 id: scale.id,

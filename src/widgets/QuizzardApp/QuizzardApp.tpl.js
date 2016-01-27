@@ -15,4 +15,3 @@ export default ({ surveyLinks: { prev, next }, metaData: { name }, currentScreen
     <h2>${linebreak(i18n('INSTITUTION'))}</h2>
     ${currentScreen ? currentScreen.render() : ''}
 `;
-

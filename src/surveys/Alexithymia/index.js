@@ -1,8 +1,10 @@
+/* eslint arrow-body-style: 0 */
+
 import '../common/button5.css';
 import { buildMetaData } from '../common/builder';
 import toSet from 'util/toSet';
 
-const META = buildMetaData({
+export const metaData = {
     className: 'Alexithymia',
     questionsCount: 26,
     answers: [
@@ -13,7 +15,9 @@ const META = buildMetaData({
         { value: 4, cls: 'a a4' },
     ],
     scaleIds: ['A'],
-});
+};
+
+const META = buildMetaData(metaData);
 
 const positives = toSet([2, 3, 4, 7, 8, 10, 14, 16, 17, 18, 19, 20, 22, 23, 25, 26]);
 const negatives = toSet([1, 5, 6, 9, 11, 12, 13, 15, 21, 24]);
@@ -28,7 +32,9 @@ export default class Alexithymia {
         return META;
     }
     calculate() {
-        let value = this.answers.reduce((scale, answer, index) => scale + plus(answer, index + 1), 0);
+        let value = this.answers.reduce((scale, answer, index) => {
+            return scale + plus(answer, index + 1);
+        }, 0);
 
         return {
             [META.scales[0].id]: { value },

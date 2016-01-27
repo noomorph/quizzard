@@ -1,5 +1,5 @@
 import './QuizzardApp.css';
-import assign from 'lodash/object/assign';
+import assign from 'lodash/assign';
 import template from './QuizzardApp.tpl';
 import uniq from 'util/uniq';
 import { getWidgetClass, forceRender } from 'util/hotMount';
@@ -17,7 +17,10 @@ function isRouteValid(route, { user, survey }) {
 
     if (route.is.survey) {
         let { index } = route.data;
-        return user.valid && index > 0 && index <= questionsCount && (index === 1 || survey.answers[index - 2] !== undefined);
+        return user.valid &&
+               index > 0 &&
+               index <= questionsCount &&
+               (index === 1 || survey.answers[index - 2] !== undefined);
     }
 
     if (route.is.results) {
@@ -44,7 +47,7 @@ export default class QuizzardApp {
         let { route: { widget, data } } = this;
         let Widget = getWidgetClass(widget);
         return new Widget(
-            assign({}, this, data, { id: this.id + '_' + widget })
+            assign({}, this, data, { id: `${this.id}_${widget}` })
         );
     }
     loadSurvey(Survey) {
@@ -72,26 +75,28 @@ export default class QuizzardApp {
         }
     }
     get listeners() {
-        return {
-            ...this.createWidget().listeners,
-            '.prev-survey': {
-                click: (ev) => {
-                    ev.preventDefault();
-                    let fn = loader.getPrevious(this.survey);
-                    if (fn) { fn(this.loadSurvey, this); }
+        return Object.assign({},
+            this.createWidget().listeners,
+            {
+                '.prev-survey': {
+                    click: (ev) => {
+                        ev.preventDefault();
+                        let fn = loader.getPrevious(this.survey);
+                        if (fn) { fn(this.loadSurvey, this); }
+                    },
                 },
-            },
-            '.next-survey': {
-                click: (ev) => {
-                    ev.preventDefault();
-                    let fn = loader.getNext(this.survey);
-                    if (fn) { fn(this.loadSurvey, this); }
+                '.next-survey': {
+                    click: (ev) => {
+                        ev.preventDefault();
+                        let fn = loader.getNext(this.survey);
+                        if (fn) { fn(this.loadSurvey, this); }
+                    },
                 },
-            },
-            'window': {
-                hashchange: this.onHashChange,
-            },
-        };
+                window: {
+                    hashchange: this.onHashChange,
+                },
+            }
+        );
     }
     render() {
         let surveyLinks = {

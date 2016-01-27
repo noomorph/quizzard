@@ -19,7 +19,7 @@ export default class RegisterForm {
     }
     get listeners() {
         return {
-            'input': {
+            input: {
                 change: ({ target }) => {
                     let { value, name } = target;
 

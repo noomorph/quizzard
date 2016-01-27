@@ -4,7 +4,7 @@ import hotMount from 'util/hotMount';
 import User from 'surveys/common/User';
 
 export default function main({ lang, translations, Survey }) {
-    translations.map(dic => register(lang, dic));
+    translations.forEach(dic => register(lang, dic));
     change(lang);
 
     hotMount(document.body, undefined, widgets, {

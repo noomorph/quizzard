@@ -1,6 +1,8 @@
 import '../common/button4.css';
-import mapValues from 'lodash/object/mapValues';
-import zipObject from 'lodash/array/zipObject';
+import map from 'lodash/map';
+import constant from 'lodash/constant';
+import mapValues from 'lodash/mapValues';
+import zipObject from 'lodash/zipObject';
 import toSet from 'util/toSet';
 import { buildMetaData } from '../common/builder';
 
@@ -52,7 +54,7 @@ function rootReducer(scales, value, index) {
     }, scales);
 }
 
-const META = buildMetaData({
+export const metaData = {
     className: 'Emin',
     questionsCount: 46,
     answers: [
@@ -64,7 +66,9 @@ const META = buildMetaData({
     scaleIds: []
         .concat(SCALES.map(scale => scale.id))
         .concat(COMPUTED_SCALES.map(scale => scale.id)),
-});
+};
+
+const META = buildMetaData(metaData);
 
 export default class Emin {
     constructor() {
@@ -74,7 +78,7 @@ export default class Emin {
         return META;
     }
     calculate() {
-        const zeroScales = zipObject(SCALES.map(({ id }) => [id, 0]));
+        const zeroScales = zipObject(map(SCALES, 'id'), map(SCALES, constant(0)));
         const basicScales = this.answers.reduce(rootReducer, zeroScales);
         const unwrappedScales = COMPUTED_SCALES.reduce(computedReducer, basicScales);
         return mapValues(unwrappedScales, value => ({ value }));

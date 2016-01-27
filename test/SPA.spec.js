@@ -1,7 +1,8 @@
 import SPA from 'surveys/SPA';
 import { should_equal } from './helpers';
+import { expect } from 'chai';
 
-describe('SPA Test', function () {
+describe('SPA Test', () => {
     let subject;
 
     beforeEach(() => subject = new SPA());
@@ -15,7 +16,7 @@ describe('SPA Test', function () {
             5: [e5a, e5b],
             6: [e6a, e6b],
             7: [e7a, e7b],
-            8: e8
+            8: e8,
         } = scales;
 
         this['1a'] = { value: e1a };
@@ -41,8 +42,8 @@ describe('SPA Test', function () {
         this.D = { value: Math.round(100 * 2 * e7a / (2 * e7a + e7b)) };
     }
 
-    describe('even when empty', function () {
-        it('should calculate without errors', function () {
+    describe('even when empty', () => {
+        it('should calculate without errors', () => {
             expect(() => subject.calculate()).not.to.throw();
         });
     });

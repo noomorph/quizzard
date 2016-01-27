@@ -8,6 +8,9 @@
     "rules": {
         "indent": [2, 4],
         "space-before-function-paren": 0,
-        "prefer-const": 0
+        "arrow-body-style": 0,
+        "prefer-const": 0,
+        "no-param-reassign": 0,
+        "no-alert": 0
     }
 }

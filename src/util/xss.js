@@ -1,6 +1,6 @@
 export function quoteattr(str, shouldPreserveCR = true) {
     let preserveCR = shouldPreserveCR ? '&#13;' : '\n';
-    return ('' + str) /* Forces the conversion to string. */
+    return (`${str}`) /* Forces the conversion to string. */
         .replace(/&/g, '&amp;') /* This MUST be the 1st replacement. */
         .replace(/'/g, '&apos;') /* The 4 other predefined entities, required. */
         .replace(/"/g, '&quot;')
@@ -16,7 +16,7 @@ export function quoteattr(str, shouldPreserveCR = true) {
 }
 
 export function escape(html) {
-    return ('' + html)
+    return (`${html}`)
             .replace(/&/g, '&amp;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#39;')

@@ -7,6 +7,7 @@ GH_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 rm -rf dist || exit 0;
 mkdir dist;
 
+npm run lint
 npm test
 npm run build
 

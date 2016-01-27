@@ -3,8 +3,9 @@
 /* eslint-disable camelcase */
 import Alexithymia from 'surveys/Alexithymia';
 import { should_equal } from './helpers';
+import { expect } from 'chai';
 
-describe(Alexithymia.name, function () {
+describe(Alexithymia.name, () => {
     let subject;
 
     beforeEach(() => subject = new Alexithymia());

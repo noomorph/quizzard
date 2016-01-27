@@ -1,12 +1,13 @@
 import gator from 'gator';
 
-const globalQueries = { window, document, '': null };
+const globalQueries = typeof window !== 'undefined' ? { window, document, '': null } : { '': null };
 
 function toggleListeners(element, listenersMap = {}, shouldAddEventListeners = false) {
     if (listenersMap) {
         Object.keys(listenersMap).forEach(function processSelector(query) {
             Object.keys(listenersMap[query]).forEach(function processEventName(eventName) {
-                let selector = globalQueries.hasOwnProperty(query) ? '_root' : query; // HACK: private Gator's _root selector
+                // HACK: private Gator's _root selector
+                let selector = globalQueries.hasOwnProperty(query) ? '_root' : query;
 
                 if (shouldAddEventListeners) {
                     this.on(eventName, selector, listenersMap[query][eventName]);
@@ -74,7 +75,7 @@ export function mountWidget(node, OldClass, NewClass, sharedData) {
     let newHTML = safeRender(NewClass && NewClass.prototype, instance);
 
     if (oldHTML.trim() !== newHTML.trim()) {
-        node.innerHTML = newHTML;
+        node.innerHTML = newHTML; // eslint-disable-line no-param-reassign
     }
 
     if (OldClass && NewClass) {
@@ -109,10 +110,7 @@ export function forceRender(instance) {
 }
 
 export default function hotMount(root, oldWidgets = {}, newWidgets = {}, sharedData) {
-    let allWidgets = {
-        ...oldWidgets,
-        ...newWidgets,
-    };
+    let allWidgets = Object.assign({}, oldWidgets, newWidgets);
 
     Object.keys(allWidgets).forEach(className => {
         let nodes = [].slice.call(root.querySelectorAll(`[data-widget-class="${className}"]`));

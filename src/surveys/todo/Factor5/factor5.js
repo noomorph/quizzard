@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* exported Factor5 */
 
 function Factor5() {

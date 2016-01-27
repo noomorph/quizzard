@@ -1,5 +1,5 @@
 import '../common/button2.css';
-import mapValues from 'lodash/object/mapValues';
+import mapValues from 'lodash/mapValues';
 import toSet from 'util/toSet';
 import { buildMetaData } from '../common/builder';
 
@@ -38,15 +38,17 @@ const SCALES = [
 
 const reducers = SCALES.map(scale => buildScaleReducer(scale.info, scale.id));
 
-const META = buildMetaData({
+export const metaData = {
     className: 'Amon',
     questionsCount: 220,
     answers: [
-        { value: '+', cls: 'yes'},
+        { value: '+', cls: 'yes' },
         { value: '-', cls: 'no' },
     ],
     scaleIds: SCALES.map(scale => scale.id),
-});
+};
+
+const META = buildMetaData(metaData);
 
 function rootReducer(scales, value, index) {
     return reducers.reduce((acc, reducer) => {

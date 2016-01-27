@@ -19,19 +19,21 @@ export function addMetaTag(tagName, config) {
     document.getElementsByTagName('head').item(0).appendChild(tag);
 }
 
+function addTouchIconTag(size) {
+    addMetaTag('link', {
+        rel: 'apple-touch-icon-precomposed',
+        sizes: size !== 57 ? `${size}x${size}` : undefined,
+        href: `${this}-${size}.png`,
+    });
+}
+
 export function initIcons(basePath) {
     const sizes = [57, 72, 114, 144];
 
-    sizes.forEach(function addTouchIconTag(size) {
-        addMetaTag('link', {
-            rel: 'apple-touch-icon-precomposed',
-            sizes: size !== 57 ? size + 'x' + size : undefined,
-            href: basePath + '-' + size + '.png',
-        });
-    });
+    sizes.forEach(addTouchIconTag, basePath);
 
     addMetaTag('link', {
         rel: 'shortcut icon',
-        href: basePath + '.png',
+        href: `${basePath}.png`,
     });
 }

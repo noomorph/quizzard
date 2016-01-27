@@ -16,18 +16,28 @@ module.exports = ({ id = 'intro', className = '', instruction = '', user }) => `
       <div class="intro-sorry">${i18n('WE_NEED_YOUR_DATA')}</div>
       <div class="intro-fields">
         <div class="intro-field intro-field-name">
-            <label class="intro-name" for="${id}_name">${i18n('FULL_NAME')}</label>
-            <input type="text" id="${id}_name" name="name" ${value(user.name)} placeholder="${i18n('FULL_NAME_PLACEHOLDER')}" required />
+            <label class="intro-name" for="${id}_name">
+                ${i18n('FULL_NAME')}
+            </label>
+            <input type="text" id="${id}_name"
+                   name="name" ${value(user.name)}
+                   placeholder="${i18n('FULL_NAME_PLACEHOLDER')}"
+                   required />
         </div>
         <div class="intro-field intro-field-age">
             <label class="intro-age" for="${id}_age">${i18n('AGE')}</label>
-            <input type="number" id="${id}_age" name="age" ${value(user.age)} pattern="[0-9]*" placeholder="18" min="18" max="99" required />
+            <input type="number"
+                   id="${id}_age"
+                   name="age" ${value(user.age)}
+                   pattern="[0-9]*" placeholder="18" min="18" max="99" required />
         </div>
         <div class="intro-field intro-field-gender">
             <label>${i18n('GENDER')}</label>
-            <input type="radio" id="${id}_male" name="gender" ${value(0)} ${checked(+user.gender === 0)} required />
+            <input type="radio" id="${id}_male"
+                   name="gender" ${value(0)} ${checked(+user.gender === 0)} required />
             <label class="intro-gender" for="${id}_male">${i18n('GENDER_NAME', 0)}</label>
-            <input type="radio" id="${id}_female" name="gender" ${value(1)} ${checked(+user.gender === 1)} required />
+            <input type="radio" id="${id}_female"
+                   name="gender" ${value(1)} ${checked(+user.gender === 1)} required />
             <label class="intro-gender" for="${id}_female">${i18n('GENDER_NAME', 1)}</label>
         </div>
       </div>

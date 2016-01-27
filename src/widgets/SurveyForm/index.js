@@ -22,7 +22,7 @@ export default class SurveyForm {
     get listeners() {
         return {
             button: {
-                'click': ({ target }) => {
+                click: ({ target }) => {
                     let { value } = target.dataset;
                     let { survey, index } = this;
                     this.survey.answers[index - 1] = isFinite(+value) ? +value : value;
