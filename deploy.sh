@@ -10,6 +10,8 @@ mkdir dist;
 npm run lint
 npm test
 npm run build
+npm run coverage
+./node_modules/.bin/coveralls < ./coverage/lcov.info
 
 if [ $GH_BRANCH = "master" ]; then
     cd dist

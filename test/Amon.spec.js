@@ -1,7 +1,5 @@
 /* global describe, beforeEach, it, expect */
-/* eslint-disable func-names */
-/* eslint-disable camelcase */
-import Amon from 'surveys/Amon';
+import Amon from '../src/surveys/Amon';
 import { should_equal } from './helpers';
 import { expect } from 'chai';
 

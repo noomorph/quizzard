@@ -1,10 +1,10 @@
-import '../common/button4.css';
+import 'surveys/common/button4.css';
 import map from 'lodash/map';
 import constant from 'lodash/constant';
 import mapValues from 'lodash/mapValues';
 import zipObject from 'lodash/zipObject';
 import toSet from 'util/toSet';
-import { buildMetaData } from '../common/builder';
+import { buildMetaData } from 'surveys/common/builder';
 
 const SCALES = [
     { id: 'МП', plus: [1, 3, 11, 13, 20, 27, 29, 32, 34], minus: [38, 42, 46] },

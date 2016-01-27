@@ -1,4 +1,4 @@
-import SPA from 'surveys/SPA';
+import SPA from '../src/surveys/SPA';
 import { should_equal } from './helpers';
 import { expect } from 'chai';
 

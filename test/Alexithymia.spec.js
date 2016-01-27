@@ -1,7 +1,5 @@
 /* global describe, beforeEach, it, expect */
-/* eslint-disable func-names */
-/* eslint-disable camelcase */
-import Alexithymia from 'surveys/Alexithymia';
+import Alexithymia from '../src/surveys/Alexithymia';
 import { should_equal } from './helpers';
 import { expect } from 'chai';
 

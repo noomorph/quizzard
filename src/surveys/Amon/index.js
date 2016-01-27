@@ -1,7 +1,7 @@
-import '../common/button2.css';
+import 'surveys/common/button2.css';
 import mapValues from 'lodash/mapValues';
 import toSet from 'util/toSet';
-import { buildMetaData } from '../common/builder';
+import { buildMetaData } from 'surveys/common/builder';
 
 function buildScaleReducer(indices, scaleId) {
     let set = toSet(indices);

@@ -1,5 +1,5 @@
-import 'core-js';
-
-let context = require.context('.', true, /.+\.(spec|test)\.js$/);
-context.keys().forEach(context);
-module.exports = context;
+import './Alexithymia.spec';
+import './Amon.spec';
+import './Emin.spec';
+import './SPA.spec';
+import './i18n.test';

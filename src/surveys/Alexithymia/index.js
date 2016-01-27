@@ -1,7 +1,7 @@
 /* eslint arrow-body-style: 0 */
 
-import '../common/button5.css';
-import { buildMetaData } from '../common/builder';
+import 'surveys/common/button5.css';
+import { buildMetaData } from 'surveys/common/builder';
 import toSet from 'util/toSet';
 
 export const metaData = {

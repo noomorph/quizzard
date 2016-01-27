@@ -1,6 +1,6 @@
 /* eslint max-len: 0 */
 
-import '../common/button6.css';
+import 'surveys/common/button6.css';
 import flowRight from 'lodash/flowRight';
 import curry from 'lodash/curry';
 import keys from 'lodash/keys';
@@ -9,7 +9,7 @@ import set from 'lodash/set';
 import mapValues from 'lodash/mapValues';
 import reduce from 'lodash/reduce';
 import toSet from 'util/toSet';
-import { buildMetaData } from '../common/builder';
+import { buildMetaData } from 'surveys/common/builder';
 
 const rootReducer = ((() => {
     const reducers = ([

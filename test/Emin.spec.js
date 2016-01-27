@@ -1,4 +1,4 @@
-import Emin from 'surveys/Emin';
+import Emin from '../src/surveys/Emin';
 import { should_equal } from './helpers';
 import { expect } from 'chai';
 
