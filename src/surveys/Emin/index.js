@@ -1,8 +1,6 @@
 import 'surveys/common/button4.css';
-import map from 'lodash/map';
-import constant from 'lodash/constant';
+import createBlankScales from 'surveys/common/blankScales';
 import mapValues from 'lodash/mapValues';
-import zipObject from 'lodash/zipObject';
 import toSet from 'util/toSet';
 import { buildMetaData } from 'surveys/common/builder';
 
@@ -78,8 +76,7 @@ export default class Emin {
         return META;
     }
     calculate() {
-        const zeroScales = zipObject(map(SCALES, 'id'), map(SCALES, constant(0)));
-        const basicScales = this.answers.reduce(rootReducer, zeroScales);
+        const basicScales = this.answers.reduce(rootReducer, createBlankScales(SCALES));
         const unwrappedScales = COMPUTED_SCALES.reduce(computedReducer, basicScales);
         return mapValues(unwrappedScales, value => ({ value }));
     }

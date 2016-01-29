@@ -9,20 +9,13 @@ var ENV = process.env.ENV;
 var srcPath = path.resolve(__dirname, 'src');
 var testPath = path.resolve(__dirname, 'test');
 
-var entry = {
-    'Alexithymia-RU': ['./containers/Alexithymia-RU'],
-    'Amon-RU': ['./containers/Amon-RU'],
-    'Emin-RU': ['./containers/Emin-RU'],
-    'SPA-RU': ['./containers/SPA-RU'],
-};
-
 function generateAppHtml(entryName) {
     return new HtmlWebpackPlugin({
         filename: entryName + '.html',
         template: path.join(srcPath, 'containers', 'main.html'),
         inject: true,
         hash: ENV === 'production',
-        excludeChunks: _(entry).keys().without(entryName).value()
+        excludeChunks: _(this).keys().without(entryName).value()
     });
 }
 

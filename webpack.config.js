@@ -14,26 +14,19 @@ templateConfig.config.module.loaders.push({
     include: templateConfig.constants.src
 });
 
+var entry = {
+    'Alexithymia-RU': ['./containers/Alexithymia-RU'],
+    'Factor5-RU': ['./containers/Factor5-RU'],
+    'Amon-RU': ['./containers/Amon-RU'],
+    'Emin-RU': ['./containers/Emin-RU'],
+    'SPA-RU': ['./containers/SPA-RU'],
+};
+
+var plugins = _.map(_.keys(entry), templateConfig.generateAppHtml.bind(entry));
+
 module.exports = _.defaultsDeep({
-    devServer: {
-        contentBase: 'dist/',
-        host: '0.0.0.0',
-        publicPath: '/',
-        port: 8000
-    },
-
-    entry: {
-        'Alexithymia-RU': ['./containers/Alexithymia-RU'],
-        'Amon-RU': ['./containers/Amon-RU'],
-        'Emin-RU': ['./containers/Emin-RU'],
-        'SPA-RU': ['./containers/SPA-RU'],
-    },
-
-    plugins: [
-        templateConfig.generateAppHtml('Alexithymia-RU'),
-        templateConfig.generateAppHtml('Amon-RU'),
-        templateConfig.generateAppHtml('Emin-RU'),
-        templateConfig.generateAppHtml('SPA-RU'),
+    entry: entry,
+    plugins: plugins.concat([
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'src', 'index.html'),
             chunks: [],
@@ -42,5 +35,11 @@ module.exports = _.defaultsDeep({
             filename: 'test.html',
             chunks: ['test']
         }),
-    ]
+    ]),
+    devServer: {
+        contentBase: 'dist/',
+        host: '0.0.0.0',
+        publicPath: '/',
+        port: 8000
+    },
 }, templateConfig.config);

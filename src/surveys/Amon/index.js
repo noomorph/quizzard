@@ -1,6 +1,8 @@
 import 'surveys/common/button2.css';
 import mapValues from 'lodash/mapValues';
+import reduce from 'lodash/reduce';
 import toSet from 'util/toSet';
+import createBlankScales from 'surveys/common/blankScales';
 import { buildMetaData } from 'surveys/common/builder';
 
 function buildScaleReducer(indices, scaleId) {
@@ -68,12 +70,7 @@ export default class Amon {
         return META;
     }
     calculate() {
-        let emptyResults = META.scales.reduce((acc, { id }) => {
-            acc[id] = 0;
-            return acc;
-        }, {});
-
-        let result = this.answers.reduce(rootReducer, emptyResults);
+        let result = reduce(this.answers, rootReducer, createBlankScales(SCALES));
         return mapValues(result, mapResult);
     }
 }
