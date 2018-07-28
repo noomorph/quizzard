@@ -1,10 +1,10 @@
 import './QuizzardApp.css';
 import assign from 'lodash/assign';
-import template from './QuizzardApp.tpl';
 import uniq from 'util/uniq';
 import { getWidgetClass, forceRender } from 'util/hotMount';
 import { getCurrentRoute, DEFAULT_URL } from 'containers/routes';
 import loader from 'containers/loader';
+import template from './QuizzardApp.tpl';
 
 function isRouteValid(route, { user, survey }) {
     if (!route || !route.is) { return false; }
@@ -13,14 +13,14 @@ function isRouteValid(route, { user, survey }) {
         return true;
     }
 
-    let questionsCount = survey.metaData.questions.length;
+    const questionsCount = survey.metaData.questions.length;
 
     if (route.is.survey) {
-        let { index } = route.data;
-        return user.valid &&
-               index > 0 &&
-               index <= questionsCount &&
-               (index === 1 || survey.answers[index - 2] !== undefined);
+        const { index } = route.data;
+        return user.valid
+               && index > 0
+               && index <= questionsCount
+               && (index === 1 || survey.answers[index - 2] !== undefined);
     }
 
     if (route.is.results) {
@@ -43,26 +43,29 @@ export default class QuizzardApp {
             location.hash = DEFAULT_URL;
         }
     }
+
     createWidget() {
-        let { route: { widget, data } } = this;
-        let Widget = getWidgetClass(widget);
+        const { route: { widget, data } } = this;
+        const Widget = getWidgetClass(widget);
         return new Widget(
-            assign({}, this, data, { id: `${this.id}_${widget}` })
+            assign({}, this, data, { id: `${this.id}_${widget}` }),
         );
     }
+
     loadSurvey(Survey) {
         this.survey = new Survey();
         this.onHashChange({ oldURL: location.hash });
     }
+
     onHashChange({ oldURL }) {
-        let newRoute = getCurrentRoute(location.hash);
+        const newRoute = getCurrentRoute(location.hash);
         if (newRoute) {
             if (isRouteValid(newRoute, this)) {
                 this.route = newRoute;
                 forceRender(this);
             } else {
-                let [, oldHash] = oldURL.split('#');
-                let oldRoute = getCurrentRoute(oldHash);
+                const [, oldHash] = oldURL.split('#');
+                const oldRoute = getCurrentRoute(oldHash);
 
                 if (isRouteValid(oldRoute, this)) {
                     location.href = oldURL;
@@ -74,6 +77,7 @@ export default class QuizzardApp {
             location.hash = DEFAULT_URL;
         }
     }
+
     get listeners() {
         return Object.assign({},
             this.createWidget().listeners,
@@ -81,25 +85,25 @@ export default class QuizzardApp {
                 '.prev-survey': {
                     click: (ev) => {
                         ev.preventDefault();
-                        let fn = loader.getPrevious(this.survey);
+                        const fn = loader.getPrevious(this.survey);
                         if (fn) { fn(this.loadSurvey, this); }
                     },
                 },
                 '.next-survey': {
                     click: (ev) => {
                         ev.preventDefault();
-                        let fn = loader.getNext(this.survey);
+                        const fn = loader.getNext(this.survey);
                         if (fn) { fn(this.loadSurvey, this); }
                     },
                 },
                 window: {
                     hashchange: this.onHashChange,
                 },
-            }
-        );
+            });
     }
+
     render() {
-        let surveyLinks = {
+        const surveyLinks = {
             prev: !!(loader.getPrevious(this.survey)),
             next: !!(loader.getNext(this.survey)),
         };

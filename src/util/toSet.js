@@ -4,7 +4,7 @@ function addToSet(set, val) {
 }
 
 export default function toSet(values) {
-    let set = new Set(values);
+    const set = new Set(values);
 
     if (set.size === 0) {
         return values.reduce(addToSet, set);

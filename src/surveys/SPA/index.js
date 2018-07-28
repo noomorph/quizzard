@@ -13,7 +13,7 @@ import { buildMetaData } from 'surveys/common/builder';
 
 const rootReducer = ((() => {
     const reducers = ([
-        // Адаптивность
+    // Адаптивность
         [[1, 'a'], [4, 5, 9, 12, 15, 19, 22, 23, 26, 27, 29, 33, 35, 37, 41, 44, 47, 51, 53, 55, 61, 63, 67, 72, 74, 75, 78, 80, 88, 91, 94, 96, 97, 98]],
         // Дезадаптивность
         [[1, 'b'], [2, 6, 7, 13, 16, 18, 25, 28, 32, 36, 38, 40, 42, 43, 49, 50, 54, 56, 59, 60, 62, 64, 69, 71, 73, 76, 77, 83, 84, 86, 90, 95, 99, 100]],
@@ -53,11 +53,7 @@ const rootReducer = ((() => {
         };
     });
 
-    return (rootAccumulator, value, index) => {
-        return reduce(reducers, (accumulator, reducer) => {
-            return reducer(accumulator, value, index + 1);
-        }, rootAccumulator);
-    };
+    return (rootAccumulator, value, index) => reduce(reducers, (accumulator, reducer) => reducer(accumulator, value, index + 1), rootAccumulator);
 })());
 
 const scaleMappers = ((() => {
@@ -120,9 +116,11 @@ export default class SPA {
     constructor() {
         this.answers = new Array(META.questionsCount);
     }
+
     get metaData() {
         return META;
     }
+
     calculate() {
         const scalesAndSubscales = reduce(this.answers, rootReducer, {});
 

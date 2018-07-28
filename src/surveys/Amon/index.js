@@ -6,7 +6,7 @@ import createBlankScales from 'surveys/common/blankScales';
 import { buildMetaData } from 'surveys/common/builder';
 
 function buildScaleReducer(indices, scaleId) {
-    let set = toSet(indices);
+    const set = toSet(indices);
 
     return function scaleReducer(scales, value, index) {
         if (value === '+' && set.has(index)) {
@@ -53,9 +53,7 @@ export const metaData = {
 const META = buildMetaData(metaData);
 
 function rootReducer(scales, value, index) {
-    return reducers.reduce((acc, reducer) => {
-        return reducer(acc, value, index + 1);
-    }, scales);
+    return reducers.reduce((acc, reducer) => reducer(acc, value, index + 1), scales);
 }
 
 function mapResult(value) {
@@ -66,11 +64,13 @@ export default class Amon {
     constructor() {
         this.answers = new Array(META.questionsCount);
     }
+
     get metaData() {
         return META;
     }
+
     calculate() {
-        let result = reduce(this.answers, rootReducer, createBlankScales(SCALES));
+        const result = reduce(this.answers, rootReducer, createBlankScales(SCALES));
         return mapValues(result, mapResult);
     }
 }

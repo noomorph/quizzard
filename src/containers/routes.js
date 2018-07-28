@@ -18,7 +18,7 @@ function register(hash) {
 }
 
 function survey(hash) {
-    let [, index] = hash.match(SURVEY_REGEX) || [];
+    const [, index] = hash.match(SURVEY_REGEX) || [];
     return index && routeParams.survey(+index);
 }
 

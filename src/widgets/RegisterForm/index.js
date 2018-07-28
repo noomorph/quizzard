@@ -1,6 +1,6 @@
 import './RegisterForm.css';
-import template from './RegisterForm.tpl';
 import uniq from 'util/uniq';
+import template from './RegisterForm.tpl';
 
 function toggleValidInput(el) {
     if (el.checkValidity()) {
@@ -17,11 +17,12 @@ export default class RegisterForm {
         this.survey = survey;
         this.submitted = !!user.valid;
     }
+
     get listeners() {
         return {
             input: {
                 change: ({ target }) => {
-                    let { value, name } = target;
+                    const { value, name } = target;
 
                     if (name) {
                         this.user[name] = value;
@@ -34,12 +35,12 @@ export default class RegisterForm {
             '': {
                 submit: (ev) => {
                     ev.preventDefault();
-                    let dom = document.getElementById(this.id);
+                    const dom = document.getElementById(this.id);
                     this.submitted = true;
                     this.user.valid = dom.checkValidity();
 
                     dom.classList.add('submitted');
-                    let els = [].slice.call(dom.querySelectorAll('input'));
+                    const els = [].slice.call(dom.querySelectorAll('input'));
                     els.forEach(toggleValidInput);
 
                     if (this.user.valid) {
@@ -49,6 +50,7 @@ export default class RegisterForm {
             },
         };
     }
+
     render() {
         return template({
             id: this.id,

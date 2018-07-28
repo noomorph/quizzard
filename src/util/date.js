@@ -2,7 +2,7 @@ function zero(val) {
     return `0${val}`;
 }
 
-export function format(date) {
+export default function format(date) {
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getYear();

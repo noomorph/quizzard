@@ -16,6 +16,7 @@ templateConfig.config.module.loaders.push({
 
 var entry = {
     'Alexithymia-RU': ['./containers/Alexithymia-RU'],
+    'Cattell-RU': ['./containers/Cattell-RU'],
     'Factor5-RU': ['./containers/Factor5-RU'],
     'Amon-RU': ['./containers/Amon-RU'],
     'Emin-RU': ['./containers/Emin-RU'],

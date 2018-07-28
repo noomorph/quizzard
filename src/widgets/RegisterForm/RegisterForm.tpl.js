@@ -9,7 +9,9 @@ function value(val) {
     return `value="${quoteattr(val)}"`;
 }
 
-module.exports = ({ id = 'intro', className = '', instruction = '', user }) => `
+module.exports = ({
+    id = 'intro', className = '', instruction = '', user,
+}) => `
   <form id="${id}" class="screen intro ${quoteattr(className)}" method="POST">
     <fieldset>
       <legend class="intro-legend">${i18n('INFO_ABOUT_YOU')}</legend>

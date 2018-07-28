@@ -9,7 +9,7 @@ export default function range(start, end, step) {
         return range(0, start, step);
     }
 
-    let arr = [];
+    const arr = [];
 
     for (number = start; number < end; number += step) {
         arr.push(number);

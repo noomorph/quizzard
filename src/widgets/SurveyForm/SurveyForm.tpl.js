@@ -1,13 +1,13 @@
 import i18n from 'util/i18n';
 import { linebreak } from 'util/softbreak';
 
-function renderQuestion({ text }, metaData, answer) {
-    let answerHtml = answer !== undefined && metaData.getAnswer(answer) || '';
+function renderQuestion(metaData, index, answer) {
+    const answerHtml = answer !== undefined && metaData.getAnswer(answer, index) || '';
 
     return `
       <div class="card">
         <div>
-          <span>${text}</span>
+          <span>${metaData.questions[index - 1].text}</span>
           <span class="answer">${answerHtml.toLowerCase()}</span>
         </div>
       </div>
@@ -30,22 +30,30 @@ function renderForward(answer, link) {
     return '';
 }
 
-export default ({ id, links, index, metaData, questions, answers }) => `
+function renderAnswersSection(metaData, index) {
+    return metaData.answers.map(answer => Object.assign({}, answer, {
+        text: metaData.getAnswer(answer.value, index),
+    })).map(renderAnswer).join('');
+}
+
+export default ({
+    id, links, index, metaData, answers,
+}) => `
   <div id="${id}" class="SurveyForm screen">
     <h4 id="breadcrumbs">
       <a href="#${links.back}">&#171;</a>
       ${i18n('QUESTION')}
       <span class="current">${index}</span>&nbsp;${i18n('FROM')}
-      <span class="total">${questions.length}</span>
+      <span class="total">${metaData.questions.length}</span>
       ${renderForward(answers[index - 1], links.forward)}
     </h4>
     <div class="frame">
       <div class="ribbon">
-        ${renderQuestion(questions[index - 1], metaData, answers[index - 1])}
+        ${renderQuestion(metaData, index, answers[index - 1])}
       </div>
     </div>
     <div class="controls clearfix">
-      ${metaData.answers.map(renderAnswer).join('')}
+      ${renderAnswersSection(metaData, index)}
     </div>
   </div>
 `;

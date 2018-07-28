@@ -1,7 +1,7 @@
 /* global describe, beforeEach, it, expect */
+import { expect } from 'chai';
 import Amon from '../src/surveys/Amon';
 import { should_equal } from './helpers';
-import { expect } from 'chai';
 
 describe(Amon.name, () => {
     let subject;

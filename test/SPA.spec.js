@@ -1,6 +1,6 @@
+import { expect } from 'chai';
 import SPA from '../src/surveys/SPA';
 import { should_equal } from './helpers';
-import { expect } from 'chai';
 
 describe('SPA Test', () => {
     let subject;
@@ -48,7 +48,7 @@ describe('SPA Test', () => {
         });
     });
 
-    [undefined, 0, 2, 3, 4, 5, 6].forEach(value => {
+    [undefined, 0, 2, 3, 4, 5, 6].forEach((value) => {
         describe(`when filled with ${value}`, () => {
             beforeEach(() => subject.answers.fill(value));
 

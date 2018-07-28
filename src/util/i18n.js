@@ -1,13 +1,13 @@
 import buildTranslationFunction from 'translate.js';
 
 let currentLanguage;
-let dirty = new Set();
-let dictionaries = new Map();
-let translates = new Map();
+const dirty = new Set();
+const dictionaries = new Map();
+const translates = new Map();
 
 function build(lang, debug = true) {
     if (dirty.has(lang)) {
-        let fn = buildTranslationFunction(dictionaries.get(lang), { debug });
+        const fn = buildTranslationFunction(dictionaries.get(lang), { debug });
         translates.set(lang, fn);
         dirty.delete(lang);
     }
@@ -17,7 +17,7 @@ function build(lang, debug = true) {
 
 export function register(lang, data, forceRebuild = false) {
     dictionaries.set(lang, Object.assign(
-        {}, data, dictionaries.get(lang)
+        {}, data, dictionaries.get(lang),
     ));
 
     dirty.add(lang);
@@ -37,7 +37,7 @@ export function change(lang) {
 }
 
 export default function translate() {
-    let fn = translates.get(currentLanguage) || translates.get('');
+    const fn = translates.get(currentLanguage) || translates.get('');
     return fn(...arguments);
 }
 

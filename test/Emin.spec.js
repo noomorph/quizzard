@@ -1,6 +1,6 @@
+import { expect } from 'chai';
 import Emin from '../src/surveys/Emin';
 import { should_equal } from './helpers';
-import { expect } from 'chai';
 
 describe(Emin.name, () => {
     let subject;

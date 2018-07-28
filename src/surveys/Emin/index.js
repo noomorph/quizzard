@@ -13,8 +13,8 @@ const SCALES = [
 ];
 
 const reducers = SCALES.map(({ id, plus, minus }) => {
-    let setP = toSet(plus);
-    let setM = toSet(minus);
+    const setP = toSet(plus);
+    const setM = toSet(minus);
 
     return function scaleReducer(scales, value, index) {
         if (!scales.hasOwnProperty(id)) {
@@ -47,9 +47,7 @@ function computedReducer(scales, { id, sum }) {
 }
 
 function rootReducer(scales, value, index) {
-    return reducers.reduce((acc, reducer) => {
-        return reducer(acc, value, index + 1);
-    }, scales);
+    return reducers.reduce((acc, reducer) => reducer(acc, value, index + 1), scales);
 }
 
 export const metaData = {
@@ -72,9 +70,11 @@ export default class Emin {
     constructor() {
         this.answers = new Array(META.questionsCount);
     }
+
     get metaData() {
         return META;
     }
+
     calculate() {
         const basicScales = this.answers.reduce(rootReducer, createBlankScales(SCALES));
         const unwrappedScales = COMPUTED_SCALES.reduce(computedReducer, basicScales);

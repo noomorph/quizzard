@@ -1,7 +1,7 @@
 import { register, change } from 'util/i18n';
-import widgets from '../widgets';
 import hotMount from 'util/hotMount';
 import User from 'surveys/common/User';
+import widgets from '../widgets';
 
 export default function main({ lang, translations, Survey }) {
     translations.forEach(dic => register(lang, dic));
@@ -16,7 +16,7 @@ export default function main({ lang, translations, Survey }) {
 
     if (module.hot) {
         module.hot.accept('../widgets', () => {
-            let newWidgets = require('../widgets').default;
+            const newWidgets = require('../widgets').default;
             hotMount(document.body, oldWidgets, newWidgets);
             oldWidgets = newWidgets;
         });

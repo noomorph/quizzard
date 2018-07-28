@@ -31,11 +31,11 @@ export const surveys = Object.keys(load);
 
 export default {
     getPrevious(survey) {
-        let position = surveys.indexOf(survey.constructor.name);
+        const position = surveys.indexOf(survey.constructor.name);
         return load[surveys[position - 1]];
     },
     getNext(survey) {
-        let position = surveys.indexOf(survey.constructor.name);
+        const position = surveys.indexOf(survey.constructor.name);
         return load[surveys[position + 1]];
     },
 };

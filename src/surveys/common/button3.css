@@ -1,0 +1,14 @@
+.SurveyForm .b {
+  width: 30%;
+  min-height: 7.5em;
+  margin-left: 2.5%;
+  font-size: 1em;
+}
+
+.SurveyForm .b0 { background-color: #1477a5; color: white; border-color: black; }
+.SurveyForm .b1 { background-color: #e8f7ff; }
+.SurveyForm .b2 { background-color: #b8efe6; }
+
+@media only screen and (max-width: 480px) {
+  .SurveyForm .b { min-height: 5.5em; }
+}

@@ -1,10 +1,10 @@
-import ru from 'surveys/Amon/ru';
-import Amon from 'surveys/Amon';
+import ru from 'surveys/Cattell/ru';
+import Cattell from 'surveys/Cattell';
 import main from './main';
 import translations from './common-ru';
 
 main({
     lang: 'ru',
     translations: [...translations, ru],
-    Survey: Amon,
+    Survey: Cattell,
 });

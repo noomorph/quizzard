@@ -7,7 +7,7 @@ function toggleListeners(element, listenersMap = {}, shouldAddEventListeners = f
         Object.keys(listenersMap).forEach(function processSelector(query) {
             Object.keys(listenersMap[query]).forEach(function processEventName(eventName) {
                 // HACK: private Gator's _root selector
-                let selector = globalQueries.hasOwnProperty(query) ? '_root' : query;
+                const selector = globalQueries.hasOwnProperty(query) ? '_root' : query;
 
                 if (shouldAddEventListeners) {
                     this.on(eventName, selector, listenersMap[query][eventName]);
@@ -27,9 +27,9 @@ function unmountListeners(element, listenersMap) {
     toggleListeners(element, listenersMap, false);
 }
 
-let instanceMap = new WeakMap();
-let listenersMap = new WeakMap();
-let nodeMap = new WeakMap();
+const instanceMap = new WeakMap();
+const listenersMap = new WeakMap();
+const nodeMap = new WeakMap();
 
 function safeRender(newPrototype, instance, node) {
     if (!newPrototype) {
@@ -37,7 +37,7 @@ function safeRender(newPrototype, instance, node) {
     }
 
     let html;
-    let originalPrototype = Object.getPrototypeOf(instance);
+    const originalPrototype = Object.getPrototypeOf(instance);
 
     try {
         Object.setPrototypeOf(instance, newPrototype);
@@ -70,9 +70,9 @@ export function mountWidget(node, OldClass, NewClass, sharedData) {
     }
 
     widgetsRegistry = this.oldWidgets; // HACK
-    let oldHTML = safeRender(OldClass && OldClass.prototype, instance, node);
+    const oldHTML = safeRender(OldClass && OldClass.prototype, instance, node);
     widgetsRegistry = this.newWidgets; // HACK
-    let newHTML = safeRender(NewClass && NewClass.prototype, instance);
+    const newHTML = safeRender(NewClass && NewClass.prototype, instance);
 
     if (oldHTML.trim() !== newHTML.trim()) {
         node.innerHTML = newHTML; // eslint-disable-line no-param-reassign
@@ -83,7 +83,7 @@ export function mountWidget(node, OldClass, NewClass, sharedData) {
     }
 
     if (NewClass) {
-        let listeners = instance.listeners;
+        const listeners = instance.listeners;
         mountListeners(node, listeners);
         instanceMap.set(node, instance);
         listenersMap.set(instance, listeners);
@@ -96,7 +96,7 @@ export function mountWidget(node, OldClass, NewClass, sharedData) {
 }
 
 export function forceRender(instance) {
-    let node = nodeMap.get(instance);
+    const node = nodeMap.get(instance);
     let listeners = listenersMap.get(instance);
 
     if (node) {
@@ -110,12 +110,12 @@ export function forceRender(instance) {
 }
 
 export default function hotMount(root, oldWidgets = {}, newWidgets = {}, sharedData) {
-    let allWidgets = Object.assign({}, oldWidgets, newWidgets);
+    const allWidgets = Object.assign({}, oldWidgets, newWidgets);
 
-    Object.keys(allWidgets).forEach(className => {
-        let nodes = [].slice.call(root.querySelectorAll(`[data-widget-class="${className}"]`));
-        let OldClass = oldWidgets[className];
-        let NewClass = newWidgets[className];
+    Object.keys(allWidgets).forEach((className) => {
+        const nodes = [].slice.call(root.querySelectorAll(`[data-widget-class="${className}"]`));
+        const OldClass = oldWidgets[className];
+        const NewClass = newWidgets[className];
 
         nodes.forEach(node => mountWidget.call({
             oldWidgets,

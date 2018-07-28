@@ -9,7 +9,7 @@ import createBlankScales from 'surveys/common/blankScales';
 const SECONDARY_SCALES = ['I', 'II', 'III', 'IV', 'V'];
 const SUB_SCALES = ['.1', '.2', '.3', '.4', '.5'];
 const PRIMARY_SCALES = flatten(
-    map(SECONDARY_SCALES, scale => map(SUB_SCALES, sub => scale + sub))
+    map(SECONDARY_SCALES, scale => map(SUB_SCALES, sub => scale + sub)),
 );
 
 const SCALES = SECONDARY_SCALES.concat(PRIMARY_SCALES).map(id => ({ id }));
@@ -43,9 +43,11 @@ export default class Factor5 {
     constructor() {
         this.answers = new Array(META.questionsCount);
     }
+
     get metaData() {
         return META;
     }
+
     calculate() {
         const raw = transform(this.answers, rootTransformer, createBlankScales(SCALES));
         return mapValues(raw, value => ({ value }));

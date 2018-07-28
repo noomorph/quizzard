@@ -1,17 +1,17 @@
 import map from 'lodash/map';
 import chunk from 'lodash/chunk';
 import i18n from 'util/i18n';
-import { format } from 'util/date';
+import format from 'util/date';
 import { quoteattr, escape } from 'util/xss';
 
 function renderAnswer(value, index) {
-    let { offset, metaData } = this;
-    let answer = value !== undefined ? metaData.getAnswer(value) : '';
+    const { offset, metaData } = this;
+    const answer = value !== undefined ? metaData.getAnswer(value) : '';
 
     return `
       <tr>
         <td>${1 + index + offset}</td>
-        <td>${answer.toLowerCase()}</td>
+        <td>${answer}</td>
       </tr>
     `;
 }
@@ -31,7 +31,7 @@ function renderAnswers(answers, extra) {
 }
 
 function renderScale({ id, text, result: { value, t } }) {
-    let td3 = this.hasT ? `<td>${t}</td>` : '';
+    const td3 = this.hasT ? `<td>${t}</td>` : '';
 
     return `
       <tr>
@@ -43,7 +43,7 @@ function renderScale({ id, text, result: { value, t } }) {
 }
 
 function renderScales(scales) {
-    let hasT = scales[0] && scales[0].result.hasOwnProperty('t');
+    const hasT = scales[0] && scales[0].result.hasOwnProperty('t');
 
     return `
         <table class="bordered">
@@ -61,7 +61,9 @@ function renderScales(scales) {
     `;
 }
 
-export default ({ id, user, answers, metaData, scales }) => `
+export default ({
+    id, user, answers, metaData, scales,
+}) => `
     <div id="${id}" class="ResultsForm screen">
       <table class="wide">
         <tr>
@@ -93,12 +95,10 @@ export default ({ id, user, answers, metaData, scales }) => `
         <tr>
           <td class="topped clearfix">
             ${chunk(answers, Math.min(38, answers.length / 2))
-                .reduce(({ offset, html }, value) => {
-                    return {
-                        offset: offset + value.length,
-                        html: html + renderAnswers(value, { offset, metaData }),
-                    };
-                }, { offset: 0, html: '' }).html}
+        .reduce(({ offset, html }, value) => ({
+            offset: offset + value.length,
+            html: html + renderAnswers(value, { offset, metaData }),
+        }), { offset: 0, html: '' }).html}
           </td>
           <td></td>
           <td class="topped">

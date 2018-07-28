@@ -3,9 +3,9 @@ export function setTitle(title) {
 }
 
 export function createTag(tagName, config) {
-    let tag = document.createElement(tagName);
+    const tag = document.createElement(tagName);
 
-    for (let prop in config) {
+    for (const prop in config) {
         if (config[prop] !== undefined) {
             tag.setAttribute(prop, config[prop]);
         }
@@ -15,7 +15,7 @@ export function createTag(tagName, config) {
 }
 
 export function addMetaTag(tagName, config) {
-    let tag = createTag(tagName, config);
+    const tag = createTag(tagName, config);
     document.getElementsByTagName('head').item(0).appendChild(tag);
 }
 
