@@ -31,7 +31,7 @@ module.exports = ({
             <input type="number"
                    id="${id}_age"
                    name="age" ${value(user.age)}
-                   pattern="[0-9]*" placeholder="18" min="18" max="99" required />
+                   pattern="[0-9]*" placeholder="18" min="16" max="70" required />
         </div>
         <div class="intro-field intro-field-gender">
             <label>${i18n('GENDER')}</label>
