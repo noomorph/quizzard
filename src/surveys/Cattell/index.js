@@ -1,6 +1,6 @@
 /* eslint arrow-body-style: 0 */
 
-import core from 'multi-test-core';
+import cattell from 'multi-test-core/lib/cattell';
 import 'surveys/common/button3.css';
 import { buildMetaData } from 'surveys/common/builder';
 
@@ -34,7 +34,7 @@ export default class Cattell {
 
     calculate({ age, gender }) {
         const _gender = gender === 0 ? 'M' : 'F';
-        const scales = core.cattell(this.answers.concat([_gender, +age]));
+        const scales = cattell(this.answers.concat([_gender, +age]));
 
         return Object.keys(scales).filter(x => x !== 'raw')
             .map(id => ({

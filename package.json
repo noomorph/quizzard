@@ -13,10 +13,11 @@
     "deploy": "./.gh-pages.sh dist"
   },
   "dependencies": {
-    "multi-test-core": "multi-test/multi-test-core",
     "gator": "^1.2.4",
     "lodash": "^4.17.0",
-    "translate.js": "^0.2.0"
+    "multi-test-core": "github:multi-test/multi-test-core",
+    "translate.js": "^0.2.0",
+    "tslib": "^1.9.3"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
